@@ -20,7 +20,7 @@ import {
 
 import { defineComponent } from 'vue';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { IonSearchbarCustomEvent } from '@ionic/core';
+import { SearchbarChangeEventDetail } from '@ionic/core';
 import Searchbar from '../components/SearchBar.vue';
 import ExploreContainer from '../components/ExploreContainer.vue';
 
@@ -35,7 +35,7 @@ export default defineComponent({
     IonContent,
   },
   methods: {
-    search(searchValue:IonSearchbarCustomEvent<Record<'value', string>>):void {
+    search(searchValue:SearchbarChangeEventDetail['value']):void {
       console.debug(searchValue);
     },
     clear():void {
