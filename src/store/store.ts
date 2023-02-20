@@ -1,9 +1,9 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia';
 
 // https://pinia.vuejs.org/core-concepts/
 
-export const gameDexStore = defineStore('gameDexStore', {
-    state : ()=>({}),
-    getters : {},
-    actions : {},
-})
+export default defineStore('gameDexStore', {
+  state: () => ({}),
+  getters: {},
+  actions: {},
+});
