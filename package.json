@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "lint-autofix": "vue-cli-service lint --fix"
   },
   "dependencies": {
     "@capacitor/app": "4.1.1",
@@ -18,6 +19,7 @@
     "@ionic/vue-router": "^6.0.0",
     "core-js": "^3.6.5",
     "ionicons": "^6.0.3",
+    "pinia": "^2.0.31",
     "vue": "^3.2.21",
     "vue-router": "^4.0.12"
   },
