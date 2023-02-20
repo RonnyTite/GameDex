@@ -13,7 +13,9 @@
 import { IonSearchbar } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { searchCircle } from 'ionicons/icons';
-
+/**
+ * @see https://ionicframework.com/docs/api/searchbar
+ */
 export default defineComponent({
   name: 'SearchBar',
   components: { IonSearchbar },
