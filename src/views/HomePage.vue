@@ -9,7 +9,9 @@
       <IonHeader collapse="condense"></IonHeader>
       <Searchbar @onSearch="search($event)" @clear="clear"></Searchbar>
 
-      <IonCard v-for="(game, index) in results" :key="index">
+      <IonSpinner name="crescent" v-if="processing" class="mx-auto spinner"></IonSpinner>
+      <div v-else>
+        <IonCard v-for="(game, index) in results" :key="index">
         <IonCardHeader>
           <IonCardTitle>{{ index }}</IonCardTitle>
           <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle> -->
@@ -19,6 +21,7 @@
           {{ game }}
         </IonCardContent>
       </IonCard>
+      </div>
 
       <!-- <ExploreContainer name="Home page" /> -->
     </IonContent>
@@ -28,7 +31,7 @@
 <script lang="ts">
 import {
   IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
-  IonCard, IonCardContent, IonCardHeader,
+  IonCard, IonCardContent, IonCardHeader, IonSpinner,
   // IonCardSubtitle,
   IonCardTitle,
 } from '@ionic/vue';
@@ -55,17 +58,21 @@ export default defineComponent({
     IonCardHeader,
     // IonCardSubtitle,
     IonCardTitle,
+    IonSpinner,
   },
   data() {
     return {
       results: {} as SearchResults,
+      processing: false as boolean,
     };
   },
   methods: {
     search(searchValue: SearchbarChangeEventDetail['value']): void {
-      console.debug(searchValue);
+      this.processing = true;
       if (searchValue) {
+        // .filter((result) => result.name.includes(searchValue))
         this.results = searchMockJson as SearchResults;
+        this.processing = false;
       }
     },
     clear(): void {
@@ -75,3 +82,11 @@ export default defineComponent({
   },
 });
 </script>
+<style>
+.spinner {
+  display: block;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+}
+</style>

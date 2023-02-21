@@ -4,7 +4,7 @@
       <IonRouterOutlet></IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="Home" href="/tabs/homepage">
-          <IonIcon :icon="gameController" />
+          <IonIcon :icon="gameControllerOutline" />
           <IonLabel>Home</IonLabel>
         </IonTabButton>
 
@@ -26,6 +26,6 @@
 import {
   IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet,
 } from '@ionic/vue';
-import { gameController, personCircleOutline, libraryOutline } from 'ionicons/icons';
+import { gameControllerOutline, personCircleOutline, libraryOutline } from 'ionicons/icons';
 
 </script>
