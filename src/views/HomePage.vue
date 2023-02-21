@@ -12,15 +12,18 @@
       <IonSpinner name="crescent" v-if="processing" class="mx-auto spinner"></IonSpinner>
       <div v-else>
         <IonCard v-for="(game, index) in results" :key="index">
-        <IonCardHeader>
-          <IonCardTitle>{{ index }}</IonCardTitle>
-          <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle> -->
-        </IonCardHeader>
 
-        <IonCardContent>
-          {{ game }}
-        </IonCardContent>
-      </IonCard>
+          <IonCardContent>
+            <IonItem>
+              <IonThumbnail slot="start">
+                <img alt="" :src="game.image.medium_url" />
+              </IonThumbnail>
+              <IonLabel> {{ game.name }}</IonLabel>
+            </ionItem>
+
+          </IonCardContent>
+
+        </IonCard>
       </div>
 
       <!-- <ExploreContainer name="Home page" /> -->
@@ -31,9 +34,10 @@
 <script lang="ts">
 import {
   IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
-  IonCard, IonCardContent, IonCardHeader, IonSpinner,
-  // IonCardSubtitle,
-  IonCardTitle,
+  IonCard, IonCardContent, IonSpinner,
+  IonItem,
+  IonThumbnail,
+  IonLabel,
 } from '@ionic/vue';
 
 import { defineComponent } from 'vue';
@@ -41,7 +45,7 @@ import { defineComponent } from 'vue';
 import { SearchbarChangeEventDetail } from '@ionic/core';
 import Searchbar from '../components/SearchBar.vue';
 // import ExploreContainer from '../components/ExploreContainer.vue';
-// import searchMockJson from '../mocks/searchRequestResultsMock.json';
+import searchMockJson from '../mocks/searchRequestResultsMock.json';
 import { SearchResults } from '../types/searchEntities.d';
 import GiantBombApi from '../scripts/GiantBombApi';
 
@@ -56,10 +60,10 @@ export default defineComponent({
     IonContent,
     IonCard,
     IonCardContent,
-    IonCardHeader,
-    // IonCardSubtitle,
-    IonCardTitle,
     IonSpinner,
+    IonItem,
+    IonThumbnail,
+    IonLabel,
   },
   data() {
     return {
@@ -77,7 +81,10 @@ export default defineComponent({
             this.processing = false;
           })
           .catch(() => {
-
+            this.results = searchMockJson.results as SearchResults['results'];
+          })
+          .finally(() => {
+            this.processing = false;
           });
       }
     },
@@ -93,5 +100,8 @@ export default defineComponent({
   width: 100%;
   position: absolute;
   top: 50%;
+}
+ion-item {
+  --inner-border-width: 0 0 0 0 ;
 }
 </style>
