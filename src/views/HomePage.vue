@@ -2,13 +2,13 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Tab 1</ion-title>
+        <ion-title>Home</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
       <ion-header collapse="condense"></ion-header>
       <Searchbar @onSearch="search($event)" @clear="clear"></Searchbar>
-      <ExploreContainer name="Tab 1 page" />
+      <ExploreContainer name="Home page" />
     </ion-content>
   </ion-page>
 </template>
