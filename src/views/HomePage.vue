@@ -1,28 +1,28 @@
 <template>
-  <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Home</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense"></ion-header>
+  <IonPage>
+    <IonHeader>
+      <IonToolbar>
+        <IonTitle>Home</IonTitle>
+      </IonToolbar>
+    </IonHeader>
+    <IonContent :fullscreen="true">
+      <IonHeader collapse="condense"></IonHeader>
       <Searchbar @onSearch="search($event)" @clear="clear"></Searchbar>
 
-      <ion-card v-for="(game, index) in results" :key="index">
-        <ion-card-header>
-          <ion-card-title>{{ index }}</ion-card-title>
+      <IonCard v-for="(game, index) in results" :key="index">
+        <IonCardHeader>
+          <IonCardTitle>{{ index }}</IonCardTitle>
           <!-- <ion-card-subtitle>Card Subtitle</ion-card-subtitle> -->
-        </ion-card-header>
+        </IonCardHeader>
 
-        <ion-card-content>
+        <IonCardContent>
           {{ game }}
-        </ion-card-content>
-      </ion-card>
+        </IonCardContent>
+      </IonCard>
 
       <!-- <ExploreContainer name="Home page" /> -->
-    </ion-content>
-  </ion-page>
+    </IonContent>
+  </IonPage>
 </template>
 
 <script lang="ts">
