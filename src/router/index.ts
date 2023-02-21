@@ -17,15 +17,15 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'homepage',
-        component: () => import('@/views/Homepage.vue'),
+        component: () => import('@/views/HomePage.vue'),
       },
       {
         path: 'library',
-        component: () => import('@/views/Library.vue'),
+        component: () => import('@/views/GamesLibrary.vue'),
       },
       {
         path: 'account',
-        component: () => import('@/views/Account.vue'),
+        component: () => import('@/views/UserAccount.vue'),
       },
     ],
   },
