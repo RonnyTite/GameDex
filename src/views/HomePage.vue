@@ -41,8 +41,9 @@ import { defineComponent } from 'vue';
 import { SearchbarChangeEventDetail } from '@ionic/core';
 import Searchbar from '../components/SearchBar.vue';
 // import ExploreContainer from '../components/ExploreContainer.vue';
-import searchMockJson from '../mocks/searchMock.json';
+// import searchMockJson from '../mocks/searchRequestResultsMock.json';
 import { SearchResults } from '../types/searchEntities.d';
+import GiantBombApi from '../scripts/GiantBombApi';
 
 export default defineComponent({
   components: {
@@ -62,7 +63,7 @@ export default defineComponent({
   },
   data() {
     return {
-      results: {} as SearchResults,
+      results: [] as SearchResults['results'],
       processing: false as boolean,
     };
   },
@@ -70,14 +71,18 @@ export default defineComponent({
     search(searchValue: SearchbarChangeEventDetail['value']): void {
       this.processing = true;
       if (searchValue) {
-        // .filter((result) => result.name.includes(searchValue))
-        this.results = searchMockJson as SearchResults;
-        this.processing = false;
+        GiantBombApi.makeSearch(searchValue)
+          .then((searchResults) => {
+            this.results = searchResults.data.results;
+            this.processing = false;
+          })
+          .catch(() => {
+
+          });
       }
     },
     clear(): void {
-      this.results = {};
-      console.debug('clear');
+      this.results = [];
     },
   },
 });

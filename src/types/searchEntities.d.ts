@@ -1,5 +1,12 @@
 export interface SearchResults {
-  [x:string]: Array<GameProfile>
+  error: 'OK' | 'KO'
+  limit: number
+  offset: number
+  number_of_page_results: number
+  number_of_total_results: number
+  status_code: number
+  results: Array<GameProfile>
+  version: string
 }
 
 export interface GameProfile {
