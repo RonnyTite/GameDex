@@ -1,0 +1,6 @@
+
+# Encouter eslint EOL issues  https://eslint.org/docs/latest/rules/linebreak-style#using-this-rule-with-version-control-systems
+# https://git-scm.com/docs/gitattributes
+
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto

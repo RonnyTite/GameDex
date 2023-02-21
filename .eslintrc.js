@@ -26,6 +26,8 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'vue/no-deprecated-slot-attribute': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    // https://eslint.org/docs/latest/rules/linebreak-style#using-this-rule-with-version-control-systems
+    'linebreak-style': ['error', 'windows'],
   },
   overrides: [
     {
