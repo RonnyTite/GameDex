@@ -13,11 +13,11 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '',
-        redirect: '/tabs/homepage',
+        redirect: '/tabs/Homepage',
       },
       {
         path: 'homepage',
-        component: () => import('@/views/homepage.vue'),
+        component: () => import('@/views/Homepage.vue'),
       },
       {
         path: 'library',

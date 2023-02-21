@@ -5,17 +5,17 @@
       <ion-tab-bar slot="bottom">
         <ion-tab-button tab="Home" href="/tabs/homepage">
           <ion-icon :icon="gameController" />
-          <ion-label>Tab 1</ion-label>
+          <ion-label>Home</ion-label>
         </ion-tab-button>
 
         <ion-tab-button tab="library" href="/tabs/library">
-          <ion-icon :icon="triangle" />
-          <ion-label>Tab 2</ion-label>
+          <ion-icon :icon="libraryOutline" />
+          <ion-label>Library</ion-label>
         </ion-tab-button>
 
         <ion-tab-button tab="Account" href="/tabs/account">
-          <ion-icon :icon="square" />
-          <ion-label>Tab 3</ion-label>
+          <ion-icon :icon="personCircleOutline" />
+          <ion-label>Account</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
@@ -26,5 +26,6 @@
 import {
   IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet,
 } from '@ionic/vue';
-import { gameController, square, triangle } from 'ionicons/icons';
+import { gameController, personCircleOutline, libraryOutline } from 'ionicons/icons';
+
 </script>
