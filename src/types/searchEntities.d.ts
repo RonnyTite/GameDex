@@ -35,10 +35,32 @@ export interface GameImages {
   image_tags:string
 }
 
-export interface GamePlatform {
+export interface GamePlatform extends GameDetails {
+  abbreviation:string
+}
+
+interface GameDetails {
   api_detail_url:string
   id:number,
   name:string
   site_detail_url:string
-  abbreviation:string
+}
+interface GameRating {
+  api_detail_url:string
+  id:number,
+  name:string
+}
+
+interface CompleteGameProfile extends GameProfile {
+  description: string,
+  expected_release_day: null,
+  expected_release_month: null,
+  number_of_user_reviews: number,
+  original_game_rating: Array<GameRating>
+  videos: Array<GameDetails>
+  developers:Array<GameDetails>
+  genres: Array<GameDetails>
+  publishers: Array<GameDetails>
+  releases: Array<GameDetails>
+  similar_games: Array<GameDetails>
 }

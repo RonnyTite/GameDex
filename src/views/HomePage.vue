@@ -11,12 +11,16 @@
 
       <IonSpinner name="crescent" v-if="processing" class="mx-auto spinner"></IonSpinner>
       <div v-else>
-        <IonCard v-for="(game, index) in results" :key="index">
+        <IonCard
+        v-for="(game, index) in results"
+        :key="index"
+        @click="openGameCard"
+        >
 
           <IonCardContent>
             <IonItem>
               <IonThumbnail slot="start">
-                <img alt="" :src="game.image.medium_url" />
+                <IonImg alt="" :src="game.image.medium_url" />
               </IonThumbnail>
               <IonLabel> {{ game.name }}</IonLabel>
             </ionItem>
@@ -37,6 +41,7 @@ import {
   IonCard, IonCardContent, IonSpinner,
   IonItem,
   IonThumbnail,
+  IonImg,
   IonLabel,
 } from '@ionic/vue';
 
@@ -46,7 +51,7 @@ import { SearchbarChangeEventDetail } from '@ionic/core';
 import Searchbar from '../components/SearchBar.vue';
 // import ExploreContainer from '../components/ExploreContainer.vue';
 import searchMockJson from '../mocks/searchRequestResultsMock.json';
-import { SearchResults } from '../types/searchEntities.d';
+import { GameProfile, SearchResults } from '../types/searchEntities.d';
 import GiantBombApi from '../scripts/GiantBombApi';
 
 export default defineComponent({
@@ -64,6 +69,7 @@ export default defineComponent({
     IonItem,
     IonThumbnail,
     IonLabel,
+    IonImg,
   },
   data() {
     return {
@@ -72,6 +78,12 @@ export default defineComponent({
     };
   },
   methods: {
+    openGameCard(selectedGame:GameProfile):void {
+      this.$router.push({
+        name: 'GameCard',
+        params: { game_id: selectedGame.id },
+      });
+    },
     search(searchValue: SearchbarChangeEventDetail['value']): void {
       this.processing = true;
       if (searchValue) {
@@ -101,7 +113,8 @@ export default defineComponent({
   position: absolute;
   top: 50%;
 }
+
 ion-item {
-  --inner-border-width: 0 0 0 0 ;
+  --inner-border-width: 0 0 0 0;
 }
 </style>
