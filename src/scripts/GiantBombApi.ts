@@ -1,6 +1,6 @@
 import { AxiosPromise } from 'axios';
 import RequestManager, { BASE_URL } from './RequestManager';
-import { GameProfile, SearchResults } from '../types/searchEntities.d';
+import { GameProfile, SearchResults } from '../@types/searchEntities';
 
 export default {
   makeSearch(args:string):AxiosPromise<SearchResults> {

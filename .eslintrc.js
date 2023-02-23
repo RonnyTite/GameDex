@@ -28,6 +28,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     // https://eslint.org/docs/latest/rules/linebreak-style#using-this-rule-with-version-control-systems
     'linebreak-style': ['error', 'windows'],
+    'max-len': ['error', { code: 120, ignoreUrls: true }],
   },
   overrides: [
     {
