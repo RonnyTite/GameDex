@@ -4,4 +4,14 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
+  collectCoverage: true,
+  collectCoverageFrom: ['src/**/*.{js,ts,vue}', '!<rootDir>/node_modules/'],
+  coverageThreshold: {
+    global: {
+      branches: 50,
+      functions: 8,
+      lines: 18,
+      statements: 18,
+    },
+  },
 };
