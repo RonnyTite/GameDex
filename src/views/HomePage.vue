@@ -1,46 +1,120 @@
 <template>
-  <ion-page>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Home</ion-title>
-      </ion-toolbar>
-    </ion-header>
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense"></ion-header>
+  <IonPage>
+    <IonHeader>
+      <IonToolbar>
+        <IonTitle>Home</IonTitle>
+      </IonToolbar>
+    </IonHeader>
+    <IonContent :fullscreen="true">
+      <IonHeader collapse="condense"></IonHeader>
       <Searchbar @onSearch="search($event)" @clear="clear"></Searchbar>
-      <ExploreContainer name="Home page" />
-    </ion-content>
-  </ion-page>
+
+      <IonSpinner name="crescent" v-if="processing" class="mx-auto spinner"></IonSpinner>
+      <div v-else>
+        <IonCard
+        v-for="(game, index) in results"
+        :key="index"
+        @click="openGameCard"
+        >
+
+          <IonCardContent>
+            <IonItem>
+              <IonThumbnail slot="start">
+                <IonImg alt="" :src="game.image.medium_url" />
+              </IonThumbnail>
+              <IonLabel> {{ game.name }}</IonLabel>
+            </ionItem>
+
+          </IonCardContent>
+
+        </IonCard>
+      </div>
+
+      <!-- <ExploreContainer name="Home page" /> -->
+    </IonContent>
+  </IonPage>
 </template>
 
 <script lang="ts">
 import {
   IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
+  IonCard, IonCardContent, IonSpinner,
+  IonItem,
+  IonThumbnail,
+  IonImg,
+  IonLabel,
 } from '@ionic/vue';
 
 import { defineComponent } from 'vue';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { SearchbarChangeEventDetail } from '@ionic/core';
 import Searchbar from '../components/SearchBar.vue';
-import ExploreContainer from '../components/ExploreContainer.vue';
+// import ExploreContainer from '../components/ExploreContainer.vue';
+import searchMockJson from '../mocks/searchRequestResultsMock.json';
+import { GameProfile, SearchResults } from '../types/searchEntities.d';
+import GiantBombApi from '../scripts/GiantBombApi';
 
 export default defineComponent({
   components: {
     Searchbar,
-    ExploreContainer,
+    // ExploreContainer,
     IonPage,
     IonHeader,
     IonToolbar,
     IonTitle,
     IonContent,
+    IonCard,
+    IonCardContent,
+    IonSpinner,
+    IonItem,
+    IonThumbnail,
+    IonLabel,
+    IonImg,
+  },
+  data() {
+    return {
+      results: [] as SearchResults['results'],
+      processing: false as boolean,
+    };
   },
   methods: {
-    search(searchValue:SearchbarChangeEventDetail['value']):void {
-      console.debug(searchValue);
+    openGameCard(selectedGame:GameProfile):void {
+      this.$router.push({
+        name: 'GameCard',
+        params: { game_id: selectedGame.id },
+      });
     },
-    clear():void {
-      console.debug('clear');
+    search(searchValue: SearchbarChangeEventDetail['value']): void {
+      this.processing = true;
+      if (searchValue) {
+        GiantBombApi.makeSearch(searchValue)
+          .then((searchResults) => {
+            this.results = searchResults.data.results;
+            this.processing = false;
+          })
+          .catch(() => {
+            this.results = searchMockJson.results as SearchResults['results'];
+          })
+          .finally(() => {
+            this.processing = false;
+          });
+      }
+    },
+    clear(): void {
+      this.results = [];
     },
   },
 });
 </script>
+<style>
+.spinner {
+  display: block;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+}
+
+ion-item {
+  --inner-border-width: 0 0 0 0;
+}
+</style>

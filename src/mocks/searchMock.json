@@ -174,9 +174,6 @@
           "resource_type":"game"
        }
     ],
-    "[object%20Object]":[
-       
-    ],
     "mario":[
        {
           "api_detail_url":"https://www.giantbomb.com/api/game/3030-64951/",
@@ -20676,77 +20673,6 @@
           ],
           "resource_type":"game"
        }
-    ],
-    "hyper light":[
-       {
-          "api_detail_url":"https://www.giantbomb.com/api/game/3030-43940/",
-          "deck":"A 2D action-RPG inspired by A Link to the Past and Diablo developed by Heart Machine.",
-          "expected_release_quarter":null,
-          "expected_release_year":null,
-          "id":43940,
-          "image":{
-             "icon_url":"https://www.giantbomb.com/api/image/square_avatar/2839123-tumblr_o2pgvtjivz1slr6aoo1_540.png",
-             "medium_url":"https://www.giantbomb.com/api/image/scale_medium/2839123-tumblr_o2pgvtjivz1slr6aoo1_540.png",
-             "screen_url":"https://www.giantbomb.com/api/image/screen_medium/2839123-tumblr_o2pgvtjivz1slr6aoo1_540.png",
-             "screen_large_url":"https://www.giantbomb.com/api/image/screen_kubrick/2839123-tumblr_o2pgvtjivz1slr6aoo1_540.png",
-             "small_url":"https://www.giantbomb.com/api/image/scale_small/2839123-tumblr_o2pgvtjivz1slr6aoo1_540.png",
-             "super_url":"https://www.giantbomb.com/api/image/scale_large/2839123-tumblr_o2pgvtjivz1slr6aoo1_540.png",
-             "thumb_url":"https://www.giantbomb.com/api/image/scale_avatar/2839123-tumblr_o2pgvtjivz1slr6aoo1_540.png",
-             "tiny_url":"https://www.giantbomb.com/api/image/square_mini/2839123-tumblr_o2pgvtjivz1slr6aoo1_540.png",
-             "original_url":"https://www.giantbomb.com/api/image/original/2839123-tumblr_o2pgvtjivz1slr6aoo1_540.png",
-             "image_tags":"All Images,Artwork,Box Art"
-          },
-          "name":"Hyper Light Drifter",
-          "original_release_date":null,
-          "platforms":[
-             {
-                "api_detail_url":"https://www.giantbomb.com/api/platform/3045-17/",
-                "id":17,
-                "name":"Mac",
-                "site_detail_url":"https://www.giantbomb.com/mac/3045-17/",
-                "abbreviation":"MAC"
-             },
-             {
-                "api_detail_url":"https://www.giantbomb.com/api/platform/3045-94/",
-                "id":94,
-                "name":"PC",
-                "site_detail_url":"https://www.giantbomb.com/pc/3045-94/",
-                "abbreviation":"PC"
-             },
-             {
-                "api_detail_url":"https://www.giantbomb.com/api/platform/3045-145/",
-                "id":145,
-                "name":"Xbox One",
-                "site_detail_url":"https://www.giantbomb.com/xbox-one/3045-145/",
-                "abbreviation":"XONE"
-             },
-             {
-                "api_detail_url":"https://www.giantbomb.com/api/platform/3045-146/",
-                "id":146,
-                "name":"PlayStation 4",
-                "site_detail_url":"https://www.giantbomb.com/playstation-4/3045-146/",
-                "abbreviation":"PS4"
-             },
-             {
-                "api_detail_url":"https://www.giantbomb.com/api/platform/3045-152/",
-                "id":152,
-                "name":"Linux",
-                "site_detail_url":"https://www.giantbomb.com/linux/3045-152/",
-                "abbreviation":"LIN"
-             },
-             {
-                "api_detail_url":"https://www.giantbomb.com/api/platform/3045-157/",
-                "id":157,
-                "name":"Nintendo Switch",
-                "site_detail_url":"https://www.giantbomb.com/nintendo-switch/3045-157/",
-                "abbreviation":"NSW"
-             }
-          ],
-          "resource_type":"game"
-       }
-    ],
-    "hyper lighty":[
-       
     ],
     "mario*":[
        {

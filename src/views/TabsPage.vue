@@ -1,31 +1,31 @@
 <template>
-  <ion-page>
-    <ion-tabs>
-      <ion-router-outlet></ion-router-outlet>
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="Home" href="/tabs/homepage">
-          <ion-icon :icon="gameController" />
-          <ion-label>Home</ion-label>
-        </ion-tab-button>
+  <IonPage>
+    <IonTabs>
+      <IonRouterOutlet></IonRouterOutlet>
+      <IonTabBar slot="bottom">
+        <IonTabButton tab="Home" href="/tabs/homepage">
+          <IonIcon :icon="gameControllerOutline" />
+          <IonLabel>Home</IonLabel>
+        </IonTabButton>
 
-        <ion-tab-button tab="library" href="/tabs/library">
-          <ion-icon :icon="libraryOutline" />
-          <ion-label>Library</ion-label>
-        </ion-tab-button>
+        <IonTabButton tab="library" href="/tabs/library">
+          <IonIcon :icon="libraryOutline" />
+          <IonLabel>Library</IonLabel>
+        </IonTabButton>
 
-        <ion-tab-button tab="Account" href="/tabs/account">
-          <ion-icon :icon="personCircleOutline" />
-          <ion-label>Account</ion-label>
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
-  </ion-page>
+        <IonTabButton tab="Account" href="/tabs/account">
+          <IonIcon :icon="personCircleOutline" />
+          <IonLabel>Account</IonLabel>
+        </IonTabButton>
+      </IonTabBar>
+    </IonTabs>
+  </IonPage>
 </template>
 
 <script setup lang="ts">
 import {
   IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet,
 } from '@ionic/vue';
-import { gameController, personCircleOutline, libraryOutline } from 'ionicons/icons';
+import { gameControllerOutline, personCircleOutline, libraryOutline } from 'ionicons/icons';
 
 </script>
