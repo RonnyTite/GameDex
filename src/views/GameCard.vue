@@ -9,7 +9,7 @@ import GiantBombApi from '../scripts/GiantBombApi';
 export default defineComponent({
   data() {
     return {
-      game_id: this.$route.params.game_id,
+      game_id: this.$route.params.game_id as string,
     };
   },
   beforeMount() {
