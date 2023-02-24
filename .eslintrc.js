@@ -22,12 +22,12 @@ module.exports = {
     extraFileExtensions: ['.vue'], // https://typescript-eslint.io/docs/linting/troubleshooting/#i-use-a-framework-like-vue-that-requires-custom-file-extensions-and-i-get-errors-like-you-should-add-parseroptionsextrafileextensions-to-your-config
   },
   rules: {
+    'linebreak-style': 0,
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'vue/no-deprecated-slot-attribute': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     // https://eslint.org/docs/latest/rules/linebreak-style#using-this-rule-with-version-control-systems
-    'linebreak-style': ['error', 'windows'],
     'max-len': ['error', { code: 120, ignoreUrls: true }],
   },
   overrides: [
