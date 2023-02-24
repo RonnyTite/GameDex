@@ -39,7 +39,7 @@ export interface GamePlatform extends GameDetails {
   abbreviation:string
 }
 
-interface GameDetails {
+export interface GameDetails {
   api_detail_url:string
   id:number,
   name:string
@@ -51,7 +51,7 @@ interface GameRating {
   name:string
 }
 
-interface CompleteGameProfile extends GameProfile {
+export interface CompleteGameProfile extends GameProfile {
   description: string,
   expected_release_day: null,
   expected_release_month: null,
