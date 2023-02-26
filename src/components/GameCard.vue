@@ -51,8 +51,8 @@ export default defineComponent({
   beforeMount() {
     if (this.isOpen && this.gameId) {
       GiantBombApi.fetchGameProfile(this.gameId)
-        .then((results:AxiosResponse<CompleteGameProfile>) => {
-          this.game = results.data;
+        .then((searchResults:AxiosResponse<CompleteGameProfile>) => {
+          this.game = searchResults.data;
         })
         .catch(() => {
           // !!Debug Mode
@@ -60,6 +60,5 @@ export default defineComponent({
         });
     }
   },
-
 });
 </script>
