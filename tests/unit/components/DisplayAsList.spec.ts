@@ -1,12 +1,13 @@
-import { mount } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import DisplayAsList from '@/components/DisplayAsList.vue';
 import searchMockJson from '@/mocks/searchRequestResultsMock.json';
+import { GameProfile } from '@/types/searchEntities.d';
 
 describe('DisplayAsList.vue', () => {
   it('click on item on the list', () => {
-    const wrapper = mount(DisplayAsList, {
+    const wrapper = shallowMount(DisplayAsList, {
       props: {
-        dataList: searchMockJson.results,
+        dataList: searchMockJson.results as Array<GameProfile>,
       },
     });
     const listElement = wrapper.find('.home-game-card');
