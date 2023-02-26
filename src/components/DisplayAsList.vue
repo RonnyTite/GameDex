@@ -13,7 +13,18 @@
             :src="game.image.medium_url"
           />
         </IonThumbnail>
-        <IonLabel> {{ game.name }}</IonLabel>
+        <IonLabel>
+          <span class="text__bold">{{ game.name }}</span>
+          <br>
+          <small
+            v-if="game.original_release_date"
+            class="text__blue"
+          >Release Date: {{ game.original_release_date }}</small>
+          <small
+            v-else
+            class="text__blue"
+          >Release Date: <span class="text__grey">- - -</span></small>
+        </IonLabel>
       </ionItem>
     </IonCardContent>
   </IonCard>

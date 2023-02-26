@@ -1,24 +1,31 @@
 <template>
   <IonPage>
     <IonHeader>
-      <IonToolbar>
-        <IonTitle>Home</IonTitle>
+      <IonToolbar class="app-header">
+        <IonTitle
+          class="font__pixel ion-text-uppercase"
+          color="light"
+        >
+          GameDex
+        </IonTitle>
         <IonButtons slot="end">
           <IonButton>
             <IonIcon
               :icon="listOutline"
-              color="primary"
+              color="light"
             />
           </IonButton>
         </IonButtons>
       </IonToolbar>
+      <ion-toolbar>
+        <Searchbar
+          @on-search="search($event)"
+          @clear="clear"
+        />
+      </ion-toolbar>
     </IonHeader>
     <IonContent :fullscreen="true">
       <IonHeader collapse="condense" />
-      <Searchbar
-        @on-search="search($event)"
-        @clear="clear"
-      />
 
       <IonSpinner
         v-if="processing"
@@ -85,6 +92,12 @@ export default defineComponent({
       processing: false as boolean,
       isGameCardModalOpen: false as boolean,
       modalGameId: '' as string,
+      appColor: {
+        blue: '#1f6cf8',
+        green: '#1cf069',
+        spacer: '#ececec',
+        red: '#f25a41',
+      },
     };
   },
   methods: {
@@ -93,7 +106,6 @@ export default defineComponent({
       this.isGameCardModalOpen = true;
     },
     closeGameCard() {
-      debugger;
       this.modalGameId = '';
       this.isGameCardModalOpen = false;
     },
@@ -121,10 +133,15 @@ export default defineComponent({
 });
 </script>
 <style>
+
 .spinner {
   display: block;
   width: 100%;
   position: absolute;
   top: 50%;
 }
+ion-toolbar {
+    --background: #1f6cf8;
+  }
+
 </style>

@@ -3,6 +3,15 @@ http://ionicframework.com/docs/theming/ */
 
 /** Ionic CSS Variables **/
 :root {
+
+/** CUSTOM **/
+
+  --blue: #1f6cf8;
+  --green: #1cf069;
+  --spacer: #ececec;
+  --red: #f25a41;
+
+
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
@@ -203,7 +212,7 @@ http://ionicframework.com/docs/theming/ */
     --ion-text-color: #ffffff;
     --ion-text-color-rgb: 255,255,255;
 
-    --ion-border-color: #222222;
+    --ion-border-color: #ececec;
 
     --ion-color-step-50: #1e1e1e;
     --ion-color-step-100: #2a2a2a;

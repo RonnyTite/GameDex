@@ -1,3 +1,4 @@
+import '@/style/fonts.css';
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { IonicVue } from '@ionic/vue';

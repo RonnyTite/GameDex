@@ -2,10 +2,26 @@
   <IonModal :is-open="isOpen">
     <IonHeader>
       <IonToolbar>
-        <IonTitle>{{ game.name }}</IonTitle>
-        <IonButtons slot="end">
+        <IonButtons slot="start">
           <IonButton @click="$emit('close-modal')">
-            Close
+            <IonIcon
+              :icon="arrowBackOutline"
+              color="light"
+            />
+          </IonButton>
+        </IonButtons>
+        <IonTitle
+          color="light"
+          class="font__pixel ion-text-uppercase"
+        >
+          {{ game.name }}
+        </IonTitle>
+        <IonButtons slot="end">
+          <IonButton>
+            <IonIcon
+              :icon="shareSocialOutline"
+              color="light"
+            />
           </IonButton>
         </IonButtons>
       </IonToolbar>
@@ -14,6 +30,10 @@
       <p>
         {{ game.deck }}
       </p>
+      <p>
+        <DisplayAsLabel :label-list="game.platforms" />
+      </p>
+
       <p
         v-for="(detail, index) in game"
         :key="index"
@@ -26,23 +46,36 @@
 
 <script lang="ts">
 import {
-  IonButtons, IonButton, IonModal, IonHeader, IonToolbar, IonContent, IonTitle,
+  IonButtons, IonButton, IonModal, IonHeader, IonToolbar, IonContent, IonTitle, IonIcon,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { AxiosResponse } from 'axios';
+import { arrowBackOutline, shareSocialOutline } from 'ionicons/icons';
 import { CompleteGameProfile } from '../types/searchEntities';
 import GiantBombApi from '../scripts/GiantBombApi';
 import searchMockJson from '../mocks/searchRequestResultsMock.json';
+import DisplayAsLabel from './DisplayAsLabel.vue';
 
 export default defineComponent({
   components: {
-    IonButtons, IonButton, IonModal, IonHeader, IonContent, IonToolbar, IonTitle,
+    IonButtons,
+    IonButton,
+    IonModal,
+    IonIcon,
+    IonHeader,
+    IonContent,
+    IonToolbar,
+    IonTitle,
+    DisplayAsLabel,
   },
   props: {
     isOpen: { type: Boolean, required: true, default: false },
     gameId: { type: String, required: true, default: '' },
   },
   emits: ['close-modal'],
+  setup() {
+    return { arrowBackOutline, shareSocialOutline };
+  },
   data() {
     return {
       game: {} as CompleteGameProfile | Record<string, never>,
