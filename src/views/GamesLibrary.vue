@@ -8,7 +8,9 @@
     <IonContent :fullscreen="true">
       <IonHeader collapse="condense">
         <IonToolbar>
-          <IonTitle size="large">Tab 2</IonTitle>
+          <IonTitle size="large">
+            Tab 2
+          </IonTitle>
         </IonToolbar>
       </IonHeader>
 

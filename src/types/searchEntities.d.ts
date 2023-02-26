@@ -1,5 +1,5 @@
 export interface SearchResults {
-  error: 'OK' | 'KO'
+  error: 'OK'
   limit: number
   offset: number
   number_of_page_results: number

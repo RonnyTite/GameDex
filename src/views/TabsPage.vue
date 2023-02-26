@@ -1,19 +1,28 @@
 <template>
   <IonPage>
     <IonTabs>
-      <IonRouterOutlet></IonRouterOutlet>
+      <IonRouterOutlet />
       <IonTabBar slot="bottom">
-        <IonTabButton tab="Home" href="/tabs/homepage">
+        <IonTabButton
+          tab="Home"
+          href="/tabs/homepage"
+        >
           <IonIcon :icon="gameControllerOutline" />
           <IonLabel>Home</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="library" href="/tabs/library">
+        <IonTabButton
+          tab="library"
+          href="/tabs/library"
+        >
           <IonIcon :icon="libraryOutline" />
           <IonLabel>Library</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="Account" href="/tabs/account">
+        <IonTabButton
+          tab="Account"
+          href="/tabs/account"
+        >
           <IonIcon :icon="personCircleOutline" />
           <IonLabel>Account</IonLabel>
         </IonTabButton>

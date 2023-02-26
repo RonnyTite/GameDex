@@ -6,7 +6,7 @@ module.exports = {
   },
   parser: 'vue-eslint-parser', // vue-eslint-parser is a dependencies of eslint-plugin-vue https://www.npmjs.com/package/vue-eslint-parser
   extends: [
-    'plugin:vue/vue3-essential',
+    'plugin:vue/vue3-recommended',
     'plugin:@typescript-eslint/recommended',
     'eslint:recommended',
     '@vue/typescript/recommended',

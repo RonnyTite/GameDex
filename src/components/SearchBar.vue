@@ -1,14 +1,14 @@
 <template>
-    <IonSearchbar
+  <IonSearchbar
     :search-icon="searchCircle"
     :animated="true"
     placeholder="Search Here"
     :debounce="1000"
     class="search-bar"
-    @ionChange="emitSearch($event.detail)"
-    @ionClear="clear"
-    ></IonSearchbar>
-  </template>
+    @ion-change="emitSearch($event.detail)"
+    @ion-clear="clear"
+  />
+</template>
 
 <script lang="ts">
 import { IonSearchbar } from '@ionic/vue';
@@ -24,6 +24,7 @@ import { SearchbarChangeEventDetail } from '@ionic/core';
 export default defineComponent({
   name: 'SearchBar',
   components: { IonSearchbar },
+  emits: ['on-search', 'clear'],
   setup() {
     return { searchCircle };
   },
