@@ -26,7 +26,12 @@
     </IonHeader>
     <IonContent :fullscreen="true">
       <IonHeader collapse="condense" />
-
+      <IonRefresher
+        slot="fixed"
+        @ion-refresh="handleRefresh($event)"
+      >
+        <IonRefresherContent />
+      </IonRefresher>
       <IonSpinner
         v-if="processing"
         name="crescent"
@@ -52,12 +57,12 @@
 <script lang="ts">
 import {
   IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
-  IonSpinner, IonButtons, IonButton, IonIcon,
+  IonSpinner, IonButtons, IonButton, IonIcon, IonRefresher, IonRefresherContent,
 } from '@ionic/vue';
 
 import { defineComponent } from 'vue';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { SearchbarChangeEventDetail } from '@ionic/core';
+import { SearchbarChangeEventDetail, RefresherEventDetail } from '@ionic/core';
 import { listOutline } from 'ionicons/icons';
 import Searchbar from '../components/SearchBar.vue';
 import GameCard from '../components/GameCard.vue';
@@ -82,6 +87,8 @@ export default defineComponent({
     IonButtons,
     IonButton,
     IonIcon,
+    IonRefresher,
+    IonRefresherContent,
   },
   setup() {
     return { listOutline };
@@ -89,6 +96,7 @@ export default defineComponent({
   data() {
     return {
       results: [] as SearchResults['results'],
+      homePageFeed: [] as any,
       processing: false as boolean,
       isGameCardModalOpen: false as boolean,
       modalGameId: '' as string,
@@ -128,6 +136,22 @@ export default defineComponent({
     },
     clear(): void {
       this.results = [];
+    },
+    handleRefresh(event:{ target: RefresherEventDetail }): void {
+      GiantBombApi.loadHomePageFeed()
+        .then((feedResults:any) => {
+          this.homePageFeed = feedResults.data.results;
+        })
+        .catch(() => {
+          // !!Debug Mode
+          this.homePageFeed = searchMockJson.results as SearchResults['results'];
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.processing = false;
+            event.target.complete();
+          }, 2000);
+        });
     },
   },
 });

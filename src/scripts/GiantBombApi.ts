@@ -9,4 +9,5 @@ export default {
   fetchGameProfile(game_id:string):AxiosPromise<CompleteGameProfile> {
     return RequestManager.get<CompleteGameProfile>(`${BASE_URL}/game/${game_id}`);
   },
+  loadHomePageFeed():Promise<void> { return Promise.resolve(); },
 };
