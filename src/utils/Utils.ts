@@ -1,4 +1,5 @@
 import { GameProfile } from '@/types/searchEntities.d';
+import libraryMock from '@/mocks/libraryMock.json';
 
 export default {
   formatDate: (date:Date):string => {
@@ -35,5 +36,8 @@ export default {
     }
 
     return expected_release_year ? expected_release_year.toLocaleString() : '- - -';
+  },
+  loadLibrary():Array<GameProfile> {
+    return libraryMock as Array<GameProfile>;
   },
 };

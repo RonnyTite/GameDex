@@ -30,7 +30,7 @@
       <IonSpinner
         v-if="processing"
         name="crescent"
-        class="mx-auto spinner"
+        class="spinner"
       />
       <DisplayAsList
         v-else
@@ -135,10 +135,10 @@ export default defineComponent({
 <style>
 
 .spinner {
-  display: block;
-  width: 100%;
   position: absolute;
   top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
 }
 ion-toolbar {
     --background: #1f6cf8;

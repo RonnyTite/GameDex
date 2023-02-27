@@ -1,0 +1,221 @@
+[
+    {
+        "deck": "Bayonetta is a \"non-stop action game\" from PlatinumGames.  The titular character is a witch who can use hair-based magic, as well as firearms attached to her feet, to battle fallen angels and other foes.",
+        "expected_release_quarter": null,
+        "expected_release_year": null,
+        "id": 20710,
+        "image": {
+        "icon_url": "https://www.giantbomb.com/a/uploads/square_avatar/1/13158/1124551-gb.png",
+        "medium_url": "https://www.giantbomb.com/a/uploads/scale_medium/1/13158/1124551-gb.png",
+        "screen_url": "https://www.giantbomb.com/a/uploads/screen_medium/1/13158/1124551-gb.png",
+        "screen_large_url": "https://www.giantbomb.com/a/uploads/screen_kubrick/1/13158/1124551-gb.png",
+        "small_url": "https://www.giantbomb.com/a/uploads/scale_small/1/13158/1124551-gb.png",
+        "super_url": "https://www.giantbomb.com/a/uploads/scale_large/1/13158/1124551-gb.png",
+        "thumb_url": "https://www.giantbomb.com/a/uploads/scale_avatar/1/13158/1124551-gb.png",
+        "tiny_url": "https://www.giantbomb.com/a/uploads/square_mini/1/13158/1124551-gb.png",
+        "original_url": "https://www.giantbomb.com/a/uploads/original/1/13158/1124551-gb.png",
+        "image_tags": "All Images,Box Art"
+        },
+        "name": "Bayonetta",
+        "original_release_date": "2009-10-29",
+        "platforms": [
+        {
+        "api_detail_url": "https://www.giantbomb.com/api/platform/3045-20/",
+        "id": 20,
+        "name": "Xbox 360",
+        "site_detail_url": "https://www.giantbomb.com/xbox-360/3045-20/",
+        "abbreviation": "X360"
+        },
+        {
+        "api_detail_url": "https://www.giantbomb.com/api/platform/3045-35/",
+        "id": 35,
+        "name": "PlayStation 3",
+        "site_detail_url": "https://www.giantbomb.com/playstation-3/3045-35/",
+        "abbreviation": "PS3"
+        },
+        {
+        "api_detail_url": "https://www.giantbomb.com/api/platform/3045-88/",
+        "id": 88,
+        "name": "PlayStation Network (PS3)",
+        "site_detail_url": "https://www.giantbomb.com/playstation-network-ps3/3045-88/",
+        "abbreviation": "PS3N"
+        },
+        {
+        "api_detail_url": "https://www.giantbomb.com/api/platform/3045-94/",
+        "id": 94,
+        "name": "PC",
+        "site_detail_url": "https://www.giantbomb.com/pc/3045-94/",
+        "abbreviation": "PC"
+        },
+        {
+        "api_detail_url": "https://www.giantbomb.com/api/platform/3045-139/",
+        "id": 139,
+        "name": "Wii U",
+        "site_detail_url": "https://www.giantbomb.com/wii-u/3045-139/",
+        "abbreviation": "WiiU"
+        },
+        {
+        "api_detail_url": "https://www.giantbomb.com/api/platform/3045-145/",
+        "id": 145,
+        "name": "Xbox One",
+        "site_detail_url": "https://www.giantbomb.com/xbox-one/3045-145/",
+        "abbreviation": "XONE"
+        },
+        {
+        "api_detail_url": "https://www.giantbomb.com/api/platform/3045-146/",
+        "id": 146,
+        "name": "PlayStation 4",
+        "site_detail_url": "https://www.giantbomb.com/playstation-4/3045-146/",
+        "abbreviation": "PS4"
+        },
+        {
+        "api_detail_url": "https://www.giantbomb.com/api/platform/3045-157/",
+        "id": 157,
+        "name": "Nintendo Switch",
+        "site_detail_url": "https://www.giantbomb.com/nintendo-switch/3045-157/",
+        "abbreviation": "NSW"
+        }
+        ],
+        "resource_type": "game"
+        },
+        {
+        "deck": "The third entry in the Bayonetta series comes to Nintendo Switch.",
+        "expected_release_quarter": null,
+        "expected_release_year": null,
+        "id": 63119,
+        "image": {
+        "icon_url": "https://www.giantbomb.com/a/uploads/square_avatar/33/338034/3390441-5022830650-Game-.jpg",
+        "medium_url": "https://www.giantbomb.com/a/uploads/scale_medium/33/338034/3390441-5022830650-Game-.jpg",
+        "screen_url": "https://www.giantbomb.com/a/uploads/screen_medium/33/338034/3390441-5022830650-Game-.jpg",
+        "screen_large_url": "https://www.giantbomb.com/a/uploads/screen_kubrick/33/338034/3390441-5022830650-Game-.jpg",
+        "small_url": "https://www.giantbomb.com/a/uploads/scale_small/33/338034/3390441-5022830650-Game-.jpg",
+        "super_url": "https://www.giantbomb.com/a/uploads/scale_large/33/338034/3390441-5022830650-Game-.jpg",
+        "thumb_url": "https://www.giantbomb.com/a/uploads/scale_avatar/33/338034/3390441-5022830650-Game-.jpg",
+        "tiny_url": "https://www.giantbomb.com/a/uploads/square_mini/33/338034/3390441-5022830650-Game-.jpg",
+        "original_url": "https://www.giantbomb.com/a/uploads/original/33/338034/3390441-5022830650-Game-.jpg",
+        "image_tags": "All Images"
+        },
+        "name": "Bayonetta 3",
+        "original_release_date": "2022-10-28",
+        "platforms": [
+        {
+        "api_detail_url": "https://www.giantbomb.com/api/platform/3045-157/",
+        "id": 157,
+        "name": "Nintendo Switch",
+        "site_detail_url": "https://www.giantbomb.com/nintendo-switch/3045-157/",
+        "abbreviation": "NSW"
+        }
+        ],
+        "resource_type": "game"
+        },
+        {
+        "deck": "The sequel to the critically-acclaimed action brawler Bayonetta, this time with a two-player online co-op mode and exclusive to the Nintendo Wii U.",
+        "expected_release_quarter": null,
+        "expected_release_year": null,
+        "id": 39764,
+        "image": {
+        "icon_url": "https://www.giantbomb.com/a/uploads/square_avatar/8/82063/2646645-bayo2.jpg",
+        "medium_url": "https://www.giantbomb.com/a/uploads/scale_medium/8/82063/2646645-bayo2.jpg",
+        "screen_url": "https://www.giantbomb.com/a/uploads/screen_medium/8/82063/2646645-bayo2.jpg",
+        "screen_large_url": "https://www.giantbomb.com/a/uploads/screen_kubrick/8/82063/2646645-bayo2.jpg",
+        "small_url": "https://www.giantbomb.com/a/uploads/scale_small/8/82063/2646645-bayo2.jpg",
+        "super_url": "https://www.giantbomb.com/a/uploads/scale_large/8/82063/2646645-bayo2.jpg",
+        "thumb_url": "https://www.giantbomb.com/a/uploads/scale_avatar/8/82063/2646645-bayo2.jpg",
+        "tiny_url": "https://www.giantbomb.com/a/uploads/square_mini/8/82063/2646645-bayo2.jpg",
+        "original_url": "https://www.giantbomb.com/a/uploads/original/8/82063/2646645-bayo2.jpg",
+        "image_tags": "All Images,Box Art"
+        },
+        "name": "Bayonetta 2",
+        "original_release_date": "2014-09-20",
+        "platforms": [
+        {
+        "api_detail_url": "https://www.giantbomb.com/api/platform/3045-139/",
+        "id": 139,
+        "name": "Wii U",
+        "site_detail_url": "https://www.giantbomb.com/wii-u/3045-139/",
+        "abbreviation": "WiiU"
+        },
+        {
+        "api_detail_url": "https://www.giantbomb.com/api/platform/3045-157/",
+        "id": 157,
+        "name": "Nintendo Switch",
+        "site_detail_url": "https://www.giantbomb.com/nintendo-switch/3045-157/",
+        "abbreviation": "NSW"
+        }
+        ],
+        "resource_type": "game"
+        },
+        {
+            "api_detail_url":"https://www.giantbomb.com/api/game/3030-28437/",
+            "deck":"Super Street Fighter IV is a standalone update to its predecessor, adding new characters, modes, and online features.",
+            "expected_release_quarter":null,
+            "expected_release_year":null,
+            "id":28437,
+            "image":{
+               "icon_url":"https://www.giantbomb.com/api/image/square_avatar/1832165-box_ssf4.png",
+               "medium_url":"https://www.giantbomb.com/api/image/scale_medium/1832165-box_ssf4.png",
+               "screen_url":"https://www.giantbomb.com/api/image/screen_medium/1832165-box_ssf4.png",
+               "screen_large_url":"https://www.giantbomb.com/api/image/screen_kubrick/1832165-box_ssf4.png",
+               "small_url":"https://www.giantbomb.com/api/image/scale_small/1832165-box_ssf4.png",
+               "super_url":"https://www.giantbomb.com/api/image/scale_large/1832165-box_ssf4.png",
+               "thumb_url":"https://www.giantbomb.com/api/image/scale_avatar/1832165-box_ssf4.png",
+               "tiny_url":"https://www.giantbomb.com/api/image/square_mini/1832165-box_ssf4.png",
+               "original_url":"https://www.giantbomb.com/api/image/original/1832165-box_ssf4.png",
+               "image_tags":"All Images,Box Art"
+            },
+            "name":"Super Street Fighter IV",
+            "original_release_date":"2010-02-26 00:00:00",
+            "platforms":[
+               {
+                  "api_detail_url":"https://www.giantbomb.com/api/platform/3045-20/",
+                  "id":20,
+                  "name":"Xbox 360",
+                  "site_detail_url":"https://www.giantbomb.com/xbox-360/3045-20/",
+                  "abbreviation":"X360"
+               },
+               {
+                  "api_detail_url":"https://www.giantbomb.com/api/platform/3045-35/",
+                  "id":35,
+                  "name":"PlayStation 3",
+                  "site_detail_url":"https://www.giantbomb.com/playstation-3/3045-35/",
+                  "abbreviation":"PS3"
+               },
+               {
+                  "api_detail_url":"https://www.giantbomb.com/api/platform/3045-84/",
+                  "id":84,
+                  "name":"Arcade",
+                  "site_detail_url":"https://www.giantbomb.com/arcade/3045-84/",
+                  "abbreviation":"ARC"
+               },
+               {
+                  "api_detail_url":"https://www.giantbomb.com/api/platform/3045-86/",
+                  "id":86,
+                  "name":"Xbox 360 Games Store",
+                  "site_detail_url":"https://www.giantbomb.com/xbox-360-games-store/3045-86/",
+                  "abbreviation":"XBGS"
+               },
+               {
+                  "api_detail_url":"https://www.giantbomb.com/api/platform/3045-94/",
+                  "id":94,
+                  "name":"PC",
+                  "site_detail_url":"https://www.giantbomb.com/pc/3045-94/",
+                  "abbreviation":"PC"
+               },
+               {
+                  "api_detail_url":"https://www.giantbomb.com/api/platform/3045-117/",
+                  "id":117,
+                  "name":"Nintendo 3DS",
+                  "site_detail_url":"https://www.giantbomb.com/nintendo-3ds/3045-117/",
+                  "abbreviation":"3DS"
+               },
+               {
+                  "api_detail_url":"https://www.giantbomb.com/api/platform/3045-138/",
+                  "id":138,
+                  "name":"Nintendo 3DS eShop",
+                  "site_detail_url":"https://www.giantbomb.com/nintendo-3ds-eshop/3045-138/",
+                  "abbreviation":"3DSE"
+               }
+            ],
+            "resource_type":"game"
+         } 
+]

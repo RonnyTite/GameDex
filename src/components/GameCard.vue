@@ -27,35 +27,42 @@
       </IonToolbar>
     </IonHeader>
     <IonContent class="ion-padding">
-      <div>
-        <span class="text__blue">Editor(s) | Publisher(s):</span>
-      </div>
-      <div>
-        <span class="text__blue">Release Date: </span>{{ computeReleaseDate }}
-      </div>
-      <p>
-        <DisplayAsLabel :label-list="game.platforms" />
-      </p>
-      <div>
-        <span class="text__blue">Story</span>
-        <p class="font__retro">
-          {{ game.deck }}
+      <IonSpinner
+        v-if="processing"
+        name="crescent"
+        class="spinner"
+      />
+      <div v-else>
+        <div>
+          <span class="text__blue">Editor(s) | Publisher(s):</span>
+        </div>
+        <div>
+          <span class="text__blue">Release Date: </span>{{ computeReleaseDate }}
+        </div>
+        <p>
+          <DisplayAsLabel :label-list="game.platforms" />
+        </p>
+        <div>
+          <span class="text__blue">Story</span>
+          <p class="font__retro">
+            {{ game.deck }}
+          </p>
+        </div>
+
+        <p
+          v-for="(detail, index) in game"
+          :key="index"
+        >
+          {{ index }}: {{ detail || null }}
         </p>
       </div>
-
-      <p
-        v-for="(detail, index) in game"
-        :key="index"
-      >
-        {{ index }}: {{ detail || null }}
-      </p>
     </IonContent>
   </IonModal>
 </template>
 
 <script lang="ts">
 import {
-  IonButtons, IonButton, IonModal, IonHeader, IonToolbar, IonContent, IonTitle, IonIcon,
+  IonButtons, IonButton, IonModal, IonHeader, IonToolbar, IonContent, IonTitle, IonIcon, IonSpinner,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { AxiosResponse } from 'axios';
@@ -76,6 +83,7 @@ export default defineComponent({
     IonContent,
     IonToolbar,
     IonTitle,
+    IonSpinner,
     DisplayAsLabel,
   },
   props: {
@@ -89,6 +97,7 @@ export default defineComponent({
   data() {
     return {
       game: {} as CompleteGameProfile,
+      processing: false as boolean,
     };
   },
   computed: {
@@ -98,6 +107,7 @@ export default defineComponent({
   },
   beforeMount() {
     if (this.isOpen && this.gameId) {
+      this.processing = true;
       GiantBombApi.fetchGameProfile(this.gameId)
         .then((searchResults:AxiosResponse<CompleteGameProfile>) => {
           this.game = searchResults.data;
@@ -105,8 +115,16 @@ export default defineComponent({
         .catch(() => {
           // !!Debug Mode
           this.game = searchMockJson.results[0] as CompleteGameProfile;
+        }).finally(() => {
+          this.processing = false;
         });
     }
   },
 });
 </script>
+<style>
+
+.spinner{
+  top: 40%!important;
+}
+</style>
