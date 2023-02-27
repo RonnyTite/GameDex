@@ -27,12 +27,21 @@
       </IonToolbar>
     </IonHeader>
     <IonContent class="ion-padding">
-      <p>
-        {{ game.deck }}
-      </p>
+      <div>
+        <span class="text__blue">Editor(s) | Publisher(s):</span>
+      </div>
+      <div>
+        <span class="text__blue">Release Date: </span>{{ computeReleaseDate }}
+      </div>
       <p>
         <DisplayAsLabel :label-list="game.platforms" />
       </p>
+      <div>
+        <span class="text__blue">Story</span>
+        <p class="font__retro">
+          {{ game.deck }}
+        </p>
+      </div>
 
       <p
         v-for="(detail, index) in game"
@@ -53,6 +62,7 @@ import { AxiosResponse } from 'axios';
 import { arrowBackOutline, shareSocialOutline } from 'ionicons/icons';
 import { CompleteGameProfile } from '../types/searchEntities';
 import GiantBombApi from '../scripts/GiantBombApi';
+import Utils from '../utils/Utils';
 import searchMockJson from '../mocks/searchRequestResultsMock.json';
 import DisplayAsLabel from './DisplayAsLabel.vue';
 
@@ -78,8 +88,13 @@ export default defineComponent({
   },
   data() {
     return {
-      game: {} as CompleteGameProfile | Record<string, never>,
+      game: {} as CompleteGameProfile,
     };
+  },
+  computed: {
+    computeReleaseDate():string {
+      return Utils.computeReleaseDate(this.game);
+    },
   },
   beforeMount() {
     if (this.isOpen && this.gameId) {

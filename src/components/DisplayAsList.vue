@@ -16,14 +16,10 @@
         <IonLabel>
           <span class="text__bold">{{ game.name }}</span>
           <br>
-          <small
-            v-if="game.original_release_date"
-            class="text__blue"
-          >Release Date: {{ game.original_release_date }}</small>
-          <small
-            v-else
-            class="text__blue"
-          >Release Date: <span class="text__grey">- - -</span></small>
+          <div>
+            <small class="text__blue">Release Date: </small>
+            <small>{{ computeReleaseDate(game) }}</small>
+          </div>
         </IonLabel>
       </ionItem>
     </IonCardContent>
@@ -40,6 +36,7 @@ import {
 
 import { defineComponent } from 'vue';
 import { GameProfile } from '../types/searchEntities.d';
+import Utils from '../utils/Utils';
 
 export default defineComponent({
   components: {
@@ -54,6 +51,11 @@ export default defineComponent({
     dataList: { type: Array<GameProfile>, required: true, default: [] },
   },
   emits: ['open-gamecard'],
+  methods: {
+    computeReleaseDate(game:GameProfile):string {
+      return Utils.computeReleaseDate(game);
+    },
+  },
 });
 </script>
   <style scoped>
