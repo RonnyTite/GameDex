@@ -12,14 +12,15 @@ export interface SearchResults<ResultsType> {
 export interface GameProfile {
   api_detail_url:string,
   deck:string,
-  expected_release_quarter: string | null,
+  expected_release_quarter: number | null,
   expected_release_year: number | null,
   expected_release_month?: number | null,
   expected_release_day?: number | null,
   id:number,
   image:GameImages
   name:string,
-  original_release_date:string,
+  original_release_date:string | null,
+  release_date?:string | null,
   platforms: Array<GamePlatform>
   resource_type: string
 }

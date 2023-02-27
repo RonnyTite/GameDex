@@ -14,12 +14,14 @@ export default {
   computeReleaseDate(game:GameProfile):string {
     const {
       // eslint-disable-next-line @typescript-eslint/naming-convention, max-len
-      expected_release_quarter, expected_release_year, expected_release_month, expected_release_day, original_release_date,
-
+      expected_release_quarter, expected_release_year, expected_release_month, expected_release_day,
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      release_date, original_release_date,
     } = game;
 
-    if (original_release_date !== null) {
-      return this.formatDate(new Date(original_release_date));
+    const releaseDate = original_release_date || release_date;
+    if (releaseDate) {
+      return this.formatDate(new Date(releaseDate));
     }
     const IsExpectedMonthExist = expected_release_month !== null && typeof expected_release_month !== 'undefined';
     const IsExpectedDayExist = expected_release_day !== null && typeof expected_release_day !== 'undefined';
@@ -29,7 +31,9 @@ export default {
     ) {
       const d = new Date(expected_release_year, expected_release_month - 1, expected_release_day);
       return this.formatDate(d);
-    } if (
+    }
+
+    if (
       expected_release_year !== null && expected_release_quarter !== null
     ) {
       return `Q${expected_release_quarter} ${expected_release_year}`;
