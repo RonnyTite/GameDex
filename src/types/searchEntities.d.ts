@@ -1,11 +1,11 @@
-export interface SearchResults {
+export interface SearchResults<ResultsType> {
   error: 'OK'
   limit: number
   offset: number
   number_of_page_results: number
   number_of_total_results: number
   status_code: number
-  results: Array<GameProfile>
+  results: ResultsType
   version: string
 }
 

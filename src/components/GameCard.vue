@@ -65,7 +65,6 @@ import {
   IonButtons, IonButton, IonModal, IonHeader, IonToolbar, IonContent, IonTitle, IonIcon, IonSpinner,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import { AxiosResponse } from 'axios';
 import { arrowBackOutline, shareSocialOutline } from 'ionicons/icons';
 import { CompleteGameProfile } from '../types/searchEntities';
 import GiantBombApi from '../scripts/GiantBombApi';
@@ -109,8 +108,8 @@ export default defineComponent({
     if (this.isOpen && this.gameId) {
       this.processing = true;
       GiantBombApi.fetchGameProfile(this.gameId)
-        .then((searchResults:AxiosResponse<CompleteGameProfile>) => {
-          this.game = searchResults.data;
+        .then((searchResults) => {
+          this.game = searchResults.data.results;
         })
         .catch(() => {
           // !!Debug Mode

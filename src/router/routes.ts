@@ -29,6 +29,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/GamesLibrary.vue'),
       },
       {
+        path: 'search',
+        component: () => import('@/views/SearchPage.vue'),
+      },
+      {
         path: 'account',
         component: () => import('@/views/UserAccount.vue'),
       },

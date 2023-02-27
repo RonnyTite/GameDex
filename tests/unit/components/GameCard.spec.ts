@@ -4,7 +4,7 @@ import { AxiosResponse } from 'axios';
 import GameCard from '@/components/GameCard.vue';
 import GiantBombApi from '@/scripts/GiantBombApi';
 import searchMockJson from '@/mocks/searchRequestResultsMock.json';
-import { CompleteGameProfile } from '@/types/searchEntities.d';
+import { CompleteGameProfile, SearchResults } from '@/types/searchEntities.d';
 
 const propsData = {
   isOpen: true,
@@ -18,7 +18,9 @@ const mountComponent = (props = propsData) => mount(GameCard, {
 describe('GameCard.vue', () => {
   let wrapper;
   beforeEach(() => {
-    const gameProfile = ({ data: searchMockJson.results[0] }) as AxiosResponse<CompleteGameProfile>;
+    const gameProfile = ({
+      data: { results: searchMockJson.results[0] },
+    }) as AxiosResponse<SearchResults<CompleteGameProfile>>;
     sinon.stub(GiantBombApi, 'fetchGameProfile').resolves(gameProfile);
   });
   afterEach(() => {
