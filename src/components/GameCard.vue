@@ -35,7 +35,7 @@
       <div v-else>
         <div>
           <IonImg
-            :src="game.image.original_url"
+            :src="game.image.original_url || ''"
             class="main-image"
           />
         </div>
@@ -131,9 +131,10 @@ export default defineComponent({
         .then((searchResults) => {
           this.game = searchResults.data.results;
         })
-        .catch(() => {
+        .catch((err) => {
           // !!Debug Mode
           this.game = GameMock as CompleteGameProfile;
+          console.error(err);
         }).finally(() => {
           this.processing = false;
         });

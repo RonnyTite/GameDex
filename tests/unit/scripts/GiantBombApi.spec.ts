@@ -25,9 +25,9 @@ describe('Api routes', () => {
       expect(url).toMatch('/game/12404');
     }));
 
-  it('check URL request for hom feed releases', () => GiantBombApi.loadHomePageFeed()
+  it('check URL request for hom feed games', () => GiantBombApi.loadHomePageFeed()
     .then(() => {
       const url = axiosMock.getCall(0).args[0];
-      expect(url).toMatch('/releases');
+      expect(url).toMatch('/games');
     }));
 });

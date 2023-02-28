@@ -6,7 +6,7 @@
     <li
       v-for="(label,key) in lexicallySortedList"
       :key="key"
-      class="gameCard__platform-name font__pixel "
+      class="gameCard__platform-name font__pixel ion-text-uppercase"
     >
       {{ abbreviation ? label.abbreviation : label.name }}
     </li>
@@ -48,7 +48,6 @@ export default defineComponent({
 }
 .gameCard__platform-name {
   color: #fff;
-  text-transform: uppercase;
   font-size: 0.7rem;
 }
 </style>
