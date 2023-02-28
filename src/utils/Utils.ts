@@ -39,7 +39,7 @@ export default {
       return `Q${expected_release_quarter} ${expected_release_year}`;
     }
 
-    return expected_release_year ? expected_release_year.toLocaleString() : '- - -';
+    return expected_release_year ? expected_release_year.toString() : '- - -';
   },
   loadLibraryFromStore():Array<GameProfile> {
     return libraryMock as Array<GameProfile>;

@@ -29,7 +29,7 @@ describe('Utils', () => {
       original_release_date: null,
     } as GameProfile;
 
-    expect(Utils.computeReleaseDate.call(Utils, game)).toEqual('2 023');
+    expect(Utils.computeReleaseDate.call(Utils, game)).toEqual('2023');
   });
 
   it('computeReleaseDate for quarter', () => {
