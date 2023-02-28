@@ -1,23 +1,26 @@
-export interface SearchResults {
-  error: 'OK' | 'KO'
+export interface SearchResults<ResultsType> {
+  error: 'OK'
   limit: number
   offset: number
   number_of_page_results: number
   number_of_total_results: number
   status_code: number
-  results: Array<GameProfile>
+  results: ResultsType
   version: string
 }
 
 export interface GameProfile {
   api_detail_url:string,
   deck:string,
-  expected_release_quarter: string | null,
-  expected_release_year: string | null,
+  expected_release_quarter: number | null,
+  expected_release_year: number | null,
+  expected_release_month?: number | null,
+  expected_release_day?: number | null,
   id:number,
   image:GameImages
   name:string,
-  original_release_date:string,
+  original_release_date:string | null,
+  release_date?:string | null,
   platforms: Array<GamePlatform>
   resource_type: string
 }
@@ -63,4 +66,5 @@ export interface CompleteGameProfile extends GameProfile {
   publishers: Array<GameDetails>
   releases: Array<GameDetails>
   similar_games: Array<GameDetails>
+  region: string
 }

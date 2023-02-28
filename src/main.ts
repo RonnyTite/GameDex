@@ -1,8 +1,9 @@
+import '@/style/fonts.css';
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { IonicVue } from '@ionic/vue';
 import App from './App.vue';
-import router from './router';
+import router from './router/routes';
 // https://pinia.vuejs.org/
 
 /* Core CSS required for Ionic components to work properly */

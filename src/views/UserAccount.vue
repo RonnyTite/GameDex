@@ -8,11 +8,11 @@
     <IonContent :fullscreen="true">
       <IonHeader collapse="condense">
         <IonToolbar>
-          <IonTitle size="large">Tab 3</IonTitle>
+          <IonTitle size="large">
+            Tab 3
+          </IonTitle>
         </IonToolbar>
       </IonHeader>
-
-      <ExploreContainer name="Tab 3 page" />
     </IonContent>
   </IonPage>
 </template>
@@ -21,6 +21,5 @@
 import {
   IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
 } from '@ionic/vue';
-import ExploreContainer from '../components/ExploreContainer.vue';
 
 </script>

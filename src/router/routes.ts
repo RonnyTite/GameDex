@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
-import TabsPage from '../views/TabsPage.vue';
+import TabsPage from '../views/AppLayout.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -18,14 +18,19 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'homepage',
         component: () => import('@/views/HomePage.vue'),
-        children: [{
-          path: '/:game_id',
-          component: () => import('@/views/GameCard.vue'),
-        }],
+      },
+      {
+        name: 'GameCard',
+        path: 'gamecard/:game_id',
+        component: () => import('@/components/GameCard.vue'),
       },
       {
         path: 'library',
         component: () => import('@/views/GamesLibrary.vue'),
+      },
+      {
+        path: 'search',
+        component: () => import('@/views/SearchPage.vue'),
       },
       {
         path: 'account',

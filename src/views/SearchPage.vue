@@ -6,12 +6,12 @@
           class="font__pixel ion-text-uppercase"
           color="light"
         >
-          Library
+          Search
         </IonTitle>
         <IonButtons slot="end">
           <IonButton>
             <IonIcon
-              :icon="filterOutline"
+              :icon="listOutline"
               color="light"
             />
           </IonButton>
@@ -19,15 +19,12 @@
       </IonToolbar>
       <ion-toolbar>
         <Searchbar
-          :debounce="200"
           @on-search="search($event)"
-          @clear="resetSearch"
+          @clear="clear"
         />
       </ion-toolbar>
     </IonHeader>
     <IonContent :fullscreen="true">
-      <IonHeader collapse="condense" />
-
       <IonSpinner
         v-if="processing"
         name="crescent"
@@ -35,7 +32,7 @@
       />
       <DisplayAsList
         v-else
-        :data-list="filteredLibrary"
+        :data-list="results"
         @open-gamecard="openGameCard"
       />
       <GameCard
@@ -57,12 +54,13 @@ import {
 import { defineComponent } from 'vue';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { SearchbarChangeEventDetail } from '@ionic/core';
-import { filterOutline } from 'ionicons/icons';
+import { listOutline } from 'ionicons/icons';
 import Searchbar from '../components/SearchBar.vue';
 import GameCard from '../components/GameCard.vue';
 import DisplayAsList from '../components/DisplayAsList.vue';
-import Utils from '../utils/Utils';
-import { GameProfile } from '../types/searchEntities.d';
+import searchMockJson from '../mocks/searchRequestResultsMock.json';
+import { GameProfile } from '../types/searchEntities';
+import GiantBombApi from '../scripts/GiantBombApi';
 
 export default defineComponent({
   components: {
@@ -80,20 +78,15 @@ export default defineComponent({
     IonIcon,
   },
   setup() {
-    return { filterOutline };
+    return { listOutline };
   },
   data() {
     return {
-      library: [] as Array<GameProfile>,
-      filteredLibrary: [] as Array<GameProfile>,
+      results: [] as Array<GameProfile>,
       processing: false as boolean,
       isGameCardModalOpen: false as boolean,
       modalGameId: '' as string,
     };
-  },
-  beforeMount() {
-    this.library = Utils.loadLibraryFromStore();
-    this.resetSearch();
   },
   methods: {
     openGameCard(game:GameProfile) {
@@ -106,21 +99,28 @@ export default defineComponent({
     },
     search(searchValue: SearchbarChangeEventDetail['value']): void {
       if (searchValue) {
-        this.filteredLibrary = this.library.filter(
-          (game) => game.name.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
-        );
-      } else if (searchValue === '') {
-        this.resetSearch();
+        this.processing = true;
+        GiantBombApi.makeSearch(searchValue)
+          .then((searchResults) => {
+            this.results = searchResults.data.results;
+            this.processing = false;
+          })
+          .catch(() => {
+            // !!Debug Mode
+            this.results = searchMockJson.results as Array<GameProfile>;
+          })
+          .finally(() => {
+            this.processing = false;
+          });
       }
     },
-    resetSearch(): void {
-      this.filteredLibrary = [...this.library];
+    clear(): void {
+      this.results = [];
     },
   },
 });
 </script>
 <style>
-
 .spinner {
   position: absolute;
   top: 50%;

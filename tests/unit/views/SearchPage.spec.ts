@@ -1,0 +1,59 @@
+import { mount } from '@vue/test-utils';
+import sinon, { SinonStub, SinonSpy } from 'sinon';
+import SearchPage from '@/views/SearchPage.vue';
+import searchMockJson from '@/mocks/searchRequestResultsMock.json';
+import { GameProfile, SearchResults } from '@/types/searchEntities.d';
+import { axiosInstance } from '../../../src/scripts/RequestManager';
+import GiantBombApi from '../../../src/scripts/GiantBombApi';
+
+describe('SearchPage.vue', () => {
+  let wrapper;
+  let axiosMock:SinonStub;
+  const searchResultsStub = ({
+    data: { results: searchMockJson.results },
+  });
+  let makeSearchSpy:SinonSpy;
+  beforeEach(() => {
+    axiosMock = sinon.stub(axiosInstance, 'get').resolves(searchResultsStub);
+    makeSearchSpy = sinon.spy(GiantBombApi, 'makeSearch');
+  });
+  afterEach(() => {
+    sinon.restore();
+  });
+
+  const results = searchMockJson as SearchResults<Array<GameProfile>>;
+  it('receive emits and open gamecard', () => {
+    wrapper = mount(SearchPage);
+    wrapper.vm.openGameCard(results.results[0]);
+    expect(wrapper.vm.modalGameId).toEqual(results.results[0].id.toString());
+    expect(wrapper.vm.isGameCardModalOpen).toEqual(true);
+  });
+  it('receive emits and close gamecard', () => {
+    wrapper = mount(SearchPage);
+    wrapper.vm.closeGameCard();
+    expect(wrapper.vm.modalGameId).toEqual('');
+    expect(wrapper.vm.isGameCardModalOpen).toEqual(false);
+  });
+
+  it('clear Search', () => {
+    wrapper = mount(SearchPage);
+    wrapper.vm.clear();
+    expect(wrapper.vm.results).toEqual([]);
+  });
+
+  it('Search request  with text', () => {
+    wrapper = mount(SearchPage);
+    wrapper.vm.search('unitTestPurposeSearch');
+
+    sinon.assert.calledOnceWithExactly(makeSearchSpy, 'unitTestPurposeSearch');
+    sinon.assert.calledOnce(axiosMock);
+  });
+
+  it('Search request with emtpy string', () => {
+    wrapper = mount(SearchPage);
+    wrapper.vm.search('');
+
+    sinon.assert.notCalled(makeSearchSpy);
+    sinon.assert.notCalled(axiosMock);
+  });
+});

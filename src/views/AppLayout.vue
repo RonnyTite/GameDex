@@ -1,19 +1,36 @@
 <template>
   <IonPage>
     <IonTabs>
-      <IonRouterOutlet></IonRouterOutlet>
+      <IonRouterOutlet />
       <IonTabBar slot="bottom">
-        <IonTabButton tab="Home" href="/tabs/homepage">
+        <IonTabButton
+          tab="Home"
+          href="/tabs/homepage"
+        >
           <IonIcon :icon="gameControllerOutline" />
           <IonLabel>Home</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="library" href="/tabs/library">
+        <IonTabButton
+          tab="library"
+          href="/tabs/library"
+        >
           <IonIcon :icon="libraryOutline" />
           <IonLabel>Library</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="Account" href="/tabs/account">
+        <IonTabButton
+          tab="search"
+          href="/tabs/search"
+        >
+          <IonIcon :icon="searchOutline" />
+          <IonLabel>Library</IonLabel>
+        </IonTabButton>
+
+        <IonTabButton
+          tab="Account"
+          href="/tabs/account"
+        >
           <IonIcon :icon="personCircleOutline" />
           <IonLabel>Account</IonLabel>
         </IonTabButton>
@@ -26,6 +43,8 @@
 import {
   IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet,
 } from '@ionic/vue';
-import { gameControllerOutline, personCircleOutline, libraryOutline } from 'ionicons/icons';
+import {
+  gameControllerOutline, personCircleOutline, libraryOutline, searchOutline,
+} from 'ionicons/icons';
 
 </script>

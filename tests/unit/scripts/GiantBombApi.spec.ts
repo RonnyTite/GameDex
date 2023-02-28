@@ -24,4 +24,10 @@ describe('Api routes', () => {
       const url = axiosMock.getCall(0).args[0];
       expect(url).toMatch('/game/12404');
     }));
+
+  it('check URL request for hom feed releases', () => GiantBombApi.loadHomePageFeed()
+    .then(() => {
+      const url = axiosMock.getCall(0).args[0];
+      expect(url).toMatch('/releases');
+    }));
 });

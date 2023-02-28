@@ -1,36 +1,58 @@
 <template>
   <IonPage>
     <IonHeader>
-      <IonToolbar>
-        <IonTitle>Home</IonTitle>
+      <IonToolbar class="app-header">
+        <IonTitle
+          class="font__pixel ion-text-uppercase"
+          color="light"
+        >
+          GameDex
+        </IonTitle>
+        <IonButtons slot="end">
+          <IonButton>
+            <IonIcon
+              :icon="listOutline"
+              color="light"
+            />
+          </IonButton>
+        </IonButtons>
       </IonToolbar>
     </IonHeader>
     <IonContent :fullscreen="true">
-      <IonHeader collapse="condense"></IonHeader>
-      <Searchbar @onSearch="search($event)" @clear="clear"></Searchbar>
-
-      <IonSpinner name="crescent" v-if="processing" class="mx-auto spinner"></IonSpinner>
-      <div v-else>
-        <IonCard
-        v-for="(game, index) in results"
-        :key="index"
-        @click="openGameCard"
-        >
-
-          <IonCardContent>
-            <IonItem>
-              <IonThumbnail slot="start">
-                <IonImg alt="" :src="game.image.medium_url" />
-              </IonThumbnail>
-              <IonLabel> {{ game.name }}</IonLabel>
-            </ionItem>
-
-          </IonCardContent>
-
-        </IonCard>
+      <IonHeader collapse="condense" />
+      <IonRefresher
+        slot="fixed"
+        @ion-refresh="handleRefresh($event)"
+      >
+        <IonRefresherContent />
+      </IonRefresher>
+      <div class="today-releases-container">
+        <div class="title">
+          Today Releases
+        </div>
+      </div>
+      <div class="future-release-container">
+        <div class="title">
+          Future Releases
+        </div>
+        <IonSpinner
+          v-if="processing"
+          name="crescent"
+          class="spinner"
+        />
+        <DisplayAsList
+          v-else
+          :data-list="homePageFeed"
+          @open-gamecard="openGameCard"
+        />
       </div>
 
-      <!-- <ExploreContainer name="Home page" /> -->
+      <GameCard
+        v-if="isGameCardModalOpen"
+        :is-open="isGameCardModalOpen"
+        :game-id="modalGameId"
+        @close-modal="closeGameCard"
+      />
     </IonContent>
   </IonPage>
 </template>
@@ -38,83 +60,107 @@
 <script lang="ts">
 import {
   IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
-  IonCard, IonCardContent, IonSpinner,
-  IonItem,
-  IonThumbnail,
-  IonImg,
-  IonLabel,
+  IonSpinner, IonButtons, IonButton, IonIcon, IonRefresher, IonRefresherContent,
 } from '@ionic/vue';
 
 import { defineComponent } from 'vue';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { SearchbarChangeEventDetail } from '@ionic/core';
-import Searchbar from '../components/SearchBar.vue';
-// import ExploreContainer from '../components/ExploreContainer.vue';
+import { RefresherEventDetail } from '@ionic/core';
+import { listOutline } from 'ionicons/icons';
+import GameCard from '../components/GameCard.vue';
+import DisplayAsList from '../components/DisplayAsList.vue';
 import searchMockJson from '../mocks/searchRequestResultsMock.json';
 import { GameProfile, SearchResults } from '../types/searchEntities.d';
 import GiantBombApi from '../scripts/GiantBombApi';
 
 export default defineComponent({
   components: {
-    Searchbar,
-    // ExploreContainer,
+    GameCard,
+    DisplayAsList,
     IonPage,
     IonHeader,
     IonToolbar,
     IonTitle,
     IonContent,
-    IonCard,
-    IonCardContent,
     IonSpinner,
-    IonItem,
-    IonThumbnail,
-    IonLabel,
-    IonImg,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonRefresher,
+    IonRefresherContent,
+  },
+  setup() {
+    return { listOutline };
   },
   data() {
     return {
-      results: [] as SearchResults['results'],
+      results: [] as Array<GameProfile>,
+      homePageFeed: [] as any,
       processing: false as boolean,
+      isGameCardModalOpen: false as boolean,
+      modalGameId: '' as string,
+      appColor: {
+        blue: '#1f6cf8',
+        green: '#1cf069',
+        spacer: '#ececec',
+        red: '#f25a41',
+      },
     };
   },
+  beforeMount() {
+    this.loadFeed();
+  },
   methods: {
-    openGameCard(selectedGame:GameProfile):void {
-      this.$router.push({
-        name: 'GameCard',
-        params: { game_id: selectedGame.id },
-      });
+    openGameCard(game:GameProfile) {
+      this.modalGameId = game.id.toString();
+      this.isGameCardModalOpen = true;
     },
-    search(searchValue: SearchbarChangeEventDetail['value']): void {
-      this.processing = true;
-      if (searchValue) {
-        GiantBombApi.makeSearch(searchValue)
-          .then((searchResults) => {
-            this.results = searchResults.data.results;
-            this.processing = false;
-          })
-          .catch(() => {
-            this.results = searchMockJson.results as SearchResults['results'];
-          })
-          .finally(() => {
-            this.processing = false;
-          });
-      }
+    closeGameCard() {
+      this.modalGameId = '';
+      this.isGameCardModalOpen = false;
     },
-    clear(): void {
-      this.results = [];
+    handleRefresh(event:{ target: RefresherEventDetail }): void {
+      this.loadFeed()
+        .then(() => {
+          setTimeout(() => {
+            event.target.complete();
+          }, 2000);
+        });
+    },
+    loadFeed() {
+      return GiantBombApi.loadHomePageFeed()
+        .then((feedResults: { data: SearchResults<Array<GameProfile>> }) => {
+          this.homePageFeed = feedResults.data.results as Array<GameProfile>;
+        })
+        .catch(() => {
+          // !!Debug Mode
+          this.homePageFeed = searchMockJson.results as Array<GameProfile>;
+        })
+        .finally(() => {
+          this.processing = false;
+        });
     },
   },
 });
 </script>
 <style>
-.spinner {
-  display: block;
+ /* https://webdevetc.com/programming-tricks/vue3/vue3-guides/vue-3-global-scss-sass-variables/ */
+.today-releases-container {
+  height: 230px;
   width: 100%;
+}
+.future-release-container {
+  background-color: rgba(255,0,0, 0.4);
+  height: auto;
+}
+.spinner {
   position: absolute;
   top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
 }
+ion-toolbar {
+    --background: #1f6cf8;
+  }
 
-ion-item {
-  --inner-border-width: 0 0 0 0;
-}
 </style>

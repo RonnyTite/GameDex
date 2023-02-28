@@ -1,0 +1,65 @@
+/* Fonts & Font Size  */
+
+* {
+  font-family: "proxima", arial;
+}
+.text__retro {
+  font-family: "retro", arial ;
+}
+.font__pixel {
+  font-family: "pixel", arial ;
+}
+.font__pixel_bold {
+  font-family: "pixel_bold", arial ;
+}
+.text__huge { font-size: 2.4rem; }
+.text__big { font-size: 1.4rem; }
+.text__small { font-size: 1.1rem;}
+.text__tiny { font-size: 0.9rem;}
+
+.capitalize {
+  text-transform: capitalize;
+}
+.text__grey {
+  color: grey;
+}
+.text__black {
+  color: black;
+}
+.text__blue {
+  color: #1f6cf8;
+}
+.text__red {
+  color: #f25a41;
+}
+
+.text__bold {
+  font-weight:bold;
+}
+
+@font-face {
+    font-family: 'retro';
+    src: url('../fonts/retro.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'pixel';
+    src: url('../fonts/pixelmix.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family:"pixel";
+    src:url("../fonts/pixelmix_bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style:normal;
+}
+@font-face {
+    font-family: 'proxima';
+    src: url('../fonts/ProximaNova-Semibold.otf') format("opentype");
+    font-weight: normal;
+    font-style: normal;
+
+}
