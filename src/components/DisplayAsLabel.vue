@@ -8,7 +8,7 @@
       :key="key"
       class="gameCard__platform-name font__pixel "
     >
-      {{ label.abbreviation }}
+      {{ abbreviation ? label.abbreviation : label.name }}
     </li>
   </ul>
 </template>
@@ -21,6 +21,7 @@ export default defineComponent({
   name: 'DisplayAsLabel',
   props: {
     labelList: { type: Array<GamePlatform>, required: false, default: [] },
+    abbreviation: { type: Boolean, required: false, default: true },
   },
   computed: {
     lexicallySortedList():Array<GamePlatform> {
@@ -31,6 +32,9 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.gameCard__platforms {
+  padding: 0;
+}
 .gameCard__platforms li {
   background-color: #cfa192;
   box-sizing: border-box;

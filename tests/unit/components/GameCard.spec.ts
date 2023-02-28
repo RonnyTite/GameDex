@@ -1,10 +1,9 @@
 import { flushPromises, mount } from '@vue/test-utils';
-import sinon from 'sinon';
-import { AxiosResponse } from 'axios';
+import sinon, { SinonSpy, SinonStub } from 'sinon';
 import GameCard from '@/components/GameCard.vue';
-import GiantBombApi from '@/scripts/GiantBombApi';
+import GiantBombApi from '../../../src/scripts/GiantBombApi';
 import searchMockJson from '@/mocks/searchRequestResultsMock.json';
-import { CompleteGameProfile, SearchResults } from '@/types/searchEntities.d';
+import { axiosInstance } from '../../../src/scripts/RequestManager';
 
 const propsData = {
   isOpen: true,
@@ -17,11 +16,16 @@ const mountComponent = (props = propsData) => mount(GameCard, {
 
 describe('GameCard.vue', () => {
   let wrapper;
+  let axiosMock:SinonStub;
+  let fetchGameProfileSpy:SinonSpy;
   beforeEach(() => {
     const gameProfile = ({
       data: { results: searchMockJson.results[0] },
-    }) as AxiosResponse<SearchResults<CompleteGameProfile>>;
-    sinon.stub(GiantBombApi, 'fetchGameProfile').resolves(gameProfile);
+    });
+
+    axiosMock = sinon.stub(axiosInstance, 'get').resolves(gameProfile);
+
+    fetchGameProfileSpy = sinon.spy(GiantBombApi, 'fetchGameProfile');
   });
   afterEach(() => {
     sinon.restore();
@@ -29,6 +33,8 @@ describe('GameCard.vue', () => {
   it('should open game card modal with', async () => {
     wrapper = mountComponent();
     await flushPromises();
+    sinon.assert.calledOnceWithExactly(fetchGameProfileSpy, '20710');
+    sinon.assert.calledOnce(axiosMock);
     expect(wrapper.vm.game).toEqual(searchMockJson.results[0]);
   });
   it('should NOT open game card modal with', async () => {
@@ -37,6 +43,8 @@ describe('GameCard.vue', () => {
       gameId: '20710',
     });
     await flushPromises();
+    sinon.assert.notCalled(fetchGameProfileSpy);
+    sinon.assert.notCalled(axiosMock);
     expect(wrapper.vm.game).toEqual({});
   });
 });

@@ -34,26 +34,44 @@
       />
       <div v-else>
         <div>
-          <span class="text__blue">Editor(s) | Publisher(s):</span>
+          <IonImg
+            :src="game.image.original_url"
+            class="main-image"
+          />
         </div>
-        <div>
-          <span class="text__blue">Release Date: </span>{{ computeReleaseDate }}
+
+        <div class="margin-top">
+          <span class="text__blue text__bold">Developper(s): </span>
+          <span
+            v-for="(developer, key) in game.developers"
+            :key="key"
+          >{{ developer.name }} {{ game.developers.length !== key + 1 ? '| ' : '' }}</span>
         </div>
-        <p>
-          <DisplayAsLabel :label-list="game.platforms" />
-        </p>
-        <div>
-          <span class="text__blue">Story</span>
-          <p class="font__retro">
+
+        <div class="margin-top">
+          <span class="text__blue text__bold">Release Date: </span>{{ computeReleaseDate }}
+        </div>
+        <div class="margin-top">
+          <span class="text__blue text__bold ">Region: </span>{{ game.region }}
+        </div>
+
+        <DisplayAsLabel
+          :label-list="game.platforms"
+          :abbreviation="false"
+        />
+
+        <div class="margin-top">
+          <span class="text__blue text__bold">Story</span>
+          <p class="font__proxima">
             {{ game.deck }}
           </p>
         </div>
 
         <p
-          v-for="(detail, index) in game"
+          v-for="(similarGame, index) in game.similar_games"
           :key="index"
         >
-          {{ index }}: {{ detail || null }}
+          {{ similarGame.name }}
         </p>
       </div>
     </IonContent>
@@ -63,13 +81,14 @@
 <script lang="ts">
 import {
   IonButtons, IonButton, IonModal, IonHeader, IonToolbar, IonContent, IonTitle, IonIcon, IonSpinner,
+  IonImg,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { arrowBackOutline, shareSocialOutline } from 'ionicons/icons';
 import { CompleteGameProfile } from '../types/searchEntities';
 import GiantBombApi from '../scripts/GiantBombApi';
 import Utils from '../utils/Utils';
-import searchMockJson from '../mocks/searchRequestResultsMock.json';
+import GameMock from '../mocks/gameMock.json';
 import DisplayAsLabel from './DisplayAsLabel.vue';
 
 export default defineComponent({
@@ -78,6 +97,7 @@ export default defineComponent({
     IonButton,
     IonModal,
     IonIcon,
+    IonImg,
     IonHeader,
     IonContent,
     IonToolbar,
@@ -113,7 +133,7 @@ export default defineComponent({
         })
         .catch(() => {
           // !!Debug Mode
-          this.game = searchMockJson.results[0] as CompleteGameProfile;
+          this.game = GameMock as CompleteGameProfile;
         }).finally(() => {
           this.processing = false;
         });
@@ -122,8 +142,16 @@ export default defineComponent({
 });
 </script>
 <style>
-
 .spinner{
   top: 40%!important;
+}
+.margin-top{
+  margin-top: 5px;
+}
+.main-image {
+  display: block;
+  height: 350px;
+  margin: 0 auto 1em auto;
+  width: auto;
 }
 </style>

@@ -66,4 +66,5 @@ export interface CompleteGameProfile extends GameProfile {
   publishers: Array<GameDetails>
   releases: Array<GameDetails>
   similar_games: Array<GameDetails>
+  region: string
 }

@@ -1,0 +1,654 @@
+{
+    "api_detail_url":"https://www.giantbomb.com/api/game/3030-20710/",
+    "deck":"Bayonetta is a \"non-stop action game\" from PlatinumGames.  The titular character is a witch who can use hair-based magic, as well as firearms attached to her feet, to battle fallen angels and other foes.",
+    "expected_release_day":null,
+    "expected_release_month":null,
+    "expected_release_quarter":null,
+    "expected_release_year":null,
+    "id":20710,
+    "image":{
+       "icon_url":"https://www.giantbomb.com/a/uploads/square_avatar/1/13158/1124551-gb.png",
+       "medium_url":"https://www.giantbomb.com/a/uploads/scale_medium/1/13158/1124551-gb.png",
+       "screen_url":"https://www.giantbomb.com/a/uploads/screen_medium/1/13158/1124551-gb.png",
+       "screen_large_url":"https://www.giantbomb.com/a/uploads/screen_kubrick/1/13158/1124551-gb.png",
+       "small_url":"https://www.giantbomb.com/a/uploads/scale_small/1/13158/1124551-gb.png",
+       "super_url":"https://www.giantbomb.com/a/uploads/scale_large/1/13158/1124551-gb.png",
+       "thumb_url":"https://www.giantbomb.com/a/uploads/scale_avatar/1/13158/1124551-gb.png",
+       "tiny_url":"https://www.giantbomb.com/a/uploads/square_mini/1/13158/1124551-gb.png",
+       "original_url":"https://www.giantbomb.com/a/uploads/original/1/13158/1124551-gb.png",
+       "image_tags":"All Images,Box Art"
+    },
+    "name":"Bayonetta",
+    "number_of_user_reviews":0,
+    "original_game_rating":[
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game_rating/3065-16/",
+          "id":16,
+          "name":"ESRB: M"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game_rating/3065-12/",
+          "id":12,
+          "name":"OFLC: MA15+"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game_rating/3065-32/",
+          "id":32,
+          "name":"CERO: D"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game_rating/3065-37/",
+          "id":37,
+          "name":"PEGI: 18+"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game_rating/3065-5/",
+          "id":5,
+          "name":"BBFC: 15"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game_rating/3065-27/",
+          "id":27,
+          "name":"CERO: C"
+       }
+    ],
+    "original_release_date":"2009-10-29",
+    "platforms":[
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/platform/3045-20/",
+          "id":20,
+          "name":"Xbox 360",
+          "site_detail_url":"https://www.giantbomb.com/xbox-360/3045-20/",
+          "abbreviation":"X360"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/platform/3045-35/",
+          "id":35,
+          "name":"PlayStation 3",
+          "site_detail_url":"https://www.giantbomb.com/playstation-3/3045-35/",
+          "abbreviation":"PS3"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/platform/3045-88/",
+          "id":88,
+          "name":"PlayStation Network (PS3)",
+          "site_detail_url":"https://www.giantbomb.com/playstation-network-ps3/3045-88/",
+          "abbreviation":"PS3N"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/platform/3045-94/",
+          "id":94,
+          "name":"PC",
+          "site_detail_url":"https://www.giantbomb.com/pc/3045-94/",
+          "abbreviation":"PC"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/platform/3045-139/",
+          "id":139,
+          "name":"Wii U",
+          "site_detail_url":"https://www.giantbomb.com/wii-u/3045-139/",
+          "abbreviation":"WiiU"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/platform/3045-145/",
+          "id":145,
+          "name":"Xbox One",
+          "site_detail_url":"https://www.giantbomb.com/xbox-one/3045-145/",
+          "abbreviation":"XONE"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/platform/3045-146/",
+          "id":146,
+          "name":"PlayStation 4",
+          "site_detail_url":"https://www.giantbomb.com/playstation-4/3045-146/",
+          "abbreviation":"PS4"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/platform/3045-157/",
+          "id":157,
+          "name":"Nintendo Switch",
+          "site_detail_url":"https://www.giantbomb.com/nintendo-switch/3045-157/",
+          "abbreviation":"NSW"
+       }
+    ],
+    "videos":[
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/video/2300-5/",
+          "id":5,
+          "name":"Giant Bomb at E3 2008: Day 03 or 04",
+          "site_detail_url":"https://www.giantbomb.com/shows/giant-bomb-at-e3-2008-day-03-or-04/2970-19097/free-video"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/video/2300-71/",
+          "id":71,
+          "name":"Giant Bomb at TGS Day 01",
+          "site_detail_url":"https://www.giantbomb.com/videos/giant-bomb-at-tgs-day-01/2300-71/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/video/2300-429/",
+          "id":429,
+          "name":"Bayonetta Trailer: The Story So Far",
+          "site_detail_url":"https://www.giantbomb.com/videos/bayonetta-trailer-the-story-so-far/2300-429/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/video/2300-697/",
+          "id":697,
+          "name":"Bayonetta E3 2009 Trailer",
+          "site_detail_url":"https://www.giantbomb.com/videos/bayonetta-e3-2009-trailer/2300-697/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/video/2300-1480/",
+          "id":1480,
+          "name":"Bayonetta Demo",
+          "site_detail_url":"https://www.giantbomb.com/shows/quick-look-bayonetta-demo/2970-15423/free-video"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/video/2300-1510/",
+          "id":1510,
+          "name":"Bayonetta Trailer: Hair and Guns",
+          "site_detail_url":"https://www.giantbomb.com/videos/bayonetta-trailer-hair-and-guns/2300-1510/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/video/2300-1590/",
+          "id":1590,
+          "name":"The Weapons and Combos of Bayonetta",
+          "site_detail_url":"https://www.giantbomb.com/videos/the-weapons-and-combos-of-bayonetta/2300-1590/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/video/2300-1670/",
+          "id":1670,
+          "name":"Bayonetta Dev Diary: Dark Arts of Destruction",
+          "site_detail_url":"https://www.giantbomb.com/videos/bayonetta-dev-diary-dark-arts-of-destruction/2300-1670/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/video/2300-1679/",
+          "id":1679,
+          "name":"Bayonetta's A Cat Lady",
+          "site_detail_url":"https://www.giantbomb.com/videos/bayonettas-a-cat-lady/2300-1679/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/video/2300-1704/",
+          "id":1704,
+          "name":"Bayonetta Slows It Down",
+          "site_detail_url":"https://www.giantbomb.com/videos/bayonetta-slows-it-down/2300-1704/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/video/2300-1859/",
+          "id":1859,
+          "name":"QOTW: 01/10/10",
+          "site_detail_url":"https://www.giantbomb.com/shows/qotw-011010/2970-17795/free-video"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/video/2300-1869/",
+          "id":1869,
+          "name":"Bayonetta Video Review",
+          "site_detail_url":"https://www.giantbomb.com/shows/bayonetta-video-review/2970-15330/free-video"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/video/2300-3632/",
+          "id":3632,
+          "name":"Game of the Year 2010: Day 01 Recap",
+          "site_detail_url":"https://www.giantbomb.com/shows/game-of-the-year-2010-day-01-recap/2970-18307/free-video"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/video/2300-3642/",
+          "id":3642,
+          "name":"Game of the Year 2010: Vinny's Top 10",
+          "site_detail_url":"https://www.giantbomb.com/shows/game-of-the-year-2010-vinnys-top-10/2970-18302/free-video"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/video/2300-3643/",
+          "id":3643,
+          "name":"Game of the Year 2010: Jeff's Top 10",
+          "site_detail_url":"https://www.giantbomb.com/shows/game-of-the-year-2010-jeffs-top-10/2970-18300/free-video"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/video/2300-11988/",
+          "id":11988,
+          "name":"04/14/2017",
+          "site_detail_url":"https://www.giantbomb.com/shows/unprofessional-fridays-04142017/2970-12089/premium-video"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/video/2300-16773/",
+          "id":16773,
+          "name":"Jams 'n' Juice - 05/20/2021",
+          "site_detail_url":"https://www.giantbomb.com/shows/jams-n-juice-05-20-2021/2970-21091/free-video"
+       }
+    ],
+    "developers":[
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/company/3010-6319/",
+          "id":6319,
+          "name":"PlatinumGames",
+          "site_detail_url":"https://www.giantbomb.com/platinumgames/3010-6319/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/company/3010-10023/",
+          "id":10023,
+          "name":"Bee Tribe",
+          "site_detail_url":"https://www.giantbomb.com/bee-tribe/3010-10023/"
+       }
+    ],
+    "genres":[
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/genre/3060-1/",
+          "id":1,
+          "name":"Action",
+          "site_detail_url":"https://www.giantbomb.com/games/?wikiSlug=action&wikiTypeId=3060&wikiId=1&genre=1"
+       }
+    ],
+    "publishers":[
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/publisher/3010-62/",
+          "id":62,
+          "name":"Sega",
+          "site_detail_url":"https://www.giantbomb.com/sega/3010-62/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/publisher/3010-90/",
+          "id":90,
+          "name":"Nintendo",
+          "site_detail_url":"https://www.giantbomb.com/nintendo/3010-90/"
+       }
+    ],
+    "releases":[
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-73858/",
+          "id":73858,
+          "name":"Bayonetta",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-73858/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-73859/",
+          "id":73859,
+          "name":"Bayonetta",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-73859/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-84904/",
+          "id":84904,
+          "name":"Bayonetta",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-84904/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-85140/",
+          "id":85140,
+          "name":"Bayonetta",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-85140/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-85141/",
+          "id":85141,
+          "name":"Bayonetta",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-85141/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-85914/",
+          "id":85914,
+          "name":"Bayonetta",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-85914/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-86414/",
+          "id":86414,
+          "name":"Bayonetta",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-86414/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-88472/",
+          "id":88472,
+          "name":"Bayonetta",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-88472/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-88474/",
+          "id":88474,
+          "name":"Bayonetta: Climax Edition",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-88474/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-88475/",
+          "id":88475,
+          "name":"Bayonetta: Climax Edition",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-88475/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-101593/",
+          "id":101593,
+          "name":"Bayonetta",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-101593/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-103280/",
+          "id":103280,
+          "name":"Bayonetta The Best",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-103280/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-103281/",
+          "id":103281,
+          "name":"Bayonetta (Platinum Collection)",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-103281/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-124444/",
+          "id":124444,
+          "name":"Bayonetta",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-124444/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-135196/",
+          "id":135196,
+          "name":"Bayonetta (Bayonetta 2 Bonus)",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-135196/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-135335/",
+          "id":135335,
+          "name":"Bayonetta (Bayonetta 2 Special Edition Bonus)",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-135335/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-135353/",
+          "id":135353,
+          "name":"Bayonetta (Bayonetta 2 Special Edition Bonus)",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-135353/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-153516/",
+          "id":153516,
+          "name":"Bayonetta",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-153516/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-153537/",
+          "id":153537,
+          "name":"Bayonetta",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-153537/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-153538/",
+          "id":153538,
+          "name":"Bayonetta",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-153538/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-153539/",
+          "id":153539,
+          "name":"Bayonetta",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-153539/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-153540/",
+          "id":153540,
+          "name":"Bayonetta",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-153540/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-153541/",
+          "id":153541,
+          "name":"Bayonetta",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-153541/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-157645/",
+          "id":157645,
+          "name":"Bayonetta (Digital)",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-157645/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-172541/",
+          "id":172541,
+          "name":"Bayonetta (Digital)",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-172541/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-172542/",
+          "id":172542,
+          "name":"Bayonetta (Digital)",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-172542/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/release/3050-184540/",
+          "id":184540,
+          "name":"Bayonetta",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta/3030-20710/release/3050-184540/"
+       }
+    ],
+    "similar_games":[
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-10037/",
+          "id":10037,
+          "name":"Bullet Witch",
+          "site_detail_url":"https://www.giantbomb.com/bullet-witch/3030-10037/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-6602/",
+          "id":6602,
+          "name":"Ninja Gaiden Black",
+          "site_detail_url":"https://www.giantbomb.com/ninja-gaiden-black/3030-6602/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-5888/",
+          "id":5888,
+          "name":"God Hand",
+          "site_detail_url":"https://www.giantbomb.com/god-hand/3030-5888/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-6959/",
+          "id":6959,
+          "name":"God of War",
+          "site_detail_url":"https://www.giantbomb.com/god-of-war/3030-6959/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-18546/",
+          "id":18546,
+          "name":"Ninja Gaiden Sigma",
+          "site_detail_url":"https://www.giantbomb.com/ninja-gaiden-sigma/3030-18546/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-22696/",
+          "id":22696,
+          "name":"The Dishwasher: Dead Samurai",
+          "site_detail_url":"https://www.giantbomb.com/the-dishwasher-dead-samurai/3030-22696/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-24827/",
+          "id":24827,
+          "name":"Dante's Inferno",
+          "site_detail_url":"https://www.giantbomb.com/dantes-inferno/3030-24827/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-22999/",
+          "id":22999,
+          "name":"Onechanbara: Bikini Samurai Squad",
+          "site_detail_url":"https://www.giantbomb.com/onechanbara-bikini-samurai-squad/3030-22999/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-31242/",
+          "id":31242,
+          "name":"El Shaddai: Ascension of the Metatron",
+          "site_detail_url":"https://www.giantbomb.com/el-shaddai-ascension-of-the-metatron/3030-31242/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-24421/",
+          "id":24421,
+          "name":"Clash of the Titans",
+          "site_detail_url":"https://www.giantbomb.com/clash-of-the-titans/3030-24421/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-32686/",
+          "id":32686,
+          "name":"DmC Devil May Cry",
+          "site_detail_url":"https://www.giantbomb.com/dmc-devil-may-cry/3030-32686/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-32377/",
+          "id":32377,
+          "name":"Malicious",
+          "site_detail_url":"https://www.giantbomb.com/malicious/3030-32377/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-31375/",
+          "id":31375,
+          "name":"Knights Contract",
+          "site_detail_url":"https://www.giantbomb.com/knights-contract/3030-31375/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-35586/",
+          "id":35586,
+          "name":"Blades of Time",
+          "site_detail_url":"https://www.giantbomb.com/blades-of-time/3030-35586/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-18615/",
+          "id":18615,
+          "name":"Tim Burton's The Nightmare Before Christmas: Oogie's Revenge",
+          "site_detail_url":"https://www.giantbomb.com/tim-burtons-the-nightmare-before-christmas-oogies-/3030-18615/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-35948/",
+          "id":35948,
+          "name":"Lollipop Chainsaw",
+          "site_detail_url":"https://www.giantbomb.com/lollipop-chainsaw/3030-35948/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-35629/",
+          "id":35629,
+          "name":"Bloodforge",
+          "site_detail_url":"https://www.giantbomb.com/bloodforge/3030-35629/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-5581/",
+          "id":5581,
+          "name":"No More Heroes",
+          "site_detail_url":"https://www.giantbomb.com/no-more-heroes/3030-5581/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-31672/",
+          "id":31672,
+          "name":"Devil's Third",
+          "site_detail_url":"https://www.giantbomb.com/devils-third/3030-31672/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-26801/",
+          "id":26801,
+          "name":"Metal Gear Rising: Revengeance",
+          "site_detail_url":"https://www.giantbomb.com/metal-gear-rising-revengeance/3030-26801/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-38553/",
+          "id":38553,
+          "name":"The Wonderful 101",
+          "site_detail_url":"https://www.giantbomb.com/the-wonderful-101/3030-38553/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-37881/",
+          "id":37881,
+          "name":"Killer is Dead",
+          "site_detail_url":"https://www.giantbomb.com/killer-is-dead/3030-37881/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-38438/",
+          "id":38438,
+          "name":"Castlevania: Lords of Shadow 2",
+          "site_detail_url":"https://www.giantbomb.com/castlevania-lords-of-shadow-2/3030-38438/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-23704/",
+          "id":23704,
+          "name":"Castlevania: Lords of Shadow",
+          "site_detail_url":"https://www.giantbomb.com/castlevania-lords-of-shadow/3030-23704/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-46790/",
+          "id":46790,
+          "name":"The Legend of Korra",
+          "site_detail_url":"https://www.giantbomb.com/the-legend-of-korra/3030-46790/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-48439/",
+          "id":48439,
+          "name":"Devil May Cry 4: Special Edition",
+          "site_detail_url":"https://www.giantbomb.com/devil-may-cry-4-special-edition/3030-48439/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-58555/",
+          "id":58555,
+          "name":"Malicious Fallen",
+          "site_detail_url":"https://www.giantbomb.com/malicious-fallen/3030-58555/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-43533/",
+          "id":43533,
+          "name":"Aztez",
+          "site_detail_url":"https://www.giantbomb.com/aztez/3030-43533/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-49939/",
+          "id":49939,
+          "name":"Transformers: Devastation",
+          "site_detail_url":"https://www.giantbomb.com/transformers-devastation/3030-49939/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-68910/",
+          "id":68910,
+          "name":"Devil May Cry 5",
+          "site_detail_url":"https://www.giantbomb.com/devil-may-cry-5/3030-68910/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-36172/",
+          "id":36172,
+          "name":"Remember Me",
+          "site_detail_url":"https://www.giantbomb.com/remember-me/3030-36172/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-29941/",
+          "id":29941,
+          "name":"Darksiders II",
+          "site_detail_url":"https://www.giantbomb.com/darksiders-ii/3030-29941/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-49998/",
+          "id":49998,
+          "name":"NieR:Automata",
+          "site_detail_url":"https://www.giantbomb.com/nierautomata/3030-49998/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-68474/",
+          "id":68474,
+          "name":"Assault Spy",
+          "site_detail_url":"https://www.giantbomb.com/assault-spy/3030-68474/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-47021/",
+          "id":47021,
+          "name":"Onechanbara Z2: Chaos",
+          "site_detail_url":"https://www.giantbomb.com/onechanbara-z2-chaos/3030-47021/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-17168/",
+          "id":17168,
+          "name":"Oni",
+          "site_detail_url":"https://www.giantbomb.com/oni/3030-17168/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-1636/",
+          "id":1636,
+          "name":"BloodRayne 2",
+          "site_detail_url":"https://www.giantbomb.com/bloodrayne-2/3030-1636/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-39764/",
+          "id":39764,
+          "name":"Bayonetta 2",
+          "site_detail_url":"https://www.giantbomb.com/bayonetta-2/3030-39764/"
+       },
+       {
+          "api_detail_url":"https://www.giantbomb.com/api/game/3030-86518/",
+          "id":86518,
+          "name":"Spark the Electric Jester 3",
+          "site_detail_url":"https://www.giantbomb.com/spark-the-electric-jester-3/3030-86518/"
+       }
+    ]
+ }

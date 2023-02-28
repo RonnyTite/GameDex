@@ -58,7 +58,6 @@ import { listOutline } from 'ionicons/icons';
 import Searchbar from '../components/SearchBar.vue';
 import GameCard from '../components/GameCard.vue';
 import DisplayAsList from '../components/DisplayAsList.vue';
-// import ExploreContainer from '../components/ExploreContainer.vue';
 import searchMockJson from '../mocks/searchRequestResultsMock.json';
 import { GameProfile } from '../types/searchEntities';
 import GiantBombApi from '../scripts/GiantBombApi';
@@ -68,7 +67,6 @@ export default defineComponent({
     GameCard,
     Searchbar,
     DisplayAsList,
-    // ExploreContainer,
     IonPage,
     IonHeader,
     IonToolbar,

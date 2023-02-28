@@ -10,7 +10,8 @@
         <IonThumbnail slot="start">
           <IonImg
             alt=""
-            :src="game.image.medium_url"
+            :src="game.image.thumb_url"
+            class="card-content-thumbnail"
           />
         </IonThumbnail>
         <IonLabel>
@@ -20,6 +21,7 @@
             <small class="text__blue">Release Date: </small>
             <small>{{ computeReleaseDate(game) }}</small>
           </div>
+          <br>
         </IonLabel>
       </ionItem>
     </IonCardContent>
@@ -61,6 +63,9 @@ export default defineComponent({
   <style scoped>
   .home-game-card {
     cursor: pointer;
+  }
+  .card-content-thumbnail {
+    object-fit: contain;
   }
   .home-game-card:hover, home-game-card:active  {
     box-shadow: 0 0 11px rgba(33,33,33,.2);

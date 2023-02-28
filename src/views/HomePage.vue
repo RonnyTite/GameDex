@@ -42,12 +42,11 @@
         />
         <DisplayAsList
           v-else
-          :data-list="results"
+          :data-list="homePageFeed"
           @open-gamecard="openGameCard"
         />
       </div>
 
-      <!-- <ExploreContainer name="Home page" /> -->
       <GameCard
         v-if="isGameCardModalOpen"
         :is-open="isGameCardModalOpen"
@@ -70,16 +69,14 @@ import { RefresherEventDetail } from '@ionic/core';
 import { listOutline } from 'ionicons/icons';
 import GameCard from '../components/GameCard.vue';
 import DisplayAsList from '../components/DisplayAsList.vue';
-// import ExploreContainer from '../components/ExploreContainer.vue';
 import searchMockJson from '../mocks/searchRequestResultsMock.json';
-import { GameProfile } from '../types/searchEntities.d';
+import { GameProfile, SearchResults } from '../types/searchEntities.d';
 import GiantBombApi from '../scripts/GiantBombApi';
 
 export default defineComponent({
   components: {
     GameCard,
     DisplayAsList,
-    // ExploreContainer,
     IonPage,
     IonHeader,
     IonToolbar,
@@ -110,6 +107,9 @@ export default defineComponent({
       },
     };
   },
+  beforeMount() {
+    this.loadFeed();
+  },
   methods: {
     openGameCard(game:GameProfile) {
       this.modalGameId = game.id.toString();
@@ -120,19 +120,24 @@ export default defineComponent({
       this.isGameCardModalOpen = false;
     },
     handleRefresh(event:{ target: RefresherEventDetail }): void {
-      GiantBombApi.loadHomePageFeed()
-        .then((feedResults:any) => {
-          this.homePageFeed = feedResults.data.results;
+      this.loadFeed()
+        .then(() => {
+          setTimeout(() => {
+            event.target.complete();
+          }, 2000);
+        });
+    },
+    loadFeed() {
+      return GiantBombApi.loadHomePageFeed()
+        .then((feedResults: { data: SearchResults<Array<GameProfile>> }) => {
+          this.homePageFeed = feedResults.data.results as Array<GameProfile>;
         })
         .catch(() => {
           // !!Debug Mode
           this.homePageFeed = searchMockJson.results as Array<GameProfile>;
         })
         .finally(() => {
-          setTimeout(() => {
-            this.processing = false;
-            event.target.complete();
-          }, 2000);
+          this.processing = false;
         });
     },
   },

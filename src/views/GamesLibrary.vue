@@ -38,8 +38,6 @@
         :data-list="filteredLibrary"
         @open-gamecard="openGameCard"
       />
-
-      <!-- <ExploreContainer name="Home page" /> -->
       <GameCard
         v-if="isGameCardModalOpen"
         :is-open="isGameCardModalOpen"
@@ -71,7 +69,6 @@ export default defineComponent({
     GameCard,
     Searchbar,
     DisplayAsList,
-    // ExploreContainer,
     IonPage,
     IonHeader,
     IonToolbar,
@@ -95,7 +92,7 @@ export default defineComponent({
     };
   },
   beforeMount() {
-    this.library = Utils.loadLibrary();
+    this.library = Utils.loadLibraryFromStore();
     this.resetSearch();
   },
   methods: {
