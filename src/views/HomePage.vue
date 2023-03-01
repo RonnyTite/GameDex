@@ -27,12 +27,12 @@
         <IonRefresherContent />
       </IonRefresher>
       <div class="today-releases-container">
-        <div class="title">
+        <div class="title text__bold text__black ion-text-uppercase ion-margin-start ion-margin-top ">
           Today Releases
         </div>
       </div>
       <div class="future-release-container">
-        <div class="title">
+        <div class="title text__bold text__black ion-text-uppercase ion-margin-start">
           Future Releases
         </div>
         <IonSpinner
@@ -70,7 +70,7 @@ import { listOutline } from 'ionicons/icons';
 import GameCard from '../components/GameCard.vue';
 import DisplayAsList from '../components/DisplayAsList.vue';
 import searchMockJson from '../mocks/searchRequestResultsMock.json';
-import { GameProfile, SearchResults } from '../types/searchEntities.d';
+import { GameProfileFeed } from '../types/searchEntities.d';
 import GiantBombApi from '../scripts/GiantBombApi';
 
 export default defineComponent({
@@ -94,7 +94,7 @@ export default defineComponent({
   },
   data() {
     return {
-      results: [] as Array<GameProfile>,
+      results: [] as Array<GameProfileFeed>,
       homePageFeed: [] as any,
       processing: false as boolean,
       isGameCardModalOpen: false as boolean,
@@ -111,7 +111,7 @@ export default defineComponent({
     this.loadFeed();
   },
   methods: {
-    openGameCard(game:GameProfile) {
+    openGameCard(game:GameProfileFeed) {
       this.modalGameId = game.id.toString();
       this.isGameCardModalOpen = true;
     },
@@ -127,14 +127,24 @@ export default defineComponent({
           }, 2000);
         });
     },
+    filteringFeedResults(data:Array<GameProfileFeed>) {
+      return data.filter((item:GameProfileFeed) => {
+        const isDayExists = item.expected_release_day !== null;
+        const isMonthExists = item.expected_release_month !== null;
+        const isYearExists = item.expected_release_year !== null;
+        const isReleaseDateExists = item.original_release_date !== null;
+
+        return isReleaseDateExists || (isDayExists && isMonthExists && isYearExists);
+      });
+    },
     loadFeed() {
       return GiantBombApi.loadHomePageFeed()
-        .then((feedResults: { data: SearchResults<Array<GameProfile>> }) => {
-          this.homePageFeed = feedResults.data.results as Array<GameProfile>;
+        .then((feedResults) => {
+          this.homePageFeed = this.filteringFeedResults(feedResults.data.results);
         })
         .catch(() => {
           // !!Debug Mode
-          this.homePageFeed = searchMockJson.results as Array<GameProfile>;
+          this.homePageFeed = searchMockJson.results as Array<GameProfileFeed>;
         })
         .finally(() => {
           this.processing = false;
@@ -150,7 +160,6 @@ export default defineComponent({
   width: 100%;
 }
 .future-release-container {
-  background-color: rgba(255,0,0, 0.4);
   height: auto;
 }
 .spinner {

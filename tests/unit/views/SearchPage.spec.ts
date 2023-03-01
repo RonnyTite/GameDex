@@ -1,10 +1,10 @@
 import { mount } from '@vue/test-utils';
-import sinon, { SinonStub, SinonSpy } from 'sinon';
+import Sinon, { SinonStub, SinonSpy } from 'sinon';
 import SearchPage from '@/views/SearchPage.vue';
 import searchMockJson from '@/mocks/searchRequestResultsMock.json';
 import { GameProfile, SearchResults } from '@/types/searchEntities.d';
-import { axiosInstance } from '../../../src/scripts/RequestManager';
-import GiantBombApi from '../../../src/scripts/GiantBombApi';
+import { axiosInstance } from '@/scripts/RequestManager';
+import GiantBombApi from '@/scripts/GiantBombApi';
 
 describe('SearchPage.vue', () => {
   let wrapper;
@@ -14,11 +14,11 @@ describe('SearchPage.vue', () => {
   });
   let makeSearchSpy:SinonSpy;
   beforeEach(() => {
-    axiosMock = sinon.stub(axiosInstance, 'get').resolves(searchResultsStub);
-    makeSearchSpy = sinon.spy(GiantBombApi, 'makeSearch');
+    axiosMock = Sinon.stub(axiosInstance, 'get').resolves(searchResultsStub);
+    makeSearchSpy = Sinon.spy(GiantBombApi, 'makeSearch');
   });
   afterEach(() => {
-    sinon.restore();
+    Sinon.restore();
   });
 
   const results = searchMockJson as SearchResults<Array<GameProfile>>;
@@ -45,15 +45,15 @@ describe('SearchPage.vue', () => {
     wrapper = mount(SearchPage);
     wrapper.vm.search('unitTestPurposeSearch');
 
-    sinon.assert.calledOnceWithExactly(makeSearchSpy, 'unitTestPurposeSearch');
-    sinon.assert.calledOnce(axiosMock);
+    Sinon.assert.calledOnceWithExactly(makeSearchSpy, 'unitTestPurposeSearch');
+    Sinon.assert.calledOnce(axiosMock);
   });
 
   it('Search request with emtpy string', () => {
     wrapper = mount(SearchPage);
     wrapper.vm.search('');
 
-    sinon.assert.notCalled(makeSearchSpy);
-    sinon.assert.notCalled(axiosMock);
+    Sinon.assert.notCalled(makeSearchSpy);
+    Sinon.assert.notCalled(axiosMock);
   });
 });

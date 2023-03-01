@@ -3,7 +3,7 @@ import sinon from 'sinon';
 import GamesLibrary from '@/views/GamesLibrary.vue';
 import libraryMock from '@/mocks/libraryMock.json';
 import { GameProfile } from '@/types/searchEntities.d';
-import Utils from '../../../src/utils/Utils';
+import Utils from '@/utils/Utils';
 
 describe('GamesLibrary.vue', () => {
   let wrapper;

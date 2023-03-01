@@ -7,6 +7,19 @@ export interface SearchResults<ResultsType> {
   status_code: number
   results: ResultsType
   version: string
+  config:RequestUrlConfig
+}
+
+export interface GameProfileFeed {
+  expected_release_quarter?: number | null,
+  expected_release_year: number | null,
+  expected_release_month?: number | null,
+  expected_release_day?: number | null,
+  id:number,
+  image:GameImages
+  name:string,
+  original_release_date:string | null,
+  platforms: Array<GamePlatform>
 }
 
 export interface GameProfile {
@@ -67,4 +80,17 @@ export interface CompleteGameProfile extends GameProfile {
   releases: Array<GameDetails>
   similar_games: Array<GameDetails>
   region: string
+}
+
+export type RequestFields = 'search' | 'game' | 'release' | 'games' | 'releases' | 'video';
+
+interface RequestUrlConfig {
+  limit: string,
+  format: string,
+  query?: string,
+  sort?: string[],
+  resources?: string,
+  field_list: string,
+  filter?: string,
+  method: RequestFields,
 }

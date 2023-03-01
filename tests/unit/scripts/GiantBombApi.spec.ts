@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import sinon, { SinonStub } from 'sinon';
-import GiantBombApi from '../../../src/scripts/GiantBombApi';
-import { axiosInstance } from '../../../src/scripts/RequestManager';
+import GiantBombApi from '@/scripts/GiantBombApi';
+import { axiosInstance } from '@/scripts/RequestManager';
 
 describe('Api routes', () => {
   let axiosMock:SinonStub;
@@ -25,9 +25,9 @@ describe('Api routes', () => {
       expect(url).toMatch('/game/12404');
     }));
 
-  it('check URL request for hom feed releases', () => GiantBombApi.loadHomePageFeed()
+  it('check URL request for hom feed games', () => GiantBombApi.loadHomePageFeed()
     .then(() => {
       const url = axiosMock.getCall(0).args[0];
-      expect(url).toMatch('/releases');
+      expect(url).toMatch('/games');
     }));
 });

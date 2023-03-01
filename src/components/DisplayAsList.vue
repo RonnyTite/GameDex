@@ -21,7 +21,7 @@
             <small class="text__blue">Release Date: </small>
             <small>{{ computeReleaseDate(game) }}</small>
           </div>
-          <br>
+          <DisplayAsLabel :label-list="game.platforms" />
         </IonLabel>
       </ionItem>
     </IonCardContent>
@@ -39,6 +39,7 @@ import {
 import { defineComponent } from 'vue';
 import { GameProfile } from '../types/searchEntities.d';
 import Utils from '../utils/Utils';
+import DisplayAsLabel from './DisplayAsLabel.vue';
 
 export default defineComponent({
   components: {
@@ -48,6 +49,7 @@ export default defineComponent({
     IonThumbnail,
     IonLabel,
     IonImg,
+    DisplayAsLabel,
   },
   props: {
     dataList: { type: Array<GameProfile>, required: true, default: [] },

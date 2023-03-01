@@ -2,11 +2,12 @@
   <ul
     v-if="labelList.length > 0"
     class="gameCard__platforms"
+    :class="{'small-label' : abbreviation}"
   >
     <li
       v-for="(label,key) in lexicallySortedList"
       :key="key"
-      class="gameCard__platform-name font__pixel "
+      class="gameCard__platform-name font__pixel ion-text-uppercase"
     >
       {{ abbreviation ? label.abbreviation : label.name }}
     </li>
@@ -35,6 +36,10 @@ export default defineComponent({
 .gameCard__platforms {
   padding: 0;
 }
+.gameCard__platforms.small-label {
+  padding: 0;
+  margin: 4px 0;
+}
 .gameCard__platforms li {
   background-color: #cfa192;
   box-sizing: border-box;
@@ -46,9 +51,15 @@ export default defineComponent({
   width: auto;
   line-height: 9px;
 }
+
+.gameCard__platforms.small-label  li {
+    height: 20px;
+    padding: 5px ;
+    line-height: 9px;
+}
+
 .gameCard__platform-name {
   color: #fff;
-  text-transform: uppercase;
   font-size: 0.7rem;
 }
 </style>

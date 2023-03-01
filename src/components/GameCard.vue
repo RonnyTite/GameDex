@@ -17,7 +17,7 @@
           {{ game.name }}
         </IonTitle>
         <IonButtons slot="end">
-          <IonButton>
+          <IonButton @click="share">
             <IonIcon
               :icon="shareSocialOutline"
               color="light"
@@ -35,7 +35,7 @@
       <div v-else>
         <div>
           <IonImg
-            :src="game.image.original_url"
+            :src="game.image.original_url || ''"
             class="main-image"
           />
         </div>
@@ -131,13 +131,25 @@ export default defineComponent({
         .then((searchResults) => {
           this.game = searchResults.data.results;
         })
-        .catch(() => {
+        .catch((err) => {
           // !!Debug Mode
           this.game = GameMock as CompleteGameProfile;
+          console.error(err);
         }).finally(() => {
           this.processing = false;
         });
     }
+  },
+  methods: {
+    async share():Promise<void> {
+      const options = {
+        text: this.game.deck,
+        title: this.game.name,
+        url: this.game.api_detail_url,
+      };
+
+      return navigator.share(options);
+    },
   },
 });
 </script>
