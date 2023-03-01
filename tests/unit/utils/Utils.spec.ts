@@ -1,5 +1,5 @@
-import Utils from '../../../src/utils/Utils';
 import { GameProfile } from '@/types/searchEntities.d';
+import Utils from '@/utils/Utils';
 
 describe('Utils', () => {
   it('computeReleaseDate with original release date', () => {

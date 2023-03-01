@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
 import Sinon, { SinonStub, SinonSpy } from 'sinon';
 import HomePage from '@/views/HomePage.vue';
-import GiantBombApi from '../../../src/scripts/GiantBombApi';
 import searchResults from '@/mocks/searchRequestResultsMock.json';
-import { axiosInstance } from '../../../src/scripts/RequestManager';
+import GiantBombApi from '@/scripts/GiantBombApi';
+import { axiosInstance } from '@/scripts/RequestManager';
 
 describe('HomePage.vue', () => {
   let axiosMock:SinonStub;

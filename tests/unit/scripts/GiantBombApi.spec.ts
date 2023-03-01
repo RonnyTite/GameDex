@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import sinon, { SinonStub } from 'sinon';
-import GiantBombApi from '../../../src/scripts/GiantBombApi';
-import { axiosInstance } from '../../../src/scripts/RequestManager';
+import GiantBombApi from '@/scripts/GiantBombApi';
+import { axiosInstance } from '@/scripts/RequestManager';
 
 describe('Api routes', () => {
   let axiosMock:SinonStub;

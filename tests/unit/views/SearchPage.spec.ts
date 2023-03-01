@@ -1,10 +1,10 @@
 import { mount } from '@vue/test-utils';
-import Sinon, { SinonStub, SinonSpy } from 'Sinon';
+import Sinon, { SinonStub, SinonSpy } from 'sinon';
 import SearchPage from '@/views/SearchPage.vue';
 import searchMockJson from '@/mocks/searchRequestResultsMock.json';
 import { GameProfile, SearchResults } from '@/types/searchEntities.d';
-import { axiosInstance } from '../../../src/scripts/RequestManager';
-import GiantBombApi from '../../../src/scripts/GiantBombApi';
+import { axiosInstance } from '@/scripts/RequestManager';
+import GiantBombApi from '@/scripts/GiantBombApi';
 
 describe('SearchPage.vue', () => {
   let wrapper;

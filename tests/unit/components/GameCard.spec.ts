@@ -1,9 +1,9 @@
 import { flushPromises, mount } from '@vue/test-utils';
-import Sinon, { SinonSpy, SinonStub } from 'Sinon';
+import Sinon, { SinonSpy, SinonStub } from 'sinon';
 import GameCard from '@/components/GameCard.vue';
-import GiantBombApi from '../../../src/scripts/GiantBombApi';
 import searchMockJson from '@/mocks/searchRequestResultsMock.json';
-import { axiosInstance } from '../../../src/scripts/RequestManager';
+import GiantBombApi from '@/scripts/GiantBombApi';
+import { axiosInstance } from '@/scripts/RequestManager';
 
 const propsData = {
   isOpen: true,
