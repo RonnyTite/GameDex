@@ -7,6 +7,7 @@ export interface SearchResults<ResultsType> {
   status_code: number
   results: ResultsType
   version: string
+  config:RequestUrlConfig
 }
 
 export interface GameProfileFeed {
@@ -79,4 +80,17 @@ export interface CompleteGameProfile extends GameProfile {
   releases: Array<GameDetails>
   similar_games: Array<GameDetails>
   region: string
+}
+
+export type RequestFields = 'search' | 'game' | 'release' | 'games' | 'releases' | 'video';
+
+interface RequestUrlConfig {
+  limit: string,
+  format: string,
+  query?: string,
+  sort?: string[],
+  resources?: string,
+  field_list: string,
+  filter?: string,
+  method: RequestFields,
 }
