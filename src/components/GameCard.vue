@@ -17,7 +17,7 @@
           {{ game.name }}
         </IonTitle>
         <IonButtons slot="end">
-          <IonButton>
+          <IonButton @click="share">
             <IonIcon
               :icon="shareSocialOutline"
               color="light"
@@ -139,6 +139,17 @@ export default defineComponent({
           this.processing = false;
         });
     }
+  },
+  methods: {
+    async share():Promise<void> {
+      const options = {
+        text: this.game.deck,
+        title: this.game.name,
+        url: this.game.api_detail_url,
+      };
+
+      return navigator.share(options);
+    },
   },
 });
 </script>
