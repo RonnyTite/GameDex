@@ -9,9 +9,15 @@
           GameDex
         </IonTitle>
         <IonButtons slot="end">
-          <IonButton>
+          <IonButton @click="changeListDisplay">
             <IonIcon
+              v-if="listAs === 'list'"
               :icon="listOutline"
+              color="light"
+            />
+            <IonIcon
+              v-else
+              :icon="gridOutline"
               color="light"
             />
           </IonButton>
@@ -40,11 +46,18 @@
           name="crescent"
           class="spinner"
         />
-        <DisplayAsList
-          v-else
-          :data-list="homePageFeed"
-          @open-gamecard="openGameCard"
-        />
+        <div v-else>
+          <DisplayAsList
+            v-if="listAs === 'list'"
+            :data-list="homePageFeed"
+            @open-gamecard="openGameCard"
+          />
+          <DisplayAsMasonry
+            v-else
+            :data-list="homePageFeed"
+            @open-gamecard="openGameCard"
+          />
+        </div>
       </div>
 
       <GameCard
@@ -66,17 +79,21 @@ import {
 import { defineComponent } from 'vue';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RefresherEventDetail } from '@ionic/core';
-import { listOutline } from 'ionicons/icons';
+import { listOutline, gridOutline } from 'ionicons/icons';
 import GameCard from '../components/GameCard.vue';
 import DisplayAsList from '../components/DisplayAsList.vue';
+import DisplayAsMasonry from '../components/DisplayAsMasonry.vue';
 import searchMockJson from '../mocks/searchRequestResultsMock.json';
 import { GameProfileFeed } from '../types/searchEntities.d';
 import GiantBombApi from '../scripts/GiantBombApi';
+
+type ListDisplays = 'list' | 'masonry';
 
 export default defineComponent({
   components: {
     GameCard,
     DisplayAsList,
+    DisplayAsMasonry,
     IonPage,
     IonHeader,
     IonToolbar,
@@ -90,7 +107,7 @@ export default defineComponent({
     IonRefresherContent,
   },
   setup() {
-    return { listOutline };
+    return { listOutline, gridOutline };
   },
   data() {
     return {
@@ -99,6 +116,7 @@ export default defineComponent({
       processing: false as boolean,
       isGameCardModalOpen: false as boolean,
       modalGameId: '' as string,
+      listAs: 'list' as ListDisplays,
       appColor: {
         blue: '#1f6cf8',
         green: '#1cf069',
@@ -111,6 +129,16 @@ export default defineComponent({
     this.loadFeed();
   },
   methods: {
+    changeListDisplay() {
+      let newDisplay:ListDisplays = 'list';
+      if (this.listAs === 'list') {
+        newDisplay = 'masonry';
+      } else if (this.listAs === 'masonry') {
+        newDisplay = 'list';
+      }
+
+      this.listAs = newDisplay;
+    },
     openGameCard(game:GameProfileFeed) {
       this.modalGameId = game.id.toString();
       this.isGameCardModalOpen = true;

@@ -56,6 +56,7 @@ export default defineComponent({
     height: 20px;
     padding: 5px ;
     line-height: 9px;
+    margin: 2px;
 }
 
 .gameCard__platform-name {
