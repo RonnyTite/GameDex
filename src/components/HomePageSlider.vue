@@ -1,4 +1,6 @@
 <template>
+  <!-- https://swiperjs.com/demos#effect-flip -->
+  <!-- Other possible choices https://swiperjs.com/demos#effect-cards https://swiperjs.com/demos#effect-coverflow -->
   <Swiper
     v-if="dataList.length >0"
     :effect="'flip'"
