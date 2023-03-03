@@ -36,13 +36,13 @@
         <IonRefresherContent />
       </IonRefresher>
       <div
-        v-if="homePageFeed.length> 0"
+        v-if="dayfilteredFeed.length> 0"
         class="today-releases-container ion-margin-top"
       >
         <div class="title text__bold text__black ion-text-uppercase ion-margin-start">
           Today Releases
           <HomePageSlider
-            :data-list="homePageFeed"
+            :data-list="dayfilteredFeed"
             class="ion-margin-vertical"
             @open-gamecard="openGameCard"
           />
