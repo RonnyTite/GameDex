@@ -11,7 +11,7 @@
         <IonButtons slot="end">
           <IonButton @click="changeListDisplay">
             <IonIcon
-              v-if="listAs === 'list'"
+              v-if="listAs === 'masonry'"
               :icon="listOutline"
               color="light"
             />
@@ -24,7 +24,10 @@
         </IonButtons>
       </IonToolbar>
     </IonHeader>
-    <IonContent :fullscreen="true">
+    <IonContent
+      :fullscreen="true"
+      class="ion-margin-horizontal"
+    >
       <IonHeader collapse="condense" />
       <IonRefresher
         slot="fixed"
@@ -32,13 +35,21 @@
       >
         <IonRefresherContent />
       </IonRefresher>
-      <div class="today-releases-container">
-        <div class="title text__bold text__black ion-text-uppercase ion-margin-start ion-margin-top ">
+      <div
+        v-if="homePageFeed.length> 0"
+        class="today-releases-container ion-margin-top"
+      >
+        <div class="title text__bold text__black ion-text-uppercase ion-margin-start">
           Today Releases
+          <HomePageSlider
+            :data-list="homePageFeed"
+            class="ion-margin-vertical"
+            @open-gamecard="openGameCard"
+          />
         </div>
       </div>
-      <div class="future-release-container">
-        <div class="title text__bold text__black ion-text-uppercase ion-margin-start">
+      <div class="future-release-container ion-margin-top">
+        <div class="title text__bold text__black ion-text-uppercase ion-margin-vertical ion-margin-start">
           Future Releases
         </div>
         <IonSpinner
@@ -82,16 +93,19 @@ import { RefresherEventDetail } from '@ionic/core';
 import { listOutline, gridOutline } from 'ionicons/icons';
 import GameCard from '../components/GameCard.vue';
 import DisplayAsList from '../components/DisplayAsList.vue';
+import HomePageSlider from '../components/HomePageSlider.vue';
 import DisplayAsMasonry from '../components/DisplayAsMasonry.vue';
 import searchMockJson from '../mocks/searchRequestResultsMock.json';
 import { GameProfileFeed } from '../types/searchEntities.d';
 import GiantBombApi from '../scripts/GiantBombApi';
+import Utils from '../utils/Utils';
 
 type ListDisplays = 'list' | 'masonry';
 
 export default defineComponent({
   components: {
     GameCard,
+    HomePageSlider,
     DisplayAsList,
     DisplayAsMasonry,
     IonPage,
@@ -111,8 +125,8 @@ export default defineComponent({
   },
   data() {
     return {
-      results: [] as Array<GameProfileFeed>,
-      homePageFeed: [] as any,
+      homePageFeed: [] as Array<GameProfileFeed>,
+      dayfilteredFeed: [] as Array<GameProfileFeed>,
       processing: false as boolean,
       isGameCardModalOpen: false as boolean,
       modalGameId: '' as string,
@@ -155,7 +169,7 @@ export default defineComponent({
           }, 2000);
         });
     },
-    filteringFeedResults(data:Array<GameProfileFeed>) {
+    filteringBlankDateFromFeedResults(data:Array<GameProfileFeed>) {
       return data.filter((item:GameProfileFeed) => {
         const isDayExists = item.expected_release_day !== null;
         const isMonthExists = item.expected_release_month !== null;
@@ -165,10 +179,28 @@ export default defineComponent({
         return isReleaseDateExists || (isDayExists && isMonthExists && isYearExists);
       });
     },
+
+    filteringTodayDateFromFeedResults(data:Array<GameProfileFeed>) {
+      return data.filter((item:GameProfileFeed) => {
+        const gameDate = Utils.computeReleaseDate(item);
+        const { fullDate } = Utils.computeTodayDate();
+        return gameDate === fullDate;
+      });
+    },
+
+    removingTodayDateFromFeedResults(data:Array<GameProfileFeed>) {
+      return data.filter((item:GameProfileFeed) => {
+        const gameDate = Utils.computeReleaseDate(item);
+        const { fullDate } = Utils.computeTodayDate();
+        return gameDate !== fullDate;
+      });
+    },
     loadFeed() {
       return GiantBombApi.loadHomePageFeed()
         .then((feedResults) => {
-          this.homePageFeed = this.filteringFeedResults(feedResults.data.results);
+          const filteredResults = this.filteringBlankDateFromFeedResults(feedResults.data.results);
+          this.dayfilteredFeed = this.filteringTodayDateFromFeedResults(filteredResults);
+          this.homePageFeed = this.removingTodayDateFromFeedResults(filteredResults);
         })
         .catch(() => {
           // !!Debug Mode
@@ -184,7 +216,7 @@ export default defineComponent({
 <style>
  /* https://webdevetc.com/programming-tricks/vue3/vue3-guides/vue-3-global-scss-sass-variables/ */
 .today-releases-container {
-  height: 230px;
+  height: 500px;
   width: 100%;
 }
 .future-release-container {

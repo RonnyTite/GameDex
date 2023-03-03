@@ -24,8 +24,7 @@ import {
 } from '@ionic/vue';
 
 import { defineComponent } from 'vue';
-import { GameProfile } from '../types/searchEntities.d';
-import Utils from '../utils/Utils';
+import { GameProfile, GameProfileFeed } from '../types/searchEntities.d';
 //  Ref for masonry: https://www.youtube.com/watch?v=7d1bhYsYi7E
 export default defineComponent({
   components: {
@@ -34,14 +33,9 @@ export default defineComponent({
     IonImg,
   },
   props: {
-    dataList: { type: Array<GameProfile>, required: true, default: [] },
+    dataList: { type: Array<GameProfile | GameProfileFeed>, required: true, default: [] },
   },
   emits: ['open-gamecard'],
-  methods: {
-    computeReleaseDate(game: GameProfile): string {
-      return Utils.computeReleaseDate(game);
-    },
-  },
 });
 </script>
 <style scoped>

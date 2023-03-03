@@ -32,7 +32,7 @@ import {
 } from '@ionic/vue';
 
 import { defineComponent } from 'vue';
-import { GameProfile } from '../types/searchEntities.d';
+import { GameProfile, GameProfileFeed } from '../types/searchEntities.d';
 import Utils from '../utils/Utils';
 import DisplayAsLabel from './DisplayAsLabel.vue';
 
@@ -44,11 +44,11 @@ export default defineComponent({
     DisplayAsLabel,
   },
   props: {
-    dataList: { type: Array<GameProfile>, required: true, default: [] },
+    dataList: { type: Array<GameProfile | GameProfileFeed>, required: true, default: [] },
   },
   emits: ['open-gamecard'],
   methods: {
-    computeReleaseDate(game: GameProfile): string {
+    computeReleaseDate(game: GameProfile | GameProfileFeed): string {
       return Utils.computeReleaseDate(game);
     },
   },
