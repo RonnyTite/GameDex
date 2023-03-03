@@ -1,5 +1,12 @@
-import { GameProfile } from '@/types/searchEntities.d';
+import { GameProfile, GameProfileFeed } from '@/types/searchEntities.d';
 import libraryMock from '@/mocks/libraryMock.json';
+
+export interface TodayDate {
+  day: number
+  month: number
+  year: number
+  fullDate: string
+}
 
 export default {
   formatDate: (date:Date):string => {
@@ -11,15 +18,21 @@ export default {
       day: 'numeric',
     });
   },
-  computeReleaseDate(game:GameProfile):string {
+  isGameprofile(data:GameProfile | GameProfileFeed):data is GameProfile {
+    return data ? 'release_date' in data : false;
+  },
+  computeReleaseDate(game:GameProfile | GameProfileFeed):string {
     const {
       // eslint-disable-next-line @typescript-eslint/naming-convention, max-len
       expected_release_quarter, expected_release_year, expected_release_month, expected_release_day,
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      release_date, original_release_date,
     } = game;
 
-    const releaseDate = original_release_date || release_date;
+    let releaseDate = game.original_release_date;
+
+    if (this.isGameprofile(game)) {
+      releaseDate = game.original_release_date || (game.release_date || null);
+    }
+
     if (releaseDate) {
       return this.formatDate(new Date(releaseDate));
     }
@@ -40,6 +53,15 @@ export default {
     }
 
     return expected_release_year ? expected_release_year.toString() : '- - -';
+  },
+  computeTodayDate():TodayDate {
+    const date = new Date();
+    return {
+      day: date.getDate(),
+      month: date.getMonth(),
+      year: date.getFullYear(),
+      fullDate: this.formatDate(date),
+    };
   },
   loadLibraryFromStore():Array<GameProfile> {
     return libraryMock as Array<GameProfile>;

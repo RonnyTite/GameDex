@@ -24,7 +24,6 @@ describe('GameCard.vue', () => {
     });
 
     axiosMock = Sinon.stub(axiosInstance, 'get').resolves(gameProfile);
-
     fetchGameProfileSpy = Sinon.spy(GiantBombApi, 'fetchGameProfile');
   });
   afterEach(() => {
@@ -46,5 +45,12 @@ describe('GameCard.vue', () => {
     Sinon.assert.notCalled(fetchGameProfileSpy);
     Sinon.assert.notCalled(axiosMock);
     expect(wrapper.vm.game).toEqual({});
+  });
+
+  it('should not display Share if not possible ', () => {
+    wrapper = mountComponent();
+
+    const shareButton = wrapper.find('.share-button');
+    expect(shareButton.exists()).toEqual(false);
   });
 });

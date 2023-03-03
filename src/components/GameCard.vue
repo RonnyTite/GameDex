@@ -16,8 +16,14 @@
         >
           {{ game.name }}
         </IonTitle>
-        <IonButtons slot="end">
-          <IonButton @click="share">
+        <IonButtons
+          v-if="navigatorCanShare"
+          slot="end"
+        >
+          <IonButton
+            class="share-button"
+            @click="share"
+          >
             <IonIcon
               :icon="shareSocialOutline"
               color="light"
@@ -41,7 +47,7 @@
         </div>
 
         <div class="margin-top">
-          <span class="text__blue text__bold">Developper(s): </span>
+          <span class="text__blue text__bold">Developer(s): </span>
           <span
             v-for="(developer, key) in game.developers"
             :key="key"
@@ -123,6 +129,16 @@ export default defineComponent({
     computeReleaseDate():string {
       return Utils.computeReleaseDate(this.game);
     },
+    dataToShare() {
+      return {
+        text: this.game.deck,
+        title: this.game.name,
+        url: this.game.api_detail_url,
+      };
+    },
+    navigatorCanShare() {
+      return navigator.canShare(this.dataToShare) && navigator.share;
+    },
   },
   beforeMount() {
     if (this.isOpen && this.gameId) {
@@ -142,13 +158,7 @@ export default defineComponent({
   },
   methods: {
     async share():Promise<void> {
-      const options = {
-        text: this.game.deck,
-        title: this.game.name,
-        url: this.game.api_detail_url,
-      };
-
-      return navigator.share(options);
+      return navigator.share(this.dataToShare);
     },
   },
 });
