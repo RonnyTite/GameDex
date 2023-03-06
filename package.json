@@ -5,15 +5,16 @@
   "author": "Ronny Tite",
   "description": "An Ionic project for gameDex",
   "scripts": {
-    "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "lint-autofix": "vue-cli-service lint --fix"
+    "lint-autofix": "vue-cli-service lint --fix",
+    "serve": "vue-cli-service serve"
   },
   "dependencies": {
+    "@capacitor/android": "4.7.0",
     "@capacitor/app": "4.1.1",
-    "@capacitor/core": "4.6.3",
+    "@capacitor/core": "^4.7.0",
     "@capacitor/haptics": "4.1.0",
     "@capacitor/keyboard": "4.1.1",
     "@capacitor/status-bar": "4.1.1",
