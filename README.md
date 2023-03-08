@@ -38,3 +38,5 @@ https://m2.material.io/design/color/the-color-system.html#tools-for-picking-colo
 https://m3.material.io/theme-builder#/custom
 
 https://ionicframework.com/docs/theming/dark-mode
+
+https://dev.to/shaedrizwan/set-your-web-app-to-dark-light-mode-based-on-user-system-settings-5fa6

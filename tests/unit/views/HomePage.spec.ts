@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils';
+import { flushPromises, mount } from '@vue/test-utils';
 import Sinon, { SinonStub, SinonSpy } from 'sinon';
 import HomePage from '@/views/HomePage.vue';
 import searchResults from '@/mocks/searchRequestResultsMock.json';
@@ -290,6 +290,35 @@ describe('HomePage.vue', () => {
 
     expect(filtered).toEqual(results);
   });
+});
+
+describe('HomePage.vue Real mount', () => {
+  const searchResultsStub = ({
+    data: { results: searchResults.results },
+  });
+  beforeEach(() => {
+    Sinon.stub(axiosInstance, 'get').resolves(searchResultsStub);
+    Sinon.stub(Utils, 'computeTodayDate').returns({
+      day: 29,
+      month: 10,
+      year: 2009,
+      fullDate: 'October 29, 2009',
+    });
+  });
+  afterEach(() => {
+    Sinon.restore();
+  });
+
+  it('simple mount', async () => {
+    const wrapper = mount(HomePage);
+    const feed = wrapper.vm.removingTodayDateFromFeedResults(searchResults.results);
+    const todayFeed = wrapper.vm.filteringTodayDateFromFeedResults(searchResults.results);
+    await flushPromises();
+    expect(wrapper.vm.dayfilteredFeed).toEqual(todayFeed);
+    expect(wrapper.vm.homePageFeed).toEqual(feed);
+    expect(wrapper.vm.originalFeedResponse).toEqual(feed);
+  });
+
 });
 
 describe('HomePage.vue', () => {
