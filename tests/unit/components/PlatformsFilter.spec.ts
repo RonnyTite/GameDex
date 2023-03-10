@@ -4,13 +4,12 @@ import PlatformsFilter from '@/components/PlatformsFilter.vue';
 import { CheckboxCustomEvent } from '@ionic/vue';
 import searchMockJson from '@/mocks/searchRequestResultsMock.json';
 
-// https://jestjs.io/docs/timer-mocks
-jest.useFakeTimers();
-jest.spyOn(window, 'setTimeout');
-
 describe('PlatformsFilter.vue Real mount', () => {
   let wrapper:any;
   beforeEach(() => {
+    // https://jestjs.io/docs/timer-mocks
+    jest.useFakeTimers();
+    jest.spyOn(window, 'setTimeout');
     wrapper = mount(PlatformsFilter, {
       props: {
         dataList: searchMockJson.results as Array<GameProfile>,
@@ -19,6 +18,8 @@ describe('PlatformsFilter.vue Real mount', () => {
   });
   afterEach(() => {
     wrapper.unmount();
+    // https://jestjs.io/docs/jest-object#jestrestoreallmocks
+    jest.restoreAllMocks();
   });
   it('should compute platforms filters', async () => {
     // wrapper.vm.computingPlatformFilter();

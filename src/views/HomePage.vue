@@ -11,8 +11,8 @@
         <IonButtons slot="end">
           <PlatformsFilter
             v-if="originalFeedResponse.length> 0"
+            key="HomepageFilter"
             :data-list="originalFeedResponse"
-            @reset-filter="clearFilter"
             @on-filter="filteringByPlatforms"
           />
           <IonButton @click="changeListDisplay">
@@ -140,7 +140,6 @@ export default defineComponent({
       processing: false as boolean,
       isGameCardModalOpen: false as boolean,
       modalGameId: '' as string,
-      filter: null as string | null,
       listAs: 'masonry' as ListDisplays,
       appColor: {
         blue: '#1f6cf8',
@@ -209,7 +208,15 @@ export default defineComponent({
     },
     filteringByPlatforms(platformNames:Array<GamePlatform['name']>):void {
       // eslint-disable-next-line max-len
-      const filtered = this.originalFeedResponse.filter((game) => game.platforms.find((platform) => platformNames.includes(platform.name)));
+      let filtered:Array<GameProfileFeed>;
+
+      if (platformNames.length > 0) {
+        // eslint-disable-next-line max-len
+        filtered = this.originalFeedResponse.filter((game) => game.platforms.find((platform) => platformNames.includes(platform.name)));
+      } else {
+        filtered = this.originalFeedResponse;
+      }
+
       this.homePageFeed = filtered;
     },
     loadFeed() {
@@ -223,13 +230,11 @@ export default defineComponent({
         .catch(() => {
           // !!Debug Mode
           this.homePageFeed = searchMockJson.results as Array<GameProfileFeed>;
+          this.originalFeedResponse = searchMockJson.results as Array<GameProfileFeed>;
         })
         .finally(() => {
           this.processing = false;
         });
-    },
-    clearFilter() {
-      this.homePageFeed = this.originalFeedResponse;
     },
   },
 });

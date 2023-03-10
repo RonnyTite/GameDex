@@ -5,7 +5,7 @@ import libraryMock from '@/mocks/libraryMock.json';
 import { GameProfile } from '@/types/searchEntities.d';
 import Utils from '@/utils/Utils';
 
-describe('GamesLibrary.vue', () => {
+describe('GamesLibrary.vue Emits', () => {
   let wrapper;
   const library = libraryMock as Array<GameProfile>;
   beforeEach(() => {
@@ -27,34 +27,125 @@ describe('GamesLibrary.vue', () => {
     expect(wrapper.vm.modalGameId).toEqual('');
     expect(wrapper.vm.isGameCardModalOpen).toEqual(false);
   });
+});
 
+describe('GamesLibrary Search and Filter', () => {
+  let wrapper:any;
+  const library = libraryMock as Array<GameProfile>;
+  beforeEach(() => {
+    sinon.stub(Utils, 'loadLibraryFromStore').returns(library);
+  });
+  afterEach(() => {
+    wrapper.unmount();
+    sinon.restore();
+  });
+  // SEARCH
   it('search through library', () => {
     wrapper = mount(GamesLibrary);
-    wrapper.vm.search('stree');
+    expect(wrapper.vm.search('stree')).toEqual([library[3]]);
+    expect(wrapper.vm.rawLibrary).toEqual(library);
     expect(wrapper.vm.library).toEqual(library);
-    expect(wrapper.vm.filteredLibrary).toEqual([library[3]]);
+    expect(wrapper.vm.searchedValue).toEqual('stree');
   });
 
   it('search through library with no results', () => {
     wrapper = mount(GamesLibrary);
-    wrapper.vm.search('strte');
+    expect(wrapper.vm.search('strte')).toEqual([]);
+    expect(wrapper.vm.rawLibrary).toEqual(library);
     expect(wrapper.vm.library).toEqual(library);
-    expect(wrapper.vm.filteredLibrary).toEqual([]);
+    expect(wrapper.vm.searchedValue).toEqual('strte');
   });
 
   it('Search request with emtpy string', () => {
     wrapper = mount(GamesLibrary);
-    wrapper.vm.search('');
-
+    expect(wrapper.vm.search('')).toEqual(wrapper.vm.library);
+    expect(wrapper.vm.rawLibrary).toEqual(library);
     expect(wrapper.vm.library).toEqual(library);
-    expect(wrapper.vm.filteredLibrary).toEqual(wrapper.vm.library);
+    expect(wrapper.vm.searchedValue).toEqual('');
   });
 
-  it('Search request with emtpy string', () => {
+  it('reset search', () => {
     wrapper = mount(GamesLibrary);
     wrapper.vm.resetSearch();
-
+    expect(wrapper.vm.rawLibrary).toEqual(library);
     expect(wrapper.vm.library).toEqual(library);
     expect(wrapper.vm.filteredLibrary).toEqual(wrapper.vm.library);
+  });
+
+  // FILTER
+  it('filter through library', () => {
+    wrapper = mount(GamesLibrary);
+    expect(wrapper.vm.filteringByPlatforms(['Arcade'])).toEqual([library[3]]);
+  });
+
+  it('filter through library with no platforms', () => {
+    wrapper = mount(GamesLibrary);
+    expect(wrapper.vm.filteringByPlatforms([])).toEqual(library);
+  });
+
+  //  SEARCH AND FILTER
+  it('search and filter only search', async () => {
+    wrapper = mount(GamesLibrary);
+    await wrapper.setData({
+      searchedValue: 'stree',
+    });
+
+    wrapper.vm.searchAndFilter();
+
+    expect(wrapper.vm.filteredLibrary).toEqual([library[3]]);
+  });
+
+  it('search and filter only filter', async () => {
+    wrapper = mount(GamesLibrary);
+    await wrapper.setData({
+      platforms: ['Arcade'],
+    });
+
+    wrapper.vm.searchAndFilter();
+
+    expect(wrapper.vm.filteredLibrary).toEqual([library[3]]);
+  });
+
+  it('search and filter only filter', async () => {
+    wrapper = mount(GamesLibrary);
+    await wrapper.setData({
+      platforms: ['PlayStation 3'],
+    });
+
+    wrapper.vm.searchAndFilter();
+
+    expect(wrapper.vm.filteredLibrary).toEqual([library[0], library[3]]);
+  });
+  it('search and filter through library', async () => {
+    wrapper = mount(GamesLibrary);
+    await wrapper.setData({
+      searchedValue: 'bayo',
+      platforms: ['PlayStation 3'],
+    });
+
+    wrapper.vm.searchAndFilter();
+
+    expect(wrapper.vm.filteredLibrary).toEqual([library[0]]);
+  });
+
+  it('search and filter and remove filter through library', async () => {
+    wrapper = mount(GamesLibrary);
+    await wrapper.setData({
+      searchedValue: 'bayo',
+      platforms: ['PlayStation 3'],
+    });
+
+    wrapper.vm.searchAndFilter();
+
+    expect(wrapper.vm.filteredLibrary).toEqual([library[0]]);
+
+    await wrapper.setData({
+      searchedValue: 'bayo',
+      platforms: [],
+    });
+
+    wrapper.vm.searchAndFilter();
+
+    expect(wrapper.vm.filteredLibrary).toEqual([library[0], library[1], library[2]]);
   });
 });

@@ -42,6 +42,90 @@
         @close-modal="closeGameCard"
       />
     </IonContent>
+    <IonHeader>
+      <IonToolbar class="app-header">
+        <IonTitle
+          class="font__pixel ion-text-uppercase"
+          color="light"
+        >
+          Search
+        </IonTitle>
+        <IonButtons slot="end">
+          <IonButton>
+            <IonIcon
+              :icon="listOutline"
+              color="light"
+            />
+          </IonButton>
+        </IonButtons>
+      </IonToolbar>
+      <ion-toolbar>
+        <Searchbar
+          @on-search="search($event)"
+          @clear="clear"
+        />
+      </ion-toolbar>
+    </IonHeader>
+    <IonContent :fullscreen="true">
+      <IonSpinner
+        v-if="processing"
+        name="crescent"
+        class="spinner"
+      />
+      <DisplayAsList
+        v-else
+        :data-list="results"
+        @open-gamecard="openGameCard"
+      />
+      <GameCard
+        v-if="isGameCardModalOpen"
+        :is-open="isGameCardModalOpen"
+        :game-id="modalGameId"
+        @close-modal="closeGameCard"
+      />
+    </IonContent>
+    <IonHeader>
+      <IonToolbar class="app-header">
+        <IonTitle
+          class="font__pixel ion-text-uppercase"
+          color="light"
+        >
+          Search
+        </IonTitle>
+        <IonButtons slot="end">
+          <IonButton>
+            <IonIcon
+              :icon="listOutline"
+              color="light"
+            />
+          </IonButton>
+        </IonButtons>
+      </IonToolbar>
+      <ion-toolbar>
+        <Searchbar
+          @on-search="search($event)"
+          @clear="clear"
+        />
+      </ion-toolbar>
+    </IonHeader>
+    <IonContent :fullscreen="true">
+      <IonSpinner
+        v-if="processing"
+        name="crescent"
+        class="spinner"
+      />
+      <DisplayAsList
+        v-else
+        :data-list="results"
+        @open-gamecard="openGameCard"
+      />
+      <GameCard
+        v-if="isGameCardModalOpen"
+        :is-open="isGameCardModalOpen"
+        :game-id="modalGameId"
+        @close-modal="closeGameCard"
+      />
+    </IonContent>
   </IonPage>
 </template>
 

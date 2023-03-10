@@ -9,11 +9,11 @@
     trigger="click-trigger"
     trigger-action="click"
     :is-open="popoverOpen"
-    @did-dismiss="popoverOpen = false"
+    @did-dismiss="filteringByPlatforms"
   >
     <IonContent>
       <IonItem
-        :class="{'disabled':!isFilterActive}"
+        :class="{ 'disabled': !isFilterActive }"
         @click="resetFilter"
       >
         <IonIcon
@@ -30,8 +30,10 @@
         <IonCheckbox
           slot="start"
           :key="key"
+          v-model="platform.checked"
+          :checked="platform.checked"
           :value="platform.value"
-          @ion-change="filteringByPlatforms"
+          @ion-change="selectPlatform"
         />
         <IonLabel>{{ platform.value }}</IonLabel>
       </IonItem>
@@ -72,36 +74,39 @@ export default defineComponent({
     };
   },
   computed: {
-    isFilterActive():boolean {
+    isFilterActive(): boolean {
       return this.platforms.some((platform) => platform.checked === true);
+    },
+  },
+  watch: {
+    dataList: {
+      deep: true,
+      handler() {
+        debugger;
+        this.computingPlatformFilter();
+      },
     },
   },
   beforeMount() {
     this.computingPlatformFilter();
   },
   methods: {
-    filteringByPlatforms(event: CheckboxCustomEvent<GamePlatform['abbreviation']>): void {
-      const { value, checked } = event.detail;
-
-      const platformName = value;
+    selectPlatform(event: CheckboxCustomEvent<GamePlatform['name']>) {
+      const { checked, value } = event.detail;
+      this.platforms.forEach((platform) => {
+        // eslint-disable-next-line no-param-reassign
+        platform.checked = false;
+        // eslint-disable-next-line no-param-reassign
+        if (platform.value === value) platform.checked = checked;
+      });
+    },
+    filteringByPlatforms(): void {
       const filterPlatforms: Array<string> = [];
       this.platforms.forEach((platform) => {
-        if (platform.value === platformName) {
-          // eslint-disable-next-line no-param-reassign
-          platform.checked = checked;
-          if (platform.checked) filterPlatforms.push(platformName);
-        } else {
-          // eslint-disable-next-line no-param-reassign
-          platform.checked = false;
-        }
+        if (platform.checked) filterPlatforms.push(platform.value);
       });
 
-      if (this.platforms.some((platform) => platform.checked === true)) {
-        this.$emit('onFilter', filterPlatforms);
-      } else {
-        this.$emit('resetFilter');
-      }
-      this.closePopover();
+      this.$emit('onFilter', filterPlatforms);
     },
     computingPlatformFilter(): void {
       this.dataList.forEach((game) => {
@@ -118,7 +123,7 @@ export default defineComponent({
       });
       this.platforms.sort((a, b) => a.value.localeCompare(b.value));
     },
-    closePopover():void {
+    closePopover(): void {
       setTimeout(() => {
         this.popoverOpen = false;
       }, 800);
@@ -137,6 +142,7 @@ export default defineComponent({
 ion-item {
   cursor: pointer;
 }
+
 ion-item.disabled {
   cursor: initial;
 }

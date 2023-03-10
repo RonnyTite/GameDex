@@ -12,7 +12,7 @@ jest.mock('@/components/HomePageSlider.vue', () => ({
   template: '<div>Mock it out</div>',
 }));
 
-describe('HomePage.vue', () => {
+describe('HomePage.vue Filters', () => {
   let axiosMock:SinonStub;
   let loadHomePageFeedSpy:SinonSpy;
   const searchResultsStub = ({
@@ -318,10 +318,9 @@ describe('HomePage.vue Real mount', () => {
     expect(wrapper.vm.homePageFeed).toEqual(feed);
     expect(wrapper.vm.originalFeedResponse).toEqual(feed);
   });
-
 });
 
-describe('HomePage.vue', () => {
+describe('HomePage  Emits', () => {
   let wrapper;
   beforeEach(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
