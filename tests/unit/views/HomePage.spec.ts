@@ -321,13 +321,14 @@ describe('HomePage.vue Real mount', () => {
 });
 
 describe('HomePage  Emits', () => {
-  let wrapper;
+  let wrapper:any;
   beforeEach(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore test are OK doesnt want all values just for the test
     Sinon.stub(GiantBombApi, 'loadHomePageFeed').resolves({ data: { results: searchResults.results } });
   });
   afterEach(() => {
+    wrapper.unmount();
     Sinon.restore();
   });
   it('receive emits and open gamecard', () => {

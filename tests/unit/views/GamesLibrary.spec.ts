@@ -1,28 +1,34 @@
-import { flushPromises, mount } from '@vue/test-utils';
-import sinon from 'sinon';
+import { flushPromises, shallowMount } from '@vue/test-utils';
+import Sinon from 'sinon';
 import GamesLibrary from '@/views/GamesLibrary.vue';
 import libraryMock from '@/mocks/libraryMock.json';
 import { GameProfile } from '@/types/searchEntities.d';
 import Utils from '@/utils/Utils';
 
 describe('GamesLibrary.vue Emits', () => {
-  let wrapper;
+  let wrapper:any;
   const library = libraryMock as Array<GameProfile>;
   beforeEach(() => {
-    sinon.stub(Utils, 'loadLibraryFromStore').returns(library);
+    Sinon.stub(Utils, 'loadLibraryFromStore').returns(library);
   });
   afterEach(() => {
-    sinon.restore();
+    wrapper.unmount();
+    Sinon.restore();
   });
 
-  it('receive emits and open gamecard', () => {
-    wrapper = mount(GamesLibrary);
+  it('receive emits and open gamecard', async () => {
+    wrapper = shallowMount(GamesLibrary, {
+      globals: {
+        GameCard: true,
+      },
+    });
     wrapper.vm.openGameCard(library[0]);
+    await flushPromises();
     expect(wrapper.vm.modalGameId).toEqual(library[0].id.toString());
     expect(wrapper.vm.isGameCardModalOpen).toEqual(true);
   });
   it('receive emits and close gamecard', () => {
-    wrapper = mount(GamesLibrary);
+    wrapper = shallowMount(GamesLibrary);
     wrapper.vm.closeGameCard();
     expect(wrapper.vm.modalGameId).toEqual('');
     expect(wrapper.vm.isGameCardModalOpen).toEqual(false);
@@ -33,15 +39,15 @@ describe('GamesLibrary Search and Filter', () => {
   let wrapper:any;
   const library = libraryMock as Array<GameProfile>;
   beforeEach(() => {
-    sinon.stub(Utils, 'loadLibraryFromStore').returns(library);
+    Sinon.stub(Utils, 'loadLibraryFromStore').returns(library);
   });
   afterEach(() => {
     wrapper.unmount();
-    sinon.restore();
+    Sinon.restore();
   });
   // SEARCH
   it('search through library', () => {
-    wrapper = mount(GamesLibrary);
+    wrapper = shallowMount(GamesLibrary);
     expect(wrapper.vm.rawLibrary).toEqual(library);
     expect(wrapper.vm.search('stree')).toEqual([library[3]]);
     // check after search that raw library was not impacted
@@ -50,7 +56,7 @@ describe('GamesLibrary Search and Filter', () => {
   });
 
   it('search through library with no results', () => {
-    wrapper = mount(GamesLibrary);
+    wrapper = shallowMount(GamesLibrary);
     expect(wrapper.vm.rawLibrary).toEqual(library);
     expect(wrapper.vm.search('strte')).toEqual([]);
     // check after search that raw library was not impacted
@@ -59,7 +65,7 @@ describe('GamesLibrary Search and Filter', () => {
   });
 
   it('Search request with emtpy string', () => {
-    wrapper = mount(GamesLibrary);
+    wrapper = shallowMount(GamesLibrary);
     expect(wrapper.vm.rawLibrary).toEqual(library);
     expect(wrapper.vm.search('')).toEqual(wrapper.vm.library);
     // check after search that raw library was not impacted
@@ -69,7 +75,7 @@ describe('GamesLibrary Search and Filter', () => {
   });
 
   it('reset search', () => {
-    wrapper = mount(GamesLibrary);
+    wrapper = shallowMount(GamesLibrary);
     wrapper.vm.resetSearch();
     expect(wrapper.vm.rawLibrary).toEqual(library);
     expect(wrapper.vm.library).toEqual(library);
@@ -78,7 +84,7 @@ describe('GamesLibrary Search and Filter', () => {
 
   // FILTER
   it('filter through library', async () => {
-    wrapper = mount(GamesLibrary);
+    wrapper = shallowMount(GamesLibrary);
     expect(wrapper.vm.rawLibrary).toEqual(library);
     const results = wrapper.vm.filteringByPlatforms(['Arcade']);
     await flushPromises();
@@ -86,44 +92,44 @@ describe('GamesLibrary Search and Filter', () => {
   });
 
   it('filter through library with no platforms', () => {
-    wrapper = mount(GamesLibrary);
+    wrapper = shallowMount(GamesLibrary);
     expect(wrapper.vm.filteringByPlatforms([])).toEqual(library);
   });
 
   //  SEARCH AND FILTER
   it('search and filter only search', async () => {
-    wrapper = mount(GamesLibrary);
-    sinon.spy(wrapper.vm, 'searchAndFilter');
+    wrapper = shallowMount(GamesLibrary);
+    Sinon.spy(wrapper.vm, 'searchAndFilter');
 
     wrapper.vm.registerSearchEvent('stree');
     await flushPromises();
 
-    sinon.assert.calledOnce(wrapper.vm.searchAndFilter);
+    Sinon.assert.calledOnce(wrapper.vm.searchAndFilter);
     expect(wrapper.vm.filteredLibrary).toEqual([library[3]]);
   });
 
   it('search and filter only filter', async () => {
-    wrapper = mount(GamesLibrary);
-    sinon.spy(wrapper.vm, 'searchAndFilter');
+    wrapper = shallowMount(GamesLibrary);
+    Sinon.spy(wrapper.vm, 'searchAndFilter');
 
     wrapper.vm.registerFilterEvent(['Arcade']);
     await flushPromises();
-    sinon.assert.calledOnce(wrapper.vm.searchAndFilter);
+    Sinon.assert.calledOnce(wrapper.vm.searchAndFilter);
     expect(wrapper.vm.filteredLibrary).toEqual([library[3]]);
   });
 
   it('search and filter only filter', async () => {
-    wrapper = mount(GamesLibrary);
-    sinon.spy(wrapper.vm, 'searchAndFilter');
+    wrapper = shallowMount(GamesLibrary);
+    Sinon.spy(wrapper.vm, 'searchAndFilter');
 
     wrapper.vm.registerFilterEvent(['PlayStation 3']);
     await flushPromises();
-    sinon.assert.calledOnce(wrapper.vm.searchAndFilter);
+    Sinon.assert.calledOnce(wrapper.vm.searchAndFilter);
     expect(wrapper.vm.filteredLibrary).toEqual([library[0], library[3]]);
   });
   it('search and filter through library', async () => {
-    wrapper = mount(GamesLibrary);
-    sinon.spy(wrapper.vm, 'searchAndFilter');
+    wrapper = shallowMount(GamesLibrary);
+    Sinon.spy(wrapper.vm, 'searchAndFilter');
 
     await wrapper.setData({
       platforms: ['PlayStation 3'],
@@ -132,13 +138,13 @@ describe('GamesLibrary Search and Filter', () => {
     wrapper.vm.registerSearchEvent('bayo');
     await flushPromises();
 
-    sinon.assert.calledOnce(wrapper.vm.searchAndFilter);
+    Sinon.assert.calledOnce(wrapper.vm.searchAndFilter);
     expect(wrapper.vm.filteredLibrary).toEqual([library[0]]);
   });
 
   it('search and filter and remove filter through library', async () => {
-    wrapper = mount(GamesLibrary);
-    sinon.spy(wrapper.vm, 'searchAndFilter');
+    wrapper = shallowMount(GamesLibrary);
+    Sinon.spy(wrapper.vm, 'searchAndFilter');
     await wrapper.setData({
       platforms: ['PlayStation 3'],
     });
@@ -149,7 +155,7 @@ describe('GamesLibrary Search and Filter', () => {
     // remove some platforms filters
     wrapper.vm.registerFilterEvent([]);
 
-    sinon.assert.calledTwice(wrapper.vm.searchAndFilter);
+    Sinon.assert.calledTwice(wrapper.vm.searchAndFilter);
     expect(wrapper.vm.platforms).toEqual([]);
     expect(wrapper.vm.filteredLibrary).toEqual([library[0], library[1], library[2]]);
   });

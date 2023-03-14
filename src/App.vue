@@ -7,11 +7,11 @@
 <script setup lang="ts">
 
 import { IonApp, IonRouterOutlet } from '@ionic/vue';
-import Utils from '@/utils/Utils';
+import gameDexStore from '@/store/Store';
 
+const store = gameDexStore();
 const isDark:boolean = window.matchMedia('(prefers-color-scheme:dark)').matches;
 
-Utils.setDeviceColorScheme(isDark);
-console.debug(`Dark mode is ${isDark ? 'enabled' : 'disabled'} at launch`);
+store.setDeviceColorScheme(isDark);
 
 </script>

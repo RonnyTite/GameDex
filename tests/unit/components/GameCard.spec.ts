@@ -15,7 +15,7 @@ const mountComponent = (props = propsData) => mount(GameCard, {
 });
 
 describe('GameCard.vue', () => {
-  let wrapper;
+  let wrapper:any;
   let axiosMock:SinonStub;
   let fetchGameProfileSpy:SinonSpy;
   beforeEach(() => {
@@ -27,6 +27,7 @@ describe('GameCard.vue', () => {
     fetchGameProfileSpy = Sinon.spy(GiantBombApi, 'fetchGameProfile');
   });
   afterEach(() => {
+    wrapper.unmount();
     Sinon.restore();
   });
   it('should open game card modal with', async () => {

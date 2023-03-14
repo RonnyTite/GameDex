@@ -31,7 +31,7 @@
           tab="Account"
           href="/tabs/account"
         >
-          <IonIcon :icon="settings" />
+          <IonIcon :icon="settingsOutline" />
           <IonLabel>Settings</IonLabel>
         </IonTabButton>
       </IonTabBar>
@@ -44,7 +44,7 @@ import {
   IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet,
 } from '@ionic/vue';
 import {
-  gameControllerOutline, settings, libraryOutline, searchOutline,
+  gameControllerOutline, settingsOutline, libraryOutline, searchOutline,
 } from 'ionicons/icons';
 
 </script>

@@ -33,6 +33,7 @@
         <IonToggle
           slot="end"
           color="primary"
+          class="theme-toggler"
           :enable-on-off-labels="true"
           :checked="store.colorSchemeIsDark"
           @ion-change="toggleDarkMode"
@@ -56,14 +57,13 @@ import {
   IonToggle, IonItem, IonLabel, IonIcon,
 } from '@ionic/vue';
 import { trashOutline, moonOutline, moon } from 'ionicons/icons';
-import Utils from '@/utils/Utils';
-import gameDexStore from '@/store/store';
+import gameDexStore from '@/store/Store';
 
 const store = gameDexStore();
 
 function toggleDarkMode(event:ToggleCustomEvent):void {
   const isDarkTheme = event.detail.checked;
-  Utils.setDeviceColorScheme(isDarkTheme);
+  store.setDeviceColorScheme(isDarkTheme);
   document.body.classList.toggle('dark', isDarkTheme);
 }
 

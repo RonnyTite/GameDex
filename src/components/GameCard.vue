@@ -73,7 +73,7 @@
           </p>
         </div>
 
-        <div v-if="game.similar_games.length > 0">
+        <div v-if="containsSimilarGamesProperty">
           <p
             v-for="(similarGame, index) in game.similar_games"
             :key="index"
@@ -130,6 +130,9 @@ export default defineComponent({
   computed: {
     computeReleaseDate():string {
       return Utils.computeReleaseDate(this.game);
+    },
+    containsSimilarGamesProperty() {
+      return this.game.similar_games && this.game.similar_games.length > 0;
     },
     dataToShare() {
       return {

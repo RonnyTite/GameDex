@@ -7,7 +7,7 @@ import { axiosInstance } from '@/scripts/RequestManager';
 import GiantBombApi from '@/scripts/GiantBombApi';
 
 describe('SearchPage.vue', () => {
-  let wrapper;
+  let wrapper:any;
   let axiosMock:SinonStub;
   const searchResultsStub = ({
     data: { results: searchMockJson.results },
@@ -18,6 +18,7 @@ describe('SearchPage.vue', () => {
     makeSearchSpy = Sinon.spy(GiantBombApi, 'makeSearch');
   });
   afterEach(() => {
+    wrapper.unmount();
     Sinon.restore();
   });
 

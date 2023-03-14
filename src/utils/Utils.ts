@@ -1,6 +1,5 @@
 import { GameProfile, GameProfileFeed } from '@/types/searchEntities.d';
 import libraryMock from '@/mocks/libraryMock.json';
-import gameDexStore from '@/store/store';
 
 export interface TodayDate {
   day: number
@@ -67,9 +66,5 @@ export default {
   loadLibraryFromStore():Array<GameProfile> {
     return libraryMock as Array<GameProfile>;
   },
-  setDeviceColorScheme(isDark:boolean):void {
-    const store = gameDexStore();
-    store.colorSchemeIsDark = isDark;
-    console.debug(`Dark mode is ${store.colorSchemeIsDark ? 'enabled' : 'disabled'}`);
-  },
+
 };
