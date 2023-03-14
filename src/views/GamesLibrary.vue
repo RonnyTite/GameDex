@@ -9,18 +9,17 @@
           Library
         </IonTitle>
         <IonButtons slot="end">
-          <IonButton>
-            <IonIcon
-              :icon="filterOutline"
-              color="light"
-            />
-          </IonButton>
+          <PlatformsFilter
+            v-if="rawLibrary.length> 0"
+            :data-list="rawLibrary"
+            @on-filter="registerFilterEvent"
+          />
         </IonButtons>
       </IonToolbar>
       <ion-toolbar>
         <Searchbar
           :debounce="200"
-          @on-search="search($event)"
+          @on-search="registerSearchEvent($event)"
           @clear="resetSearch"
         />
       </ion-toolbar>
@@ -50,8 +49,8 @@
 
 <script lang="ts">
 import {
-  IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
-  IonSpinner, IonButtons, IonButton, IonIcon,
+  IonHeader, IonToolbar, IonTitle, IonContent, IonPage,
+  IonSpinner, IonButtons,
 } from '@ionic/vue';
 
 import { defineComponent } from 'vue';
@@ -61,13 +60,15 @@ import { filterOutline } from 'ionicons/icons';
 import Searchbar from '../components/SearchBar.vue';
 import GameCard from '../components/GameCard.vue';
 import DisplayAsList from '../components/DisplayAsList.vue';
+import PlatformsFilter from '../components/PlatformsFilter.vue';
 import Utils from '../utils/Utils';
-import { GameProfile } from '../types/searchEntities.d';
+import { GameProfile, GamePlatform } from '../types/searchEntities.d';
 
 export default defineComponent({
   components: {
     GameCard,
     Searchbar,
+    PlatformsFilter,
     DisplayAsList,
     IonPage,
     IonHeader,
@@ -76,22 +77,24 @@ export default defineComponent({
     IonContent,
     IonSpinner,
     IonButtons,
-    IonButton,
-    IonIcon,
   },
   setup() {
     return { filterOutline };
   },
   data() {
     return {
+      rawLibrary: [] as Array<GameProfile>,
       library: [] as Array<GameProfile>,
       filteredLibrary: [] as Array<GameProfile>,
       processing: false as boolean,
       isGameCardModalOpen: false as boolean,
       modalGameId: '' as string,
+      searchedValue: '' as string,
+      platforms: [] as Array<GamePlatform['name']>,
     };
   },
   beforeMount() {
+    this.rawLibrary = Utils.loadLibraryFromStore();
     this.library = Utils.loadLibraryFromStore();
     this.resetSearch();
   },
@@ -104,13 +107,48 @@ export default defineComponent({
       this.modalGameId = '';
       this.isGameCardModalOpen = false;
     },
-    search(searchValue: SearchbarChangeEventDetail['value']): void {
+    registerSearchEvent(searchValue: SearchbarChangeEventDetail['value']):void {
+      this.searchedValue = searchValue || '';
+      this.searchAndFilter();
+    },
+    registerFilterEvent(platformNames:Array<GamePlatform['name']>):void {
+      this.platforms = platformNames;
+      this.searchAndFilter();
+    },
+    search(searchValue:string): Array<GameProfile> {
+      let searched = [] as Array<GameProfile>;
       if (searchValue) {
-        this.filteredLibrary = this.library.filter(
+        searched = this.filteredLibrary.filter(
           (game) => game.name.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
         );
       } else if (searchValue === '') {
-        this.resetSearch();
+        searched = this.rawLibrary;
+      } else {
+        searched = [] as Array<GameProfile>;
+      }
+      return searched;
+    },
+    filteringByPlatforms(platformNames:Array<GamePlatform['name']>):Array<GameProfile> {
+      let filtered:Array<GameProfile>;
+
+      if (platformNames.length > 0) {
+        // eslint-disable-next-line max-len
+        filtered = this.filteredLibrary.filter((game) => game.platforms.find((platform) => platformNames.includes(platform.name)));
+      } else {
+        filtered = this.filteredLibrary;
+      }
+
+      return filtered;
+    },
+    searchAndFilter():void {
+      this.resetSearch();
+
+      if (this.searchedValue) {
+        this.filteredLibrary = this.search(this.searchedValue);
+      }
+
+      if (this.platforms) {
+        this.filteredLibrary = this.filteringByPlatforms(this.platforms);
       }
     },
     resetSearch(): void {
@@ -119,16 +157,3 @@ export default defineComponent({
   },
 });
 </script>
-<style>
-
-.spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-}
-ion-toolbar {
-    --background: #1f6cf8;
-  }
-
-</style>

@@ -9,6 +9,12 @@
           GameDex
         </IonTitle>
         <IonButtons slot="end">
+          <PlatformsFilter
+            v-if="originalFeedResponse.length> 0"
+            key="HomepageFilter"
+            :data-list="originalFeedResponse"
+            @on-filter="filteringByPlatforms"
+          />
           <IonButton @click="changeListDisplay">
             <IonIcon
               v-if="listAs === 'masonry'"
@@ -39,7 +45,7 @@
         v-if="dayfilteredFeed.length> 0"
         class="today-releases-container ion-margin-top"
       >
-        <div class="title text__bold text__black ion-text-uppercase ion-margin-start">
+        <div class="title text__bold ion-text-uppercase ion-margin-start">
           Today Releases
           <HomePageSlider
             :data-list="dayfilteredFeed"
@@ -49,7 +55,7 @@
         </div>
       </div>
       <div class="future-release-container ion-margin-top">
-        <div class="title text__bold text__black ion-text-uppercase ion-margin-vertical ion-margin-start">
+        <div class="title text__bold ion-text-uppercase ion-margin-vertical ion-margin-start">
           Future Releases
         </div>
         <IonSpinner
@@ -90,13 +96,14 @@ import {
 import { defineComponent } from 'vue';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RefresherEventDetail } from '@ionic/core';
-import { listOutline, gridOutline } from 'ionicons/icons';
+import { listOutline, gridOutline, filterOutline } from 'ionicons/icons';
 import GameCard from '../components/GameCard.vue';
+import PlatformsFilter from '../components/PlatformsFilter.vue';
 import DisplayAsList from '../components/DisplayAsList.vue';
 import HomePageSlider from '../components/HomePageSlider.vue';
 import DisplayAsMasonry from '../components/DisplayAsMasonry.vue';
 import searchMockJson from '../mocks/searchRequestResultsMock.json';
-import { GameProfileFeed } from '../types/searchEntities.d';
+import { GamePlatform, GameProfileFeed } from '../types/searchEntities.d';
 import GiantBombApi from '../scripts/GiantBombApi';
 import Utils from '../utils/Utils';
 
@@ -104,6 +111,7 @@ type ListDisplays = 'list' | 'masonry';
 
 export default defineComponent({
   components: {
+    PlatformsFilter,
     GameCard,
     HomePageSlider,
     DisplayAsList,
@@ -121,16 +129,18 @@ export default defineComponent({
     IonRefresherContent,
   },
   setup() {
-    return { listOutline, gridOutline };
+    return { listOutline, gridOutline, filterOutline };
   },
   data() {
     return {
       homePageFeed: [] as Array<GameProfileFeed>,
+      originalFeedResponse: [] as Array<GameProfileFeed>,
       dayfilteredFeed: [] as Array<GameProfileFeed>,
+      popoverOpen: false as boolean,
       processing: false as boolean,
       isGameCardModalOpen: false as boolean,
       modalGameId: '' as string,
-      listAs: 'list' as ListDisplays,
+      listAs: 'masonry' as ListDisplays,
       appColor: {
         blue: '#1f6cf8',
         green: '#1cf069',
@@ -138,6 +148,9 @@ export default defineComponent({
         red: '#f25a41',
       },
     };
+  },
+  computed: {
+
   },
   beforeMount() {
     this.loadFeed();
@@ -179,7 +192,6 @@ export default defineComponent({
         return isReleaseDateExists || (isDayExists && isMonthExists && isYearExists);
       });
     },
-
     filteringTodayDateFromFeedResults(data:Array<GameProfileFeed>) {
       return data.filter((item:GameProfileFeed) => {
         const gameDate = Utils.computeReleaseDate(item);
@@ -187,7 +199,6 @@ export default defineComponent({
         return gameDate === fullDate;
       });
     },
-
     removingTodayDateFromFeedResults(data:Array<GameProfileFeed>) {
       return data.filter((item:GameProfileFeed) => {
         const gameDate = Utils.computeReleaseDate(item);
@@ -195,16 +206,32 @@ export default defineComponent({
         return gameDate !== fullDate;
       });
     },
+    filteringByPlatforms(platformNames:Array<GamePlatform['name']>):void {
+      // eslint-disable-next-line max-len
+      let filtered:Array<GameProfileFeed>;
+
+      if (platformNames.length > 0) {
+        // eslint-disable-next-line max-len
+        filtered = this.originalFeedResponse.filter((game) => game.platforms.find((platform) => platformNames.includes(platform.name)));
+      } else {
+        filtered = this.originalFeedResponse;
+      }
+
+      this.homePageFeed = filtered;
+    },
     loadFeed() {
+      this.processing = true;
       return GiantBombApi.loadHomePageFeed()
         .then((feedResults) => {
           const filteredResults = this.filteringBlankDateFromFeedResults(feedResults.data.results);
           this.dayfilteredFeed = this.filteringTodayDateFromFeedResults(filteredResults);
           this.homePageFeed = this.removingTodayDateFromFeedResults(filteredResults);
+          this.originalFeedResponse = this.removingTodayDateFromFeedResults(filteredResults);
         })
         .catch(() => {
           // !!Debug Mode
           this.homePageFeed = searchMockJson.results as Array<GameProfileFeed>;
+          this.originalFeedResponse = searchMockJson.results as Array<GameProfileFeed>;
         })
         .finally(() => {
           this.processing = false;
@@ -222,14 +249,8 @@ export default defineComponent({
 .future-release-container {
   height: auto;
 }
-.spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
+ion-popover {
+  --max-height: 330px
 }
-ion-toolbar {
-    --background: #1f6cf8;
-  }
 
 </style>

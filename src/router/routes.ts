@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import TabsPage from '../views/AppLayout.vue';
 
-const routes: Array<RouteRecordRaw> = [
+export const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     redirect: '/tabs/homepage',
@@ -20,11 +20,6 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/HomePage.vue'),
       },
       {
-        name: 'GameCard',
-        path: 'gamecard/:game_id',
-        component: () => import('@/components/GameCard.vue'),
-      },
-      {
         path: 'library',
         component: () => import('@/views/GamesLibrary.vue'),
       },
@@ -34,7 +29,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'account',
-        component: () => import('@/views/UserAccount.vue'),
+        component: () => import('@/views/AppSettings.vue'),
       },
     ],
   },

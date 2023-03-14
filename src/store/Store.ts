@@ -5,13 +5,16 @@ import { defineStore } from 'pinia';
 export default defineStore('gameDexStore', {
   state: () => ({
     gameLibrary: {},
+    colorSchemeIsDark: false,
   }),
   getters: {
     getgameLibrary() {},
   },
   actions: {
-    saveGame() {
-
+    saveGame() {},
+    setDeviceColorScheme(isDark:boolean):void {
+      this.colorSchemeIsDark = isDark;
+      console.debug(`Dark mode is ${this.colorSchemeIsDark ? 'enabled' : 'disabled'}`);
     },
   },
 });

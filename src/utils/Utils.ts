@@ -66,4 +66,5 @@ export default {
   loadLibraryFromStore():Array<GameProfile> {
     return libraryMock as Array<GameProfile>;
   },
+
 };

@@ -31,8 +31,8 @@
           tab="Account"
           href="/tabs/account"
         >
-          <IonIcon :icon="personCircleOutline" />
-          <IonLabel>Account</IonLabel>
+          <IonIcon :icon="settingsOutline" />
+          <IonLabel>Settings</IonLabel>
         </IonTabButton>
       </IonTabBar>
     </IonTabs>
@@ -44,7 +44,18 @@ import {
   IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet,
 } from '@ionic/vue';
 import {
-  gameControllerOutline, personCircleOutline, libraryOutline, searchOutline,
+  gameControllerOutline, settingsOutline, libraryOutline, searchOutline,
 } from 'ionicons/icons';
 
 </script>
+<style>
+ion-toolbar {
+  --background: #1f6cf8;
+}
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+</style>
