@@ -112,7 +112,6 @@ export default defineComponent({
       this.searchAndFilter();
     },
     registerFilterEvent(platformNames:Array<GamePlatform['name']>):void {
-      debugger;
       this.platforms = platformNames;
       this.searchAndFilter();
     },
@@ -132,7 +131,7 @@ export default defineComponent({
     filteringByPlatforms(platformNames:Array<GamePlatform['name']>):Array<GameProfile> {
       let filtered:Array<GameProfile>;
 
-      if (this.platforms.length > 0) {
+      if (platformNames.length > 0) {
         // eslint-disable-next-line max-len
         filtered = this.filteredLibrary.filter((game) => game.platforms.find((platform) => platformNames.includes(platform.name)));
       } else {

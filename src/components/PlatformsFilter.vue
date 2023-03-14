@@ -133,6 +133,7 @@ export default defineComponent({
         // eslint-disable-next-line no-param-reassign
         platform.checked = false;
       });
+      this.closePopover();
       this.$emit('resetFilter');
     },
   },

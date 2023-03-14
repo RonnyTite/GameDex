@@ -73,12 +73,14 @@
           </p>
         </div>
 
-        <p
-          v-for="(similarGame, index) in game.similar_games"
-          :key="index"
-        >
-          {{ similarGame.name }}
-        </p>
+        <div v-if="game.similar_games.length > 0">
+          <p
+            v-for="(similarGame, index) in game.similar_games"
+            :key="index"
+          >
+            {{ similarGame.name }}
+          </p>
+        </div>
       </div>
     </IonContent>
   </IonModal>
