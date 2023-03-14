@@ -17,11 +17,7 @@ describe('GamesLibrary.vue Emits', () => {
   });
 
   it('receive emits and open gamecard', async () => {
-    wrapper = shallowMount(GamesLibrary, {
-      globals: {
-        GameCard: true,
-      },
-    });
+    wrapper = shallowMount(GamesLibrary);
     wrapper.vm.openGameCard(library[0]);
     await flushPromises();
     expect(wrapper.vm.modalGameId).toEqual(library[0].id.toString());
