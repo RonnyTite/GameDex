@@ -29,7 +29,7 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'account',
-        component: () => import('@/views/UserAccount.vue'),
+        component: () => import('@/views/AppSettings.vue'),
       },
     ],
   },

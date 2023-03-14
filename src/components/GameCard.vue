@@ -46,7 +46,7 @@
           />
         </div>
 
-        <div class="margin-top">
+        <div class="ion-margin-top">
           <span class="text__blue text__bold">Developer(s): </span>
           <span
             v-for="(developer, key) in game.developers"
@@ -54,10 +54,10 @@
           >{{ developer.name }} {{ game.developers.length !== key + 1 ? '| ' : '' }}</span>
         </div>
 
-        <div class="margin-top">
+        <div class="ion-margin-top">
           <span class="text__blue text__bold">Release Date: </span>{{ computeReleaseDate }}
         </div>
-        <div class="margin-top">
+        <div class="ion-margin-top">
           <span class="text__blue text__bold ">Region: </span>{{ game.region }}
         </div>
 
@@ -66,7 +66,7 @@
           :abbreviation="false"
         />
 
-        <div class="margin-top">
+        <div class="ion-margin-top">
           <span class="text__blue text__bold">Story</span>
           <p class="font__proxima">
             {{ game.deck }}
@@ -168,9 +168,6 @@ export default defineComponent({
 <style>
 .spinner{
   top: 40%!important;
-}
-.margin-top{
-  margin-top: 5px;
 }
 .main-image {
   display: block;

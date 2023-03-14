@@ -45,7 +45,7 @@
         v-if="dayfilteredFeed.length> 0"
         class="today-releases-container ion-margin-top"
       >
-        <div class="title text__bold text__black ion-text-uppercase ion-margin-start">
+        <div class="title text__bold ion-text-uppercase ion-margin-start">
           Today Releases
           <HomePageSlider
             :data-list="dayfilteredFeed"
@@ -55,7 +55,7 @@
         </div>
       </div>
       <div class="future-release-container ion-margin-top">
-        <div class="title text__bold text__black ion-text-uppercase ion-margin-vertical ion-margin-start">
+        <div class="title text__bold ion-text-uppercase ion-margin-vertical ion-margin-start">
           Future Releases
         </div>
         <IonSpinner
@@ -220,6 +220,7 @@ export default defineComponent({
       this.homePageFeed = filtered;
     },
     loadFeed() {
+      this.processing = true;
       return GiantBombApi.loadHomePageFeed()
         .then((feedResults) => {
           const filteredResults = this.filteringBlankDateFromFeedResults(feedResults.data.results);
@@ -247,15 +248,6 @@ export default defineComponent({
 }
 .future-release-container {
   height: auto;
-}
-.spinner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-}
-ion-toolbar {
-    --background: #1f6cf8;
 }
 ion-popover {
   --max-height: 330px
