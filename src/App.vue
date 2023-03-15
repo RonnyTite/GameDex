@@ -13,5 +13,6 @@ const store = gameDexStore();
 const isDark:boolean = window.matchMedia('(prefers-color-scheme:dark)').matches;
 
 store.setDeviceColorScheme(isDark);
+document.body.classList.toggle('dark', isDark);
 
 </script>
