@@ -1,9 +1,19 @@
 import { defineStore } from 'pinia';
+import { CompleteGameProfile } from '@/types/searchEntities.d';
 
 // https://pinia.vuejs.org/core-concepts/
 
+interface GameLibrary {
+  [x:string]: CompleteGameProfile
+}
+
+interface GameDexState {
+  gameLibrary: GameLibrary
+  colorSchemeIsDark: boolean
+}
+
 export default defineStore('gameDexStore', {
-  state: () => ({
+  state: ():GameDexState => ({
     gameLibrary: {},
     colorSchemeIsDark: false,
   }),
@@ -11,7 +21,22 @@ export default defineStore('gameDexStore', {
     getgameLibrary() {},
   },
   actions: {
-    saveGame() {},
+    toggleGameInLibrary(game:CompleteGameProfile):void {
+      const gameId = game.id.toString();
+      const isAlreadySaved = Object.keys(this.gameLibrary).includes(gameId);
+
+      if (isAlreadySaved) {
+        delete this.gameLibrary[gameId];
+        console.debug(`${gameId} has been removed`);
+      } else {
+        this.gameLibrary = {
+          [gameId]: game,
+          ...this.gameLibrary,
+        };
+        console.debug(`${gameId} has been saved`);
+      }
+    },
+
     setDeviceColorScheme(isDark:boolean):void {
       this.colorSchemeIsDark = isDark;
       console.debug(`Dark mode is ${this.colorSchemeIsDark ? 'enabled' : 'disabled'}`);
