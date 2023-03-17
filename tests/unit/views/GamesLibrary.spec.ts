@@ -15,6 +15,7 @@ describe('GamesLibrary.vue Emits', () => {
   let wrapper:any;
   const libraryMock = { ...GamelibraryMock } as unknown as GameLibrary;
   beforeEach(() => {
+    Sinon.stub(console, 'debug');
     // creates a fresh pinia and make it active so it's automatically picked
     // up by any useStore() call without having to pass it to it:
     // `useStore(pinia)`
