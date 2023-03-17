@@ -26,15 +26,8 @@
     </IonHeader>
     <IonContent :fullscreen="true">
       <IonHeader collapse="condense" />
-
-      <IonSpinner
-        v-if="processing"
-        name="crescent"
-        class="spinner"
-      />
       <DisplayAsList
         v-for="(gameListFilteredByLetter, index) in Object.values(filteredLibrary)"
-        v-else
         :key="index"
         :data-list="gameListFilteredByLetter"
         @open-gamecard="openGameCard"
@@ -52,7 +45,7 @@
 <script lang="ts">
 import {
   IonHeader, IonToolbar, IonTitle, IonContent, IonPage,
-  IonSpinner, IonButtons,
+  IonButtons,
 } from '@ionic/vue';
 
 import { defineComponent } from 'vue';
@@ -79,7 +72,6 @@ export default defineComponent({
     IonToolbar,
     IonTitle,
     IonContent,
-    IonSpinner,
     IonButtons,
   },
   setup() {

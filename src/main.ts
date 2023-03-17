@@ -1,6 +1,9 @@
 import '@/style/fonts.css';
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+// https://seb-l.github.io/pinia-plugin-persist
+// eslint-disable-next-line import/no-extraneous-dependencies
+import piniaPersist from 'pinia-plugin-persist';
 import { IonicVue } from '@ionic/vue';
 import App from './App.vue';
 import router from './router/routes';
@@ -26,8 +29,8 @@ import '@ionic/vue/css/display.css';
 import './theme/variables.css';
 
 /* instanciate store */
-const pinia = createPinia();
-
+const pinia = createPinia()
+  .use(piniaPersist);
 const app = createApp(App)
   .use(IonicVue)
   .use(pinia)

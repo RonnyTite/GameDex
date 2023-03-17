@@ -1,5 +1,5 @@
 import { CompleteGameProfile, GameProfile, GameProfileFeed } from '@/types/SearchEntities.d';
-import { GameLibrary } from '@/types/Store.d';
+import { GameLibrary, SortedLibrary } from '@/types/Store.d';
 import GameDexStore from '@/store/Store';
 // import libraryMock from '@/mocks/libraryMock.json';
 
@@ -9,12 +9,6 @@ export interface TodayDate {
   year: number
   fullDate: string
 }
-
-export interface SortedLibrary {
-  [x: string]: Array<CompleteGameProfile>
-}
-// eslint-disable-next-line max-len
-export type SingleLetter = '# | A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z';
 
 export default {
   formatDate: (date: Date): string => {

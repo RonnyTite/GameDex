@@ -38,4 +38,13 @@ export default defineStore('gameDexStore', {
       console.debug(`Dark mode is ${this.colorSchemeIsDark ? 'enabled' : 'disabled'}`);
     },
   },
+  persist: {
+    enabled: true,
+    strategies: [
+      {
+        key: 'gameDexStore',
+        storage: localStorage,
+      },
+    ],
+  },
 });
