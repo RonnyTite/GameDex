@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils';
 import Sinon, { SinonStub, SinonSpy } from 'sinon';
 import SearchPage from '@/views/SearchPage.vue';
 import searchMockJson from '@/mocks/searchRequestResultsMock.json';
-import { GameProfile, SearchResults } from '@/types/SearchEntities.d';
+import { GameProfile, SearchResults } from '@/types/searchEntities';
 import { axiosInstance } from '@/scripts/RequestManager';
 import GiantBombApi from '@/scripts/GiantBombApi';
 

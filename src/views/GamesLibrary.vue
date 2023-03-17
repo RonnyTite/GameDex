@@ -64,7 +64,7 @@ import GameCard from '@/components/GameCard.vue';
 import DisplayAsList from '@/components/DisplayAsList.vue';
 import PlatformsFilter from '@/components/PlatformsFilter.vue';
 import Utils from '@/utils/Utils';
-import { GameProfile, GamePlatform } from '@/types/SearchEntities.d';
+import { GameProfile, GamePlatform } from '@/types/searchEntities';
 import { SortedLibrary, GameLibrary } from '@/types/Store.d';
 
 export default defineComponent({

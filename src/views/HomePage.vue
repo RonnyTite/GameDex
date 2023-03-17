@@ -103,7 +103,7 @@ import DisplayAsList from '@/components/DisplayAsList.vue';
 import HomePageSlider from '@/components/HomePageSlider.vue';
 import DisplayAsMasonry from '@/components/DisplayAsMasonry.vue';
 import searchMockJson from '@/mocks/searchRequestResultsMock.json';
-import { GamePlatform, GameProfileFeed } from '@/types/SearchEntities.d';
+import { GamePlatform, GameProfileFeed } from '@/types/searchEntities';
 import GiantBombApi from '@/scripts/GiantBombApi';
 import Utils from '@/utils/Utils';
 

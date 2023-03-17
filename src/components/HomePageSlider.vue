@@ -34,7 +34,7 @@ import 'swiper/css/effect-flip';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { defineComponent } from 'vue';
-import { GameProfileFeed } from '@/types/SearchEntities.d';
+import { GameProfileFeed } from '@/types/searchEntities';
 
 export default defineComponent({
   components: {

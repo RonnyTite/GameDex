@@ -1,7 +1,7 @@
 import { AxiosPromise } from 'axios';
 import {
   CompleteGameProfile, GameProfile, SearchResults, GameProfileFeed,
-} from '@/types/SearchEntities.d';
+} from '@/types/searchEntities';
 import RequestManager, { BASE_URL } from './RequestManager';
 
 export default {
