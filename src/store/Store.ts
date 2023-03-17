@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { CompleteGameProfile } from '@/types/SearchEntities';
-import { GameLibrary } from '@/types/Store';
+import { GameLibrary } from '@/types/Store.d';
+import { CompleteGameProfile } from '@/types/SearchEntities.d';
 
 // https://pinia.vuejs.org/core-concepts/
 interface GameDexState {
