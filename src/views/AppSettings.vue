@@ -39,7 +39,7 @@
           @ion-change="toggleDarkMode"
         />
       </IonItem>
-      <IonItem>
+      <IonItem @click="wipe">
         <IonIcon
           :icon="trashOutline"
         />
@@ -56,6 +56,8 @@ import {
   IonPage, IonHeader, IonToolbar, IonTitle, IonContent, ToggleCustomEvent,
   IonToggle, IonItem, IonLabel, IonIcon,
 } from '@ionic/vue';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Dialog } from '@capacitor/dialog';
 import { trashOutline, moonOutline, moon } from 'ionicons/icons';
 import gameDexStore from '@/store/Store';
 
@@ -65,6 +67,21 @@ function toggleDarkMode(event:ToggleCustomEvent):void {
   const isDarkTheme = event.detail.checked;
   store.setDeviceColorScheme(isDarkTheme);
   document.body.classList.toggle('dark', isDarkTheme);
+}
+
+function wipe():void {
+  // https://ionicframework.com/docs/native/dialog#example
+  Dialog.confirm({
+    title: 'Confirm',
+    message: 'Are you sure you\'d like to wipe the whole app?',
+  })
+    .then((confirmAnswer) => {
+      if (confirmAnswer.value) {
+        store.wipe();
+      } else {
+        // CANCEL
+      }
+    });
 }
 
 </script>

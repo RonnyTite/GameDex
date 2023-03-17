@@ -5,13 +5,13 @@ import { GameLibrary } from '@/types/Store';
 // https://pinia.vuejs.org/core-concepts/
 interface GameDexState {
   gameLibrary: GameLibrary
-  colorSchemeIsDark: boolean
+  colorSchemeIsDark: boolean | null
 }
 
 export default defineStore('gameDexStore', {
   state: ():GameDexState => ({
     gameLibrary: {},
-    colorSchemeIsDark: false,
+    colorSchemeIsDark: null,
   }),
   getters: {
     getgameLibrary() {},
@@ -36,6 +36,10 @@ export default defineStore('gameDexStore', {
     setDeviceColorScheme(isDark:boolean):void {
       this.colorSchemeIsDark = isDark;
       console.debug(`Dark mode is ${this.colorSchemeIsDark ? 'enabled' : 'disabled'}`);
+    },
+    wipe() {
+      this.gameLibrary = {};
+      this.colorSchemeIsDark = null;
     },
   },
   persist: {

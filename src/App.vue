@@ -10,8 +10,12 @@ import { IonApp, IonRouterOutlet } from '@ionic/vue';
 import gameDexStore from '@/store/Store';
 
 const store = gameDexStore();
-const isDark:boolean = window.matchMedia('(prefers-color-scheme:dark)').matches;
+let isDark = store.colorSchemeIsDark;
 
-store.setDeviceColorScheme(isDark);
+if (isDark === null) {
+  isDark = window.matchMedia('(prefers-color-scheme:dark)').matches;
+  store.setDeviceColorScheme(isDark);
+}
+if (typeof isDark === 'boolean')document.body.classList.toggle('dark', isDark);
 
 </script>
