@@ -42,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import { GameProfileFeed, GameProfile, GamePlatform } from '@/types/SearchEntities.d';
+import { GameProfileFeed, GameProfile, GamePlatform } from '@/types/SearchEntities';
 import {
   IonContent,
   IonButton, IonIcon, CheckboxCustomEvent,

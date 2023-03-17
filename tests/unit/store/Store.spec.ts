@@ -2,7 +2,7 @@ import gameDexStore from '@/store/Store';
 // https://pinia.vuejs.org/cookbook/testing.html#unit-testing-a-store
 import { setActivePinia, createPinia } from 'pinia';
 import gameMock from '@/mocks/gameMock.json';
-import { CompleteGameProfile } from '@/types/SearchEntities.d';
+import { CompleteGameProfile } from '@/types/SearchEntities';
 import { flushPromises } from '@vue/test-utils';
 import Sinon from 'sinon';
 import libraryMock from '@/mocks/libraryMock.json';

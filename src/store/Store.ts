@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { CompleteGameProfile } from '@/types/SearchEntities.d';
+import { CompleteGameProfile } from '@/types/SearchEntities';
 import { GameLibrary } from '@/types/Store';
 
 // https://pinia.vuejs.org/core-concepts/

@@ -6,7 +6,7 @@ import GamesLibrary from '@/views/GamesLibrary.vue';
 // https://pinia.vuejs.org/cookbook/testing.html#unit-testing-a-store
 import { setActivePinia, createPinia } from 'pinia';
 import GamelibraryMock from '@/mocks/libraryMock.json';
-import { CompleteGameProfile } from '@/types/SearchEntities.d';
+import { CompleteGameProfile } from '@/types/SearchEntities';
 import gameDexStore from '@/store/Store';
 import { GameLibrary, SortedLibrary } from '@/types/Store';
 import Utils from '@/utils/Utils';
