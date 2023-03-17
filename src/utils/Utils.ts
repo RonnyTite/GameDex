@@ -1,5 +1,7 @@
-import { GameProfile, GameProfileFeed } from '@/types/searchEntities.d';
-import libraryMock from '@/mocks/libraryMock.json';
+import { CompleteGameProfile, GameProfile, GameProfileFeed } from '@/types/SearchEntities.d';
+import { GameLibrary } from '@/types/Store.d';
+import GameDexStore from '@/store/Store';
+// import libraryMock from '@/mocks/libraryMock.json';
 
 export interface TodayDate {
   day: number
@@ -8,8 +10,14 @@ export interface TodayDate {
   fullDate: string
 }
 
+export interface SortedLibrary {
+  [x: string]: Array<CompleteGameProfile>
+}
+// eslint-disable-next-line max-len
+export type SingleLetter = '# | A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z';
+
 export default {
-  formatDate: (date:Date):string => {
+  formatDate: (date: Date): string => {
     const locale = 'en-US';
 
     return date.toLocaleDateString(locale, {
@@ -18,10 +26,10 @@ export default {
       day: 'numeric',
     });
   },
-  isGameprofile(data:GameProfile | GameProfileFeed):data is GameProfile {
+  isGameprofile(data: GameProfile | GameProfileFeed): data is GameProfile {
     return data ? 'release_date' in data : false;
   },
-  computeReleaseDate(game:GameProfile | GameProfileFeed):string {
+  computeReleaseDate(game: GameProfile | GameProfileFeed): string {
     const {
       // eslint-disable-next-line @typescript-eslint/naming-convention, max-len
       expected_release_quarter, expected_release_year, expected_release_month, expected_release_day,
@@ -54,7 +62,7 @@ export default {
 
     return expected_release_year ? expected_release_year.toString() : '- - -';
   },
-  computeTodayDate():TodayDate {
+  computeTodayDate(): TodayDate {
     const date = new Date();
     return {
       day: date.getDate(),
@@ -63,8 +71,54 @@ export default {
       fullDate: this.formatDate(date),
     };
   },
-  loadLibraryFromStore():Array<GameProfile> {
-    return libraryMock as Array<GameProfile>;
+  /**
+   * @description create an Array with one iteration of first letters only , no duplicates
+   */
+  fetchFirstLetters(rawLibrary: Array<CompleteGameProfile>): Array<string> {
+    return [...new Set( // new Set to avoid duplicate
+      rawLibrary
+        .sort((a, b) => a.name.localeCompare(b.name)) // sort by name
+        .map((game) => game.name.charAt(0)), // make array of first letter;
+    )];
+  },
+  flatGameLibrary(rawLibrary: GameLibrary | SortedLibrary):Array<CompleteGameProfile> {
+    return Object.values(rawLibrary).flat();
+  },
+  organizeFlattenedLibraryAsGameLibrary(flattenedLibrary:Array<CompleteGameProfile >):SortedLibrary {
+    const filterLetters = this.fetchFirstLetters(flattenedLibrary);
+
+    let sortedlibrary: SortedLibrary = {};
+
+    filterLetters.forEach((letter) => {
+      const filteredGames = Object.values(flattenedLibrary).filter((game) => game.name.charAt(0) === letter);
+
+      const nonLetterRegex = /[^a-zA-Z]+/g;
+      const property = letter.match(nonLetterRegex) ? '#' : letter;
+
+      sortedlibrary = {
+        [property]: filteredGames,
+        ...sortedlibrary,
+      };
+    });
+
+    return sortedlibrary;
+  },
+  loadLibrary(): SortedLibrary {
+    const store = GameDexStore();
+    // @todo to be removed
+    // const gameMock0 = libraryMock[0] as CompleteGameProfile;
+    // const gameMock1 = libraryMock[1] as CompleteGameProfile;
+    // const gameMock2 = libraryMock[2] as CompleteGameProfile;
+    // const gameMock3 = libraryMock[3] as CompleteGameProfile;
+    // store.toggleGameInLibrary(gameMock0);
+    // store.toggleGameInLibrary(gameMock1); // Bayonetta
+    // store.toggleGameInLibrary(gameMock2); // Bayonetta 2
+    // store.toggleGameInLibrary(gameMock3); // Street Fighter
+
+    const rawLibrary = { ...store.gameLibrary };
+    const flattenedLibrary = this.flatGameLibrary(rawLibrary);
+
+    return this.organizeFlattenedLibraryAsGameLibrary(flattenedLibrary);
   },
 
 };

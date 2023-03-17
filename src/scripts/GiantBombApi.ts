@@ -2,7 +2,7 @@ import { AxiosPromise } from 'axios';
 import RequestManager, { BASE_URL } from './RequestManager';
 import {
   CompleteGameProfile, GameProfile, SearchResults, GameProfileFeed,
-} from '../types/searchEntities.d';
+} from '../types/SearchEntities.d';
 // import feedMock from '@/mocks/feedMock.json';
 
 export default {

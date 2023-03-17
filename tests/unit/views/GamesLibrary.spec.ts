@@ -1,15 +1,36 @@
 import { flushPromises, shallowMount } from '@vue/test-utils';
 import Sinon from 'sinon';
 import GamesLibrary from '@/views/GamesLibrary.vue';
-import libraryMock from '@/mocks/libraryMock.json';
-import { GameProfile } from '@/types/searchEntities.d';
+// import gameLibraryFilteredMock from '@/mocks/gameLibraryFilteredMock.json';
+
+// https://pinia.vuejs.org/cookbook/testing.html#unit-testing-a-store
+import { setActivePinia, createPinia } from 'pinia';
+import GamelibraryMock from '@/mocks/libraryMock.json';
+import { CompleteGameProfile } from '@/types/SearchEntities.d';
+import gameDexStore from '@/store/Store';
+import { GameLibrary, SortedLibrary } from '@/types/Store';
 import Utils from '@/utils/Utils';
 
 describe('GamesLibrary.vue Emits', () => {
   let wrapper:any;
-  const library = libraryMock as Array<GameProfile>;
+  const libraryMock = { ...GamelibraryMock } as unknown as GameLibrary;
   beforeEach(() => {
-    Sinon.stub(Utils, 'loadLibraryFromStore').returns(library);
+    // creates a fresh pinia and make it active so it's automatically picked
+    // up by any useStore() call without having to pass it to it:
+    // `useStore(pinia)`
+    setActivePinia(createPinia());
+
+    const store = gameDexStore();
+
+    const gameMock0 = { ...libraryMock[0] } as CompleteGameProfile;
+    gameMock0.name = '070 Project'; // Name beginning with a Number
+    const gameMock1 = { ...libraryMock[1] } as CompleteGameProfile;
+    const gameMock2 = { ...libraryMock[2] } as CompleteGameProfile;
+    const gameMock3 = { ...libraryMock[3] } as CompleteGameProfile;
+    store.toggleGameInLibrary(gameMock0); // 070 Project
+    store.toggleGameInLibrary(gameMock1); // Bayonetta
+    store.toggleGameInLibrary(gameMock2); // Bayonetta 2
+    store.toggleGameInLibrary(gameMock3); // Street Fighter
   });
   afterEach(() => {
     wrapper.unmount();
@@ -18,9 +39,9 @@ describe('GamesLibrary.vue Emits', () => {
 
   it('receive emits and open gamecard', async () => {
     wrapper = shallowMount(GamesLibrary);
-    wrapper.vm.openGameCard(library[0]);
+    wrapper.vm.openGameCard(libraryMock[0]);
     await flushPromises();
-    expect(wrapper.vm.modalGameId).toEqual(library[0].id.toString());
+    expect(wrapper.vm.modalGameId).toEqual(libraryMock[0].id.toString());
     expect(wrapper.vm.isGameCardModalOpen).toEqual(true);
   });
   it('receive emits and close gamecard', () => {
@@ -33,63 +54,94 @@ describe('GamesLibrary.vue Emits', () => {
 
 describe('GamesLibrary Search and Filter', () => {
   let wrapper:any;
-  const library = libraryMock as Array<GameProfile>;
+  let gameMock0:CompleteGameProfile;
+  const libraryMock = { ...GamelibraryMock } as unknown as GameLibrary;
+  let loadedLibrary:SortedLibrary;
   beforeEach(() => {
-    Sinon.stub(Utils, 'loadLibraryFromStore').returns(library);
+    Sinon.stub(console, 'debug');
+    // creates a fresh pinia and make it active so it's automatically picked
+    // up by any useStore() call without having to pass it to it:
+    // `useStore(pinia)`
+    setActivePinia(createPinia());
+
+    const store = gameDexStore();
+
+    gameMock0 = { ...libraryMock[0] } as CompleteGameProfile;
+    gameMock0.name = '070 Project'; // Name beginning with a Number
+    const gameMock1 = { ...libraryMock[1] } as CompleteGameProfile;
+    const gameMock2 = { ...libraryMock[2] } as CompleteGameProfile;
+    const gameMock3 = { ...libraryMock[3] } as CompleteGameProfile;
+    store.toggleGameInLibrary(gameMock0); // 070 Project
+    store.toggleGameInLibrary(gameMock1); // Bayonetta
+    store.toggleGameInLibrary(gameMock2); // Bayonetta 2
+    store.toggleGameInLibrary(gameMock3); // Street Fighter
+
+    loadedLibrary = Utils.loadLibrary();
   });
+
   afterEach(() => {
     wrapper.unmount();
     Sinon.restore();
   });
+
   // SEARCH
   it('search through library', () => {
+    const store = gameDexStore();
     wrapper = shallowMount(GamesLibrary);
-    expect(wrapper.vm.rawLibrary).toEqual(library);
-    expect(wrapper.vm.search('stree')).toEqual([library[3]]);
+    expect(wrapper.vm.rawLibrary).toEqual(store.gameLibrary);
+    expect(wrapper.vm.search('stree')).toEqual({
+      S: [libraryMock[3]],
+    });
     // check after search that raw library was not impacted
-    expect(wrapper.vm.rawLibrary).toEqual(library);
-    expect(wrapper.vm.library).toEqual(library);
+    expect(wrapper.vm.rawLibrary).toEqual(store.gameLibrary);
+    expect(wrapper.vm.library).toEqual(loadedLibrary);
   });
 
   it('search through library with no results', () => {
+    const store = gameDexStore();
     wrapper = shallowMount(GamesLibrary);
-    expect(wrapper.vm.rawLibrary).toEqual(library);
-    expect(wrapper.vm.search('strte')).toEqual([]);
+    expect(wrapper.vm.rawLibrary).toEqual(store.gameLibrary);
+    expect(wrapper.vm.search('strte')).toEqual({});
     // check after search that raw library was not impacted
-    expect(wrapper.vm.rawLibrary).toEqual(library);
-    expect(wrapper.vm.library).toEqual(library);
+    expect(wrapper.vm.rawLibrary).toEqual(store.gameLibrary);
+    expect(wrapper.vm.library).toEqual(loadedLibrary);
   });
 
-  it('Search request with emtpy string', () => {
+  it('Search request with empty string', () => {
+    const store = gameDexStore();
     wrapper = shallowMount(GamesLibrary);
-    expect(wrapper.vm.rawLibrary).toEqual(library);
+    expect(wrapper.vm.rawLibrary).toEqual(store.gameLibrary);
     expect(wrapper.vm.search('')).toEqual(wrapper.vm.library);
     // check after search that raw library was not impacted
-    expect(wrapper.vm.rawLibrary).toEqual(library);
-    expect(wrapper.vm.library).toEqual(library);
+    expect(wrapper.vm.rawLibrary).toEqual(store.gameLibrary);
+    expect(wrapper.vm.library).toEqual(loadedLibrary);
     expect(wrapper.vm.searchedValue).toEqual('');
   });
 
   it('reset search', () => {
+    const store = gameDexStore();
     wrapper = shallowMount(GamesLibrary);
     wrapper.vm.resetSearch();
-    expect(wrapper.vm.rawLibrary).toEqual(library);
-    expect(wrapper.vm.library).toEqual(library);
-    expect(wrapper.vm.filteredLibrary).toEqual(wrapper.vm.library);
+    expect(wrapper.vm.rawLibrary).toEqual(store.gameLibrary);
+    expect(wrapper.vm.library).toEqual(loadedLibrary);
+    expect(wrapper.vm.filteredLibrary).toEqual(loadedLibrary);
   });
 
   // FILTER
   it('filter through library', async () => {
+    const store = gameDexStore();
     wrapper = shallowMount(GamesLibrary);
-    expect(wrapper.vm.rawLibrary).toEqual(library);
+    expect(wrapper.vm.rawLibrary).toEqual(store.gameLibrary);
     const results = wrapper.vm.filteringByPlatforms(['Arcade']);
     await flushPromises();
-    expect(results).toEqual([library[3]]);
+    expect(results).toEqual({
+      S: [libraryMock[3]],
+    });
   });
 
   it('filter through library with no platforms', () => {
     wrapper = shallowMount(GamesLibrary);
-    expect(wrapper.vm.filteringByPlatforms([])).toEqual(library);
+    expect(wrapper.vm.filteringByPlatforms([])).toEqual(loadedLibrary);
   });
 
   //  SEARCH AND FILTER
@@ -101,7 +153,9 @@ describe('GamesLibrary Search and Filter', () => {
     await flushPromises();
 
     Sinon.assert.calledOnce(wrapper.vm.searchAndFilter);
-    expect(wrapper.vm.filteredLibrary).toEqual([library[3]]);
+    expect(wrapper.vm.filteredLibrary).toEqual({
+      S: [libraryMock[3]],
+    });
   });
 
   it('search and filter only filter', async () => {
@@ -111,7 +165,9 @@ describe('GamesLibrary Search and Filter', () => {
     wrapper.vm.registerFilterEvent(['Arcade']);
     await flushPromises();
     Sinon.assert.calledOnce(wrapper.vm.searchAndFilter);
-    expect(wrapper.vm.filteredLibrary).toEqual([library[3]]);
+    expect(wrapper.vm.filteredLibrary).toEqual({
+      S: [libraryMock[3]],
+    });
   });
 
   it('search and filter only filter', async () => {
@@ -121,7 +177,10 @@ describe('GamesLibrary Search and Filter', () => {
     wrapper.vm.registerFilterEvent(['PlayStation 3']);
     await flushPromises();
     Sinon.assert.calledOnce(wrapper.vm.searchAndFilter);
-    expect(wrapper.vm.filteredLibrary).toEqual([library[0], library[3]]);
+    expect(wrapper.vm.filteredLibrary).toEqual({
+      '#': [gameMock0],
+      S: [libraryMock[3]],
+    });
   });
   it('search and filter through library', async () => {
     wrapper = shallowMount(GamesLibrary);
@@ -131,28 +190,33 @@ describe('GamesLibrary Search and Filter', () => {
       platforms: ['PlayStation 3'],
     });
 
-    wrapper.vm.registerSearchEvent('bayo');
+    wrapper.vm.registerSearchEvent('stree');
     await flushPromises();
 
     Sinon.assert.calledOnce(wrapper.vm.searchAndFilter);
-    expect(wrapper.vm.filteredLibrary).toEqual([library[0]]);
+    expect(wrapper.vm.filteredLibrary).toEqual({
+      S: [libraryMock[3]],
+    });
   });
 
   it('search and filter and remove filter through library', async () => {
     wrapper = shallowMount(GamesLibrary);
     Sinon.spy(wrapper.vm, 'searchAndFilter');
+
     await wrapper.setData({
       platforms: ['PlayStation 3'],
     });
     // add a search to filter further more
     wrapper.vm.registerSearchEvent('bayo');
 
-    expect(wrapper.vm.filteredLibrary).toEqual([library[0]]);
+    expect(wrapper.vm.filteredLibrary).toEqual({});
     // remove some platforms filters
     wrapper.vm.registerFilterEvent([]);
 
     Sinon.assert.calledTwice(wrapper.vm.searchAndFilter);
     expect(wrapper.vm.platforms).toEqual([]);
-    expect(wrapper.vm.filteredLibrary).toEqual([library[0], library[1], library[2]]);
+    expect(wrapper.vm.filteredLibrary).toEqual({
+      B: [libraryMock[2], libraryMock[1]],
+    });
   });
 });

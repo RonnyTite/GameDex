@@ -32,7 +32,7 @@ import {
 } from '@ionic/vue';
 
 import { defineComponent } from 'vue';
-import { GameProfile, GameProfileFeed } from '../types/searchEntities.d';
+import { GameProfile, GameProfileFeed } from '../types/SearchEntities.d';
 import Utils from '../utils/Utils';
 import DisplayAsLabel from './DisplayAsLabel.vue';
 

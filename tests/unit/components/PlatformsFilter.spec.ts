@@ -1,5 +1,5 @@
 import { flushPromises, mount } from '@vue/test-utils';
-import { GameProfile } from '@/types/searchEntities';
+import { GameProfile } from '@/types/SearchEntities.d';
 import PlatformsFilter from '@/components/PlatformsFilter.vue';
 import searchMockJson from '@/mocks/searchRequestResultsMock.json';
 

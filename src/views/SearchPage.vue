@@ -59,7 +59,7 @@ import Searchbar from '../components/SearchBar.vue';
 import GameCard from '../components/GameCard.vue';
 import DisplayAsList from '../components/DisplayAsList.vue';
 import searchMockJson from '../mocks/searchRequestResultsMock.json';
-import { GameProfile } from '../types/searchEntities';
+import { GameProfile } from '../types/SearchEntities.d';
 import GiantBombApi from '../scripts/GiantBombApi';
 
 export default defineComponent({

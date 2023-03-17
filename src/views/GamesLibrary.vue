@@ -10,8 +10,8 @@
         </IonTitle>
         <IonButtons slot="end">
           <PlatformsFilter
-            v-if="rawLibrary.length> 0"
-            :data-list="rawLibrary"
+            v-if="flatGameLibrary.length> 0"
+            :data-list="flatGameLibrary"
             @on-filter="registerFilterEvent"
           />
         </IonButtons>
@@ -33,8 +33,10 @@
         class="spinner"
       />
       <DisplayAsList
+        v-for="(gameListFilteredByLetter, index) in Object.values(filteredLibrary)"
         v-else
-        :data-list="filteredLibrary"
+        :key="index"
+        :data-list="gameListFilteredByLetter"
         @open-gamecard="openGameCard"
       />
       <GameCard
@@ -57,12 +59,14 @@ import { defineComponent } from 'vue';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { SearchbarChangeEventDetail } from '@ionic/core';
 import { filterOutline } from 'ionicons/icons';
+import gameDexStore from '@/store/Store';
 import Searchbar from '../components/SearchBar.vue';
 import GameCard from '../components/GameCard.vue';
 import DisplayAsList from '../components/DisplayAsList.vue';
 import PlatformsFilter from '../components/PlatformsFilter.vue';
 import Utils from '../utils/Utils';
-import { GameProfile, GamePlatform } from '../types/searchEntities.d';
+import { GameProfile, GamePlatform } from '../types/SearchEntities.d';
+import { SortedLibrary, GameLibrary } from '../types/Store.d';
 
 export default defineComponent({
   components: {
@@ -83,9 +87,9 @@ export default defineComponent({
   },
   data() {
     return {
-      rawLibrary: [] as Array<GameProfile>,
-      library: [] as Array<GameProfile>,
-      filteredLibrary: [] as Array<GameProfile>,
+      rawLibrary: {} as GameLibrary,
+      library: {} as SortedLibrary,
+      filteredLibrary: {} as SortedLibrary,
       processing: false as boolean,
       isGameCardModalOpen: false as boolean,
       modalGameId: '' as string,
@@ -93,9 +97,17 @@ export default defineComponent({
       platforms: [] as Array<GamePlatform['name']>,
     };
   },
+  computed: {
+    flatGameLibrary():Array<GameProfile> {
+      return Utils.flatGameLibrary(this.rawLibrary);
+    },
+  },
   beforeMount() {
-    this.rawLibrary = Utils.loadLibraryFromStore();
-    this.library = Utils.loadLibraryFromStore();
+    const store = gameDexStore();
+    const library = Utils.loadLibrary();
+    this.rawLibrary = { ...store.gameLibrary };
+    this.library = library;
+    this.filteredLibrary = library;
     this.resetSearch();
   },
   methods: {
@@ -115,25 +127,32 @@ export default defineComponent({
       this.platforms = platformNames;
       this.searchAndFilter();
     },
-    search(searchValue:string): Array<GameProfile> {
-      let searched = [] as Array<GameProfile>;
+    search(searchValue:string): SortedLibrary {
+      let searched = {} as SortedLibrary;
       if (searchValue) {
-        searched = this.filteredLibrary.filter(
-          (game) => game.name.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
+        const flattenedList = Utils.flatGameLibrary(this.filteredLibrary);
+        const filteredList = flattenedList.filter(
+          (game) => game.name.toLocaleLowerCase()
+            .includes(searchValue.toLocaleLowerCase()),
         );
+        searched = Utils.organizeFlattenedLibraryAsGameLibrary(filteredList);
       } else if (searchValue === '') {
-        searched = this.rawLibrary;
-      } else {
-        searched = [] as Array<GameProfile>;
+        searched = this.filteredLibrary;
       }
+
       return searched;
     },
-    filteringByPlatforms(platformNames:Array<GamePlatform['name']>):Array<GameProfile> {
-      let filtered:Array<GameProfile>;
+    filteringByPlatforms(platformNames:Array<GamePlatform['name']>):SortedLibrary {
+      let filtered:SortedLibrary;
 
       if (platformNames.length > 0) {
-        // eslint-disable-next-line max-len
-        filtered = this.filteredLibrary.filter((game) => game.platforms.find((platform) => platformNames.includes(platform.name)));
+        const flattenedList = Utils.flatGameLibrary(this.filteredLibrary);
+        const filteredList = flattenedList.filter(
+          (game) => game.platforms.find(
+            (platform) => platformNames.includes(platform.name),
+          ),
+        );
+        filtered = Utils.organizeFlattenedLibraryAsGameLibrary(filteredList);
       } else {
         filtered = this.filteredLibrary;
       }
@@ -152,7 +171,7 @@ export default defineComponent({
       }
     },
     resetSearch(): void {
-      this.filteredLibrary = [...this.library];
+      this.filteredLibrary = { ...this.library };
     },
   },
 });

@@ -1,12 +1,8 @@
 import { defineStore } from 'pinia';
-import { CompleteGameProfile } from '@/types/searchEntities.d';
+import { CompleteGameProfile } from '@/types/SearchEntities.d';
+import { GameLibrary } from '@/types/Store';
 
 // https://pinia.vuejs.org/core-concepts/
-
-interface GameLibrary {
-  [x:string]: CompleteGameProfile
-}
-
 interface GameDexState {
   gameLibrary: GameLibrary
   colorSchemeIsDark: boolean

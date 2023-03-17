@@ -94,7 +94,7 @@ import {
 import { defineComponent } from 'vue';
 import { arrowBackOutline, shareSocialOutline } from 'ionicons/icons';
 import gameDexStore from '@/store/Store';
-import { CompleteGameProfile } from '../types/searchEntities';
+import { CompleteGameProfile } from '../types/SearchEntities.d';
 import GiantBombApi from '../scripts/GiantBombApi';
 import Utils from '../utils/Utils';
 import GameMock from '../mocks/gameMock.json';

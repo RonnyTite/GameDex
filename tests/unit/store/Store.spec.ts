@@ -2,8 +2,9 @@ import gameDexStore from '@/store/Store';
 // https://pinia.vuejs.org/cookbook/testing.html#unit-testing-a-store
 import { setActivePinia, createPinia } from 'pinia';
 import gameMock from '@/mocks/gameMock.json';
-import { CompleteGameProfile } from '@/types/searchEntities';
+import { CompleteGameProfile } from '@/types/SearchEntities.d';
 import { flushPromises } from '@vue/test-utils';
+import Sinon from 'sinon';
 
 describe('Test Pinia Store', () => {
   beforeEach(() => {
@@ -11,6 +12,10 @@ describe('Test Pinia Store', () => {
     // up by any useStore() call without having to pass it to it:
     // `useStore(pinia)`
     setActivePinia(createPinia());
+    Sinon.stub(console, 'debug');
+  });
+  afterEach(() => {
+    Sinon.restore();
   });
 
   it('Initial mount', () => {
