@@ -97,15 +97,15 @@ import { defineComponent } from 'vue';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RefresherEventDetail } from '@ionic/core';
 import { listOutline, gridOutline, filterOutline } from 'ionicons/icons';
-import GameCard from '../components/GameCard.vue';
-import PlatformsFilter from '../components/PlatformsFilter.vue';
-import DisplayAsList from '../components/DisplayAsList.vue';
-import HomePageSlider from '../components/HomePageSlider.vue';
-import DisplayAsMasonry from '../components/DisplayAsMasonry.vue';
-import searchMockJson from '../mocks/searchRequestResultsMock.json';
-import { GamePlatform, GameProfileFeed } from '../types/searchEntities.d';
-import GiantBombApi from '../scripts/GiantBombApi';
-import Utils from '../utils/Utils';
+import GameCard from '@/components/GameCard.vue';
+import PlatformsFilter from '@/components/PlatformsFilter.vue';
+import DisplayAsList from '@/components/DisplayAsList.vue';
+import HomePageSlider from '@/components/HomePageSlider.vue';
+import DisplayAsMasonry from '@/components/DisplayAsMasonry.vue';
+import searchMockJson from '@/mocks/searchRequestResultsMock.json';
+import { GamePlatform, GameProfileFeed } from '@/types/searchEntities';
+import GiantBombApi from '@/scripts/GiantBombApi';
+import Utils from '@/utils/Utils';
 
 type ListDisplays = 'list' | 'masonry';
 

@@ -1,9 +1,8 @@
 import { AxiosPromise } from 'axios';
-import RequestManager, { BASE_URL } from './RequestManager';
 import {
   CompleteGameProfile, GameProfile, SearchResults, GameProfileFeed,
-} from '../types/searchEntities.d';
-// import feedMock from '@/mocks/feedMock.json';
+} from '@/types/searchEntities';
+import RequestManager, { BASE_URL } from './RequestManager';
 
 export default {
   makeSearch(args:string):AxiosPromise<SearchResults<Array<GameProfile>>> {

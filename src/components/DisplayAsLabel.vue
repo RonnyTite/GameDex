@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { GamePlatform } from '../types/searchEntities';
+import { GamePlatform } from '@/types/searchEntities';
 
 export default defineComponent({
   name: 'DisplayAsLabel',

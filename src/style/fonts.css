@@ -39,26 +39,26 @@
 
 @font-face {
     font-family: 'retro';
-    src: url('../fonts/retro.ttf') format('truetype');
+    src: url('@/fonts/retro.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 
 }
 @font-face {
     font-family: 'pixel';
-    src: url('../fonts/pixelmix.ttf') format('truetype');
+    src: url('@/fonts/pixelmix.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
     font-family:"pixel";
-    src:url("../fonts/pixelmix_bold.ttf") format("truetype");
+    src:url("@/fonts/pixelmix_bold.ttf") format("truetype");
     font-weight: 700;
     font-style:normal;
 }
 @font-face {
     font-family: 'proxima';
-    src: url('../fonts/ProximaNova-Semibold.otf') format("opentype");
+    src: url('@/fonts/ProximaNova-Semibold.otf') format("opentype");
     font-weight: normal;
     font-style: normal;
 

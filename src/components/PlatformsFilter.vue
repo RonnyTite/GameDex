@@ -82,7 +82,6 @@ export default defineComponent({
     dataList: {
       deep: true,
       handler() {
-        debugger;
         this.computingPlatformFilter();
       },
     },

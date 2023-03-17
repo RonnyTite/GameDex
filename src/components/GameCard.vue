@@ -40,10 +40,18 @@
       />
       <div v-else>
         <div>
-          <IonImg
-            :src="game.image.original_url || ''"
-            class="main-image"
-          />
+          <div class="img-container">
+            <IonImg
+              :src="game.image.original_url || ''"
+              class="main-image"
+            />
+            <IonIcon
+              class="heart-icon"
+              :icon="heartOutline"
+              color="light"
+              @click="toggleGameInLibrary"
+            />
+          </div>
         </div>
 
         <div class="ion-margin-top">
@@ -51,7 +59,8 @@
           <span
             v-for="(developer, key) in game.developers"
             :key="key"
-          >{{ developer.name }} {{ game.developers.length !== key + 1 ? '| ' : '' }}</span>
+          >{{ developer.name }} {{ game.developers.length !==
+            key + 1 ? '| ' : '' }}</span>
         </div>
 
         <div class="ion-margin-top">
@@ -92,11 +101,12 @@ import {
   IonImg,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import { arrowBackOutline, shareSocialOutline } from 'ionicons/icons';
-import { CompleteGameProfile } from '../types/searchEntities';
-import GiantBombApi from '../scripts/GiantBombApi';
-import Utils from '../utils/Utils';
-import GameMock from '../mocks/gameMock.json';
+import { arrowBackOutline, shareSocialOutline, heartOutline } from 'ionicons/icons';
+import gameDexStore from '@/store/Store';
+import { CompleteGameProfile } from '@/types/searchEntities';
+import GiantBombApi from '@/scripts/GiantBombApi';
+import Utils from '@/utils/Utils';
+import GameMock from '@/mocks/gameMock.json';
 import DisplayAsLabel from './DisplayAsLabel.vue';
 
 export default defineComponent({
@@ -119,7 +129,7 @@ export default defineComponent({
   },
   emits: ['close-modal'],
   setup() {
-    return { arrowBackOutline, shareSocialOutline };
+    return { arrowBackOutline, shareSocialOutline, heartOutline };
   },
   data() {
     return {
@@ -128,7 +138,7 @@ export default defineComponent({
     };
   },
   computed: {
-    computeReleaseDate():string {
+    computeReleaseDate(): string {
       return Utils.computeReleaseDate(this.game);
     },
     containsSimilarGamesProperty() {
@@ -162,20 +172,42 @@ export default defineComponent({
     }
   },
   methods: {
-    async share():Promise<void> {
+    async share(): Promise<void> {
       return navigator.share(this.dataToShare);
+    },
+    toggleGameInLibrary() {
+      const store = gameDexStore();
+      store.toggleGameInLibrary(this.game);
     },
   },
 });
 </script>
 <style>
-.spinner{
-  top: 40%!important;
+.spinner {
+  top: 40% !important;
 }
+
 .main-image {
   display: block;
   height: 350px;
   margin: 0 auto 1em auto;
   width: auto;
+}
+
+.img-container {
+  position: relative;
+  margin: auto;
+  width: 300px;
+  display: block;
+  height: 100%;
+}
+
+.heart-icon {
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  bottom: 5px;
+  width: 25px;
+  height: 25px;
 }
 </style>

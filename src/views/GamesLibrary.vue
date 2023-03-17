@@ -10,8 +10,8 @@
         </IonTitle>
         <IonButtons slot="end">
           <PlatformsFilter
-            v-if="rawLibrary.length> 0"
-            :data-list="rawLibrary"
+            v-if="flatGameLibrary.length> 0"
+            :data-list="flatGameLibrary"
             @on-filter="registerFilterEvent"
           />
         </IonButtons>
@@ -26,17 +26,18 @@
     </IonHeader>
     <IonContent :fullscreen="true">
       <IonHeader collapse="condense" />
+      <div
+        v-for="([letter,gamesListFilteredByLetter], index) in Object.entries(filteredLibrary)"
+        :key="index"
+      >
+        <h4>{{ letter.toUpperCase() }}</h4>
+        <DisplayAsList
 
-      <IonSpinner
-        v-if="processing"
-        name="crescent"
-        class="spinner"
-      />
-      <DisplayAsList
-        v-else
-        :data-list="filteredLibrary"
-        @open-gamecard="openGameCard"
-      />
+          :data-list="gamesListFilteredByLetter"
+          @open-gamecard="openGameCard"
+        />
+      </div>
+
       <GameCard
         v-if="isGameCardModalOpen"
         :is-open="isGameCardModalOpen"
@@ -50,19 +51,21 @@
 <script lang="ts">
 import {
   IonHeader, IonToolbar, IonTitle, IonContent, IonPage,
-  IonSpinner, IonButtons,
+  IonButtons,
 } from '@ionic/vue';
 
 import { defineComponent } from 'vue';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { SearchbarChangeEventDetail } from '@ionic/core';
 import { filterOutline } from 'ionicons/icons';
-import Searchbar from '../components/SearchBar.vue';
-import GameCard from '../components/GameCard.vue';
-import DisplayAsList from '../components/DisplayAsList.vue';
-import PlatformsFilter from '../components/PlatformsFilter.vue';
-import Utils from '../utils/Utils';
-import { GameProfile, GamePlatform } from '../types/searchEntities.d';
+import gameDexStore from '@/store/Store';
+import Searchbar from '@/components/SearchBar.vue';
+import GameCard from '@/components/GameCard.vue';
+import DisplayAsList from '@/components/DisplayAsList.vue';
+import PlatformsFilter from '@/components/PlatformsFilter.vue';
+import Utils from '@/utils/Utils';
+import { GameProfile, GamePlatform } from '@/types/searchEntities';
+import { SortedLibrary, GameLibrary } from '@/types/Store.d';
 
 export default defineComponent({
   components: {
@@ -75,7 +78,6 @@ export default defineComponent({
     IonToolbar,
     IonTitle,
     IonContent,
-    IonSpinner,
     IonButtons,
   },
   setup() {
@@ -83,9 +85,9 @@ export default defineComponent({
   },
   data() {
     return {
-      rawLibrary: [] as Array<GameProfile>,
-      library: [] as Array<GameProfile>,
-      filteredLibrary: [] as Array<GameProfile>,
+      rawLibrary: {} as GameLibrary,
+      library: {} as SortedLibrary,
+      filteredLibrary: {} as SortedLibrary,
       processing: false as boolean,
       isGameCardModalOpen: false as boolean,
       modalGameId: '' as string,
@@ -93,9 +95,17 @@ export default defineComponent({
       platforms: [] as Array<GamePlatform['name']>,
     };
   },
+  computed: {
+    flatGameLibrary():Array<GameProfile> {
+      return Utils.flatGameLibrary(this.rawLibrary);
+    },
+  },
   beforeMount() {
-    this.rawLibrary = Utils.loadLibraryFromStore();
-    this.library = Utils.loadLibraryFromStore();
+    const store = gameDexStore();
+    const library = Utils.loadLibrary();
+    this.rawLibrary = { ...store.gameLibrary };
+    this.library = library;
+    this.filteredLibrary = library;
     this.resetSearch();
   },
   methods: {
@@ -115,25 +125,32 @@ export default defineComponent({
       this.platforms = platformNames;
       this.searchAndFilter();
     },
-    search(searchValue:string): Array<GameProfile> {
-      let searched = [] as Array<GameProfile>;
+    search(searchValue:string): SortedLibrary {
+      let searched = {} as SortedLibrary;
       if (searchValue) {
-        searched = this.filteredLibrary.filter(
-          (game) => game.name.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
+        const flattenedList = Utils.flatGameLibrary(this.filteredLibrary);
+        const filteredList = flattenedList.filter(
+          (game) => game.name.toLocaleLowerCase()
+            .includes(searchValue.toLocaleLowerCase()),
         );
+        searched = Utils.organizeFlattenedLibraryAsGameLibrary(filteredList);
       } else if (searchValue === '') {
-        searched = this.rawLibrary;
-      } else {
-        searched = [] as Array<GameProfile>;
+        searched = this.filteredLibrary;
       }
+
       return searched;
     },
-    filteringByPlatforms(platformNames:Array<GamePlatform['name']>):Array<GameProfile> {
-      let filtered:Array<GameProfile>;
+    filteringByPlatforms(platformNames:Array<GamePlatform['name']>):SortedLibrary {
+      let filtered:SortedLibrary;
 
       if (platformNames.length > 0) {
-        // eslint-disable-next-line max-len
-        filtered = this.filteredLibrary.filter((game) => game.platforms.find((platform) => platformNames.includes(platform.name)));
+        const flattenedList = Utils.flatGameLibrary(this.filteredLibrary);
+        const filteredList = flattenedList.filter(
+          (game) => game.platforms.find(
+            (platform) => platformNames.includes(platform.name),
+          ),
+        );
+        filtered = Utils.organizeFlattenedLibraryAsGameLibrary(filteredList);
       } else {
         filtered = this.filteredLibrary;
       }
@@ -152,7 +169,7 @@ export default defineComponent({
       }
     },
     resetSearch(): void {
-      this.filteredLibrary = [...this.library];
+      this.filteredLibrary = { ...this.library };
     },
   },
 });

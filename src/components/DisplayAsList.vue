@@ -32,8 +32,8 @@ import {
 } from '@ionic/vue';
 
 import { defineComponent } from 'vue';
-import { GameProfile, GameProfileFeed } from '../types/searchEntities.d';
-import Utils from '../utils/Utils';
+import { GameProfile, GameProfileFeed } from '@/types/searchEntities';
+import Utils from '@/utils/Utils';
 import DisplayAsLabel from './DisplayAsLabel.vue';
 
 export default defineComponent({

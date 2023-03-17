@@ -20,6 +20,7 @@
     "baseUrl": ".",
     "types": [
       "webpack-env",
+      "pinia-plugin-persist",
       "jest"
     ],
     "paths": {
@@ -41,7 +42,7 @@
     "./**/*.js",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+   ],
   "exclude": [
     "node_modules"
   ]
