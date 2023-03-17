@@ -59,13 +59,13 @@ import { defineComponent } from 'vue';
 import { SearchbarChangeEventDetail } from '@ionic/core';
 import { filterOutline } from 'ionicons/icons';
 import gameDexStore from '@/store/Store';
-import Searchbar from '../components/SearchBar.vue';
-import GameCard from '../components/GameCard.vue';
-import DisplayAsList from '../components/DisplayAsList.vue';
-import PlatformsFilter from '../components/PlatformsFilter.vue';
-import Utils from '../utils/Utils';
-import { GameProfile, GamePlatform } from '../types/SearchEntities.d';
-import { SortedLibrary, GameLibrary } from '../types/Store.d';
+import Searchbar from '@/components/SearchBar.vue';
+import GameCard from '@/components/GameCard.vue';
+import DisplayAsList from '@/components/DisplayAsList.vue';
+import PlatformsFilter from '@/components/PlatformsFilter.vue';
+import Utils from '@/utils/Utils';
+import { GameProfile, GamePlatform } from '@/types/SearchEntities.d';
+import { SortedLibrary, GameLibrary } from '@/types/Store.d';
 
 export default defineComponent({
   components: {

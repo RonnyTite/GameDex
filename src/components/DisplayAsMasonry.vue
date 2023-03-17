@@ -24,7 +24,7 @@ import {
 } from '@ionic/vue';
 
 import { defineComponent } from 'vue';
-import { GameProfile, GameProfileFeed } from '../types/SearchEntities.d';
+import { GameProfile, GameProfileFeed } from '@/types/SearchEntities.d';
 //  Ref for masonry: https://www.youtube.com/watch?v=7d1bhYsYi7E
 export default defineComponent({
   components: {

@@ -42,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import { GameProfileFeed, GameProfile, GamePlatform } from '@/types/SearchEntities';
+import { GameProfileFeed, GameProfile, GamePlatform } from '@/types/SearchEntities.d';
 import {
   IonContent,
   IonButton, IonIcon, CheckboxCustomEvent,
@@ -82,7 +82,6 @@ export default defineComponent({
     dataList: {
       deep: true,
       handler() {
-        debugger;
         this.computingPlatformFilter();
       },
     },

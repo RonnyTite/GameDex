@@ -1,4 +1,4 @@
-import { CompleteGameProfile, GameProfile } from '@/types/SearchEntities';
+import { CompleteGameProfile, GameProfile } from '@/types/SearchEntities.d';
 import Utils from '@/utils/Utils';
 // https://pinia.vuejs.org/cookbook/testing.html#unit-testing-a-store
 import { setActivePinia, createPinia } from 'pinia';

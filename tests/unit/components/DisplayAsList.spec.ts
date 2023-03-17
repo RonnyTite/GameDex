@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils';
 import DisplayAsList from '@/components/DisplayAsList.vue';
 import searchMockJson from '@/mocks/searchRequestResultsMock.json';
-import { GameProfile } from '@/types/SearchEntities';
+import { GameProfile } from '@/types/SearchEntities.d';
 
 describe('DisplayAsList.vue', () => {
   it('click on item on the list', () => {

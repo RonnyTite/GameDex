@@ -42,7 +42,7 @@
     "./**/*.js",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-  ],
+   ],
   "exclude": [
     "node_modules"
   ]

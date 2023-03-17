@@ -1,4 +1,4 @@
-import { CompleteGameProfile, GameProfile, GameProfileFeed } from '@/types/SearchEntities';
+import { CompleteGameProfile, GameProfile, GameProfileFeed } from '@/types/SearchEntities.d';
 import { GameLibrary, SortedLibrary } from '@/types/Store.d';
 import GameDexStore from '@/store/Store';
 // import libraryMock from '@/mocks/libraryMock.json';

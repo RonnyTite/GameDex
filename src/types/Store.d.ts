@@ -1,4 +1,4 @@
-import { CompleteGameProfile } from './SearchEntities';
+import { CompleteGameProfile } from './SearchEntities.d';
 
 export type GameLibrary = {
   [x:string]: CompleteGameProfile
