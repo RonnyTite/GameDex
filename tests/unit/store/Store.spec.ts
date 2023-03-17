@@ -5,6 +5,7 @@ import gameMock from '@/mocks/gameMock.json';
 import { CompleteGameProfile } from '@/types/SearchEntities.d';
 import { flushPromises } from '@vue/test-utils';
 import Sinon from 'sinon';
+import libraryMock from '@/mocks/libraryMock.json';
 
 describe('Test Pinia Store', () => {
   beforeEach(() => {
@@ -21,16 +22,29 @@ describe('Test Pinia Store', () => {
   it('Initial mount', () => {
     const store = gameDexStore();
 
-    expect(store.colorSchemeIsDark).toEqual(false);
+    expect(store.colorSchemeIsDark).toEqual(null);
     expect(store.gameLibrary).toEqual({});
   });
 
   it('should set the dark theme status', () => {
     const store = gameDexStore();
 
-    expect(store.colorSchemeIsDark).toEqual(false);
+    expect(store.colorSchemeIsDark).toEqual(null);
     store.setDeviceColorScheme(true);
     expect(store.colorSchemeIsDark).toEqual(true);
+  });
+
+  it('should wipe everything', () => {
+    const store = gameDexStore();
+    const gameMock1 = { ...libraryMock[1] } as CompleteGameProfile;
+    // Set data in store
+    store.setDeviceColorScheme(true);
+    store.toggleGameInLibrary(gameMock1);
+
+    store.wipe();
+
+    expect(store.colorSchemeIsDark).toEqual(null);
+    expect(store.gameLibrary).toEqual({});
   });
 
   describe('Interact with gamelibrary', () => {
