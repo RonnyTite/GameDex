@@ -26,12 +26,18 @@
     </IonHeader>
     <IonContent :fullscreen="true">
       <IonHeader collapse="condense" />
-      <DisplayAsList
-        v-for="(gameListFilteredByLetter, index) in Object.values(filteredLibrary)"
+      <div
+        v-for="([letter,gamesListFilteredByLetter], index) in Object.entries(filteredLibrary)"
         :key="index"
-        :data-list="gameListFilteredByLetter"
-        @open-gamecard="openGameCard"
-      />
+      >
+        <h4>{{ letter.toUpperCase() }}</h4>
+        <DisplayAsList
+
+          :data-list="gamesListFilteredByLetter"
+          @open-gamecard="openGameCard"
+        />
+      </div>
+
       <GameCard
         v-if="isGameCardModalOpen"
         :is-open="isGameCardModalOpen"
