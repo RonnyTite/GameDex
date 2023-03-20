@@ -27,6 +27,7 @@ describe('HomePage.vue Filters', () => {
   });
   it('filter blank date', () => {
     const wrapper = mount(HomePage);
+    wrapper.vm.loadFeed();
 
     Sinon.assert.calledOnceWithExactly(loadHomePageFeedSpy);
     Sinon.assert.calledOnce(axiosMock);
@@ -145,6 +146,7 @@ describe('HomePage.vue Filters', () => {
 
   it('filter today date', () => {
     const wrapper = mount(HomePage);
+    wrapper.vm.loadFeed();
 
     Sinon.assert.calledOnceWithExactly(loadHomePageFeedSpy);
     Sinon.assert.calledOnce(axiosMock);
@@ -195,6 +197,7 @@ describe('HomePage.vue Filters', () => {
 
   it('remove today date', () => {
     const wrapper = mount(HomePage);
+    wrapper.vm.loadFeed();
 
     Sinon.assert.calledOnceWithExactly(loadHomePageFeedSpy);
     Sinon.assert.calledOnce(axiosMock);
@@ -311,6 +314,8 @@ describe('HomePage.vue Real mount', () => {
 
   it('simple mount', async () => {
     const wrapper = mount(HomePage);
+    wrapper.vm.loadFeed();
+
     const feed = wrapper.vm.removingTodayDateFromFeedResults(searchResults.results);
     const todayFeed = wrapper.vm.filteringTodayDateFromFeedResults(searchResults.results);
     await flushPromises();
@@ -326,19 +331,19 @@ describe('HomePage  Emits', () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore test are OK doesnt want all values just for the test
     Sinon.stub(GiantBombApi, 'loadHomePageFeed').resolves({ data: { results: searchResults.results } });
+    wrapper = mount(HomePage);
+    wrapper.vm.loadFeed();
   });
   afterEach(() => {
     wrapper.unmount();
     Sinon.restore();
   });
   it('receive emits and open gamecard', () => {
-    wrapper = mount(HomePage);
     wrapper.vm.openGameCard(searchResults.results[0]);
     expect(wrapper.vm.modalGameId).toEqual(searchResults.results[0].id.toString());
     expect(wrapper.vm.isGameCardModalOpen).toEqual(true);
   });
   it('receive emits and close gamecard', () => {
-    wrapper = mount(HomePage);
     wrapper.vm.closeGameCard();
     expect(wrapper.vm.modalGameId).toEqual('');
     expect(wrapper.vm.isGameCardModalOpen).toEqual(false);

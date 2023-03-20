@@ -114,5 +114,4 @@ export default {
 
     return this.organizeFlattenedLibraryAsGameLibrary(flattenedLibrary);
   },
-
 };

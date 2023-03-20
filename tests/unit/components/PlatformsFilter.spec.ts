@@ -14,6 +14,7 @@ describe('PlatformsFilter.vue Real mount', () => {
         dataList: searchMockJson.results as Array<GameProfile>,
       },
     });
+    wrapper.vm.computingPlatformFilter();
   });
   afterEach(() => {
     wrapper.unmount();
@@ -21,7 +22,6 @@ describe('PlatformsFilter.vue Real mount', () => {
     jest.restoreAllMocks();
   });
   it('should compute platforms filters', async () => {
-    // wrapper.vm.computingPlatformFilter();
     await flushPromises();
     expect(wrapper.vm.platforms).toEqual([
       { value: 'Browser', checked: false },
@@ -37,12 +37,6 @@ describe('PlatformsFilter.vue Real mount', () => {
   });
 
   it('should reset filters', async () => {
-    wrapper = mount(PlatformsFilter, {
-      props: {
-        dataList: searchMockJson.results as Array<GameProfile>,
-      },
-    });
-
     await flushPromises();
     // enable some filters
     wrapper.setData({
@@ -91,12 +85,6 @@ describe('PlatformsFilter.vue Real mount', () => {
   });
 
   it('should enable filters', async () => {
-    wrapper = mount(PlatformsFilter, {
-      props: {
-        dataList: searchMockJson.results as Array<GameProfile>,
-      },
-    });
-
     // check initial state
     expect(wrapper.vm.platforms).toEqual([
       { value: 'Browser', checked: false },
@@ -144,6 +132,7 @@ describe('PlatformsFilter.vue Real mount', () => {
   });
 
   it('should disable filters', async () => {
+    // overwrite wrapper
     wrapper = mount(PlatformsFilter, {
       data: () => ({
         platforms: [
@@ -162,7 +151,7 @@ describe('PlatformsFilter.vue Real mount', () => {
         dataList: searchMockJson.results as Array<GameProfile>,
       },
     });
-
+    wrapper.vm.computingPlatformFilter();
     // Check mounted data
     expect(wrapper.vm.platforms).toEqual([
       { value: 'Browser', checked: false },

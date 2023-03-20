@@ -160,23 +160,26 @@ export default defineComponent({
       return Share.canShare();
     },
   },
-  beforeMount() {
-    if (this.isOpen && this.gameId) {
-      this.processing = true;
-      GiantBombApi.fetchGameProfile(this.gameId)
-        .then((searchResults) => {
-          this.game = searchResults.data.results;
-        })
-        .catch((err) => {
-          // !!Debug Mode
-          this.game = GameMock as CompleteGameProfile;
-          console.error(err);
-        }).finally(() => {
-          this.processing = false;
-        });
-    }
+  ionViewDidEnter() {
+    this.initPage();
   },
   methods: {
+    initPage() {
+      if (this.isOpen && this.gameId) {
+        this.processing = true;
+        GiantBombApi.fetchGameProfile(this.gameId)
+          .then((searchResults) => {
+            this.game = searchResults.data.results;
+          })
+          .catch((err) => {
+          // !!Debug Mode
+            this.game = GameMock as CompleteGameProfile;
+            console.error(err);
+          }).finally(() => {
+            this.processing = false;
+          });
+      }
+    },
     async share(): Promise<ShareResult> {
       return Share.share(this.dataToShare);
     },

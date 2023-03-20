@@ -32,7 +32,6 @@
       >
         <h4>{{ letter.toUpperCase() }}</h4>
         <DisplayAsList
-
           :data-list="gamesListFilteredByLetter"
           @open-gamecard="openGameCard"
         />
@@ -64,7 +63,7 @@ import GameCard from '@/components/GameCard.vue';
 import DisplayAsList from '@/components/DisplayAsList.vue';
 import PlatformsFilter from '@/components/PlatformsFilter.vue';
 import Utils from '@/utils/Utils';
-import { GameProfile, GamePlatform } from '@/types/searchEntities';
+import { CompleteGameProfile, GameProfile, GamePlatform } from '@/types/searchEntities';
 import { SortedLibrary, GameLibrary } from '@/types/Store.d';
 
 export default defineComponent({
@@ -96,19 +95,22 @@ export default defineComponent({
     };
   },
   computed: {
-    flatGameLibrary():Array<GameProfile> {
+    flatGameLibrary():Array<CompleteGameProfile> {
       return Utils.flatGameLibrary(this.rawLibrary);
     },
   },
-  beforeMount() {
-    const store = gameDexStore();
-    const library = Utils.loadLibrary();
-    this.rawLibrary = { ...store.gameLibrary };
-    this.library = library;
-    this.filteredLibrary = library;
-    this.resetSearch();
+  ionViewDidEnter() {
+    this.initPage();
   },
   methods: {
+    initPage() {
+      const store = gameDexStore();
+      const library:SortedLibrary = Utils.loadLibrary();
+      this.rawLibrary = { ...store.gameLibrary };
+      this.library = library;
+      this.filteredLibrary = library;
+      this.resetSearch();
+    },
     openGameCard(game:GameProfile) {
       this.modalGameId = game.id.toString();
       this.isGameCardModalOpen = true;
