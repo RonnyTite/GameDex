@@ -86,7 +86,7 @@ export default defineComponent({
       },
     },
   },
-  beforeMount() {
+  ionViewDidEnter() {
     this.computingPlatformFilter();
   },
   methods: {
