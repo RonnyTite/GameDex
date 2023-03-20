@@ -107,6 +107,10 @@ import { CompleteGameProfile } from '@/types/searchEntities';
 import GiantBombApi from '@/scripts/GiantBombApi';
 import Utils from '@/utils/Utils';
 import GameMock from '@/mocks/gameMock.json';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import {
+  Share, CanShareResult, ShareResult, ShareOptions,
+} from '@capacitor/share';
 import DisplayAsLabel from './DisplayAsLabel.vue';
 
 export default defineComponent({
@@ -144,15 +148,16 @@ export default defineComponent({
     containsSimilarGamesProperty() {
       return this.game.similar_games && this.game.similar_games.length > 0;
     },
-    dataToShare() {
+    dataToShare():ShareOptions {
       return {
         text: this.game.deck,
         title: this.game.name,
         url: this.game.api_detail_url,
+        dialogTitle: 'Dialog Title',
       };
     },
-    navigatorCanShare() {
-      return navigator.canShare(this.dataToShare) && navigator.share;
+    navigatorCanShare():Promise<CanShareResult> {
+      return Share.canShare();
     },
   },
   beforeMount() {
@@ -172,8 +177,8 @@ export default defineComponent({
     }
   },
   methods: {
-    async share(): Promise<void> {
-      return navigator.share(this.dataToShare);
+    async share(): Promise<ShareResult> {
+      return Share.share(this.dataToShare);
     },
     toggleGameInLibrary() {
       const store = gameDexStore();
