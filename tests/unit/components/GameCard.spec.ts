@@ -32,7 +32,6 @@ describe('GameCard.vue', () => {
   });
   it('should open game card modal with', async () => {
     wrapper = mountComponent();
-    wrapper.vm.initPage();
     await flushPromises();
     Sinon.assert.calledOnceWithExactly(fetchGameProfileSpy, '20710');
     Sinon.assert.calledOnce(axiosMock);
@@ -43,7 +42,6 @@ describe('GameCard.vue', () => {
       isOpen: false,
       gameId: '20710',
     });
-    wrapper.vm.initPage();
     await flushPromises();
     Sinon.assert.notCalled(fetchGameProfileSpy);
     Sinon.assert.notCalled(axiosMock);
@@ -52,7 +50,6 @@ describe('GameCard.vue', () => {
 
   it('should not display Share if not possible ', () => {
     wrapper = mountComponent();
-    wrapper.vm.initPage();
 
     const shareButton = wrapper.find('.share-button');
     expect(shareButton.exists()).toEqual(false);

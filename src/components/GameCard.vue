@@ -17,7 +17,7 @@
           {{ game.name }}
         </IonTitle>
         <IonButtons
-          v-if="navigatorCanShare"
+          v-if="navigatorCanShare()"
           slot="end"
         >
           <IonButton
@@ -39,17 +39,22 @@
         class="spinner"
       />
       <div v-else>
-        <div>
-          <div class="img-container">
-            <IonImg
-              :src="game.image.original_url || ''"
-              class="main-image"
+        <div class="img-container">
+          <IonImg
+            :src="game.image.original_url || ''"
+            class="main-image"
+          />
+          <div
+            class="heart-container"
+            @click="toggleGameInLibrary"
+          >
+            <IonIcon
+              class="heart-icon heart-filled"
+              :icon="heart"
             />
             <IonIcon
-              class="heart-icon"
+              class="heart-icon heart-outline"
               :icon="heartOutline"
-              color="light"
-              @click="toggleGameInLibrary"
             />
           </div>
         </div>
@@ -100,8 +105,10 @@ import {
   IonButtons, IonButton, IonModal, IonHeader, IonToolbar, IonContent, IonTitle, IonIcon, IonSpinner,
   IonImg,
 } from '@ionic/vue';
-import { defineComponent } from 'vue';
-import { arrowBackOutline, shareSocialOutline, heartOutline } from 'ionicons/icons';
+import { defineComponent, nextTick } from 'vue';
+import {
+  arrowBackOutline, shareSocialOutline, heartOutline, heart,
+} from 'ionicons/icons';
 import gameDexStore from '@/store/Store';
 import { CompleteGameProfile } from '@/types/searchEntities';
 import GiantBombApi from '@/scripts/GiantBombApi';
@@ -133,7 +140,9 @@ export default defineComponent({
   },
   emits: ['close-modal'],
   setup() {
-    return { arrowBackOutline, shareSocialOutline, heartOutline };
+    return {
+      arrowBackOutline, shareSocialOutline, heartOutline, heart,
+    };
   },
   data() {
     return {
@@ -148,7 +157,7 @@ export default defineComponent({
     containsSimilarGamesProperty() {
       return this.game.similar_games && this.game.similar_games.length > 0;
     },
-    dataToShare():ShareOptions {
+    dataToShare(): ShareOptions {
       return {
         text: this.game.deck,
         title: this.game.name,
@@ -156,15 +165,15 @@ export default defineComponent({
         dialogTitle: 'Dialog Title',
       };
     },
-    navigatorCanShare():Promise<CanShareResult> {
-      return Share.canShare();
+    isAlreadySaved(): boolean {
+      return Utils.isAlreadySaved(this.game.id);
     },
   },
-  ionViewDidEnter() {
+  mounted() {
     this.initPage();
   },
   methods: {
-    initPage() {
+    initPage(): void {
       if (this.isOpen && this.gameId) {
         this.processing = true;
         GiantBombApi.fetchGameProfile(this.gameId)
@@ -172,20 +181,54 @@ export default defineComponent({
             this.game = searchResults.data.results;
           })
           .catch((err) => {
-          // !!Debug Mode
+            // !!Debug Mode
             this.game = GameMock as CompleteGameProfile;
             console.error(err);
-          }).finally(() => {
+          }).finally(async () => {
             this.processing = false;
+            await nextTick(); // wait  a little for the newt rendering after processing => false https://vuejs.org/api/general.html#nexttick
+            if (this.isAlreadySaved) {
+              this.addHeartBeatAnimation();
+            } else {
+              const animatedHeart = document.querySelector('.heart-filled');
+              animatedHeart?.setAttribute('style', 'opacity: 0');
+            }
           });
       }
     },
-    async share(): Promise<ShareResult> {
+    // @ts-ignore its an async assigned to a const, everything is OK
+    async navigatorCanShare(): CanShareResult {
+      const canShare = await Share.canShare(); // need to wait to have a boolean
+      return canShare;
+    },
+    share(): Promise<ShareResult> {
       return Share.share(this.dataToShare);
     },
-    toggleGameInLibrary() {
+    addHeartBeatAnimation(): void {
+      const animatedHeart = document.querySelector('.heart-filled');
+      if (animatedHeart) {
+        animatedHeart.classList.remove('heartbeat', 'slowbeat');
+        animatedHeart.classList.add('heartbeat');
+      }
+    },
+    addSlowBeatAnimation(): void {
+      const animatedHeart = document.querySelector('.heart-filled');
+      if (animatedHeart) {
+        animatedHeart.classList.remove('heartbeat', 'slowbeat');
+        animatedHeart.classList.add('slowbeat');
+      }
+    },
+    toggleHeartAnimation(): void {
+      if (this.isAlreadySaved) {
+        this.addHeartBeatAnimation();
+      } else {
+        this.addSlowBeatAnimation();
+      }
+    },
+    toggleGameInLibrary(): void {
       const store = gameDexStore();
       store.toggleGameInLibrary(this.game);
+      this.toggleHeartAnimation();
     },
   },
 });
@@ -210,12 +253,84 @@ export default defineComponent({
   height: 100%;
 }
 
-.heart-icon {
+.heart-container {
   cursor: pointer;
   position: absolute;
   right: 20px;
   bottom: 5px;
   width: 25px;
   height: 25px;
+}
+
+.heart-icon {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.heart-outline {
+  color: #98002e;
+}
+
+.heart-filled {
+  color: #e31b23;
+  z-index: 10;
+  opacity: 0;
+}
+
+/* ANIMATION  */
+.heartbeat {
+  animation: 1.8s ease-in 0s 1 beat;
+  /* Retain last frame of animation when disappearing https://stackoverflow.com/a/6902557 */
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+.slowbeat {
+  animation: 1.8s ease-in 0s 1 slowbeat;
+  /* Retain last frame of animation when disappearing https://stackoverflow.com/a/6902557 */
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  -o-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+@keyframes beat {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.8;
+  }
+
+  60% {
+    transform: scale(1.3, 1.3);
+  }
+
+  80% {
+    transform: scale(0.8, 0.8);
+  }
+
+  100% {
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+}
+
+@keyframes slowbeat {
+  0% {
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+
+  80% {
+    transform: scale(0.2, 0.2);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(0, 0);
+    opacity: 0
+  }
 }
 </style>

@@ -108,6 +108,7 @@ export default defineComponent({
       const library:SortedLibrary = Utils.loadLibrary();
       this.rawLibrary = { ...store.gameLibrary };
       this.library = library;
+      console.debug(' this.library', this.library);
       this.filteredLibrary = library;
       this.resetSearch();
     },

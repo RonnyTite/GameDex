@@ -97,7 +97,7 @@ describe('Utils', () => {
     it('should return array of letters', () => {
       const store = gameDexStore();
       const flattenedLibrary = Utils.flatGameLibrary(store.gameLibrary);
-      expect(Utils.fetchFirstLetters(flattenedLibrary)).toEqual(['0', 'B', 'S']);
+      expect(Utils.fetchFirstLetters(flattenedLibrary)).toEqual(['S', 'B', '0']);
     });
 
     it('should return filtered Library', () => {
