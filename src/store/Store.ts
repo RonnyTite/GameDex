@@ -14,20 +14,26 @@ export default defineStore('gameDexStore', {
     colorSchemeIsDark: null,
   }),
   actions: {
-    toggleGameInLibrary(game:CompleteGameProfile):void {
+    toggleGameInLibrary(game:CompleteGameProfile):boolean {
       const gameId = game.id.toString();
       const isAlreadySaved = Object.keys(this.gameLibrary).includes(gameId);
+
+      let isSaved:boolean;
 
       if (isAlreadySaved) {
         delete this.gameLibrary[gameId];
         console.debug(`${gameId} has been removed`);
+        isSaved = false;
       } else {
         this.gameLibrary = {
           [gameId]: game,
           ...this.gameLibrary,
         };
         console.debug(`${gameId} has been saved`);
+        isSaved = true;
       }
+
+      return isSaved;
     },
 
     setDeviceColorScheme(isDark:boolean):void {

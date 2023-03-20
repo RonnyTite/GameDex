@@ -71,7 +71,7 @@ export default {
   fetchFirstLetters(rawLibrary: Array<CompleteGameProfile>): Array<string> {
     return [...new Set( // new Set to avoid duplicate
       rawLibrary
-        .sort((a, b) => a.name.localeCompare(b.name)) // sort by name
+        .sort((a, b) => b.name.localeCompare(a.name)) // sort by unalphabetical order
         .map((game) => game.name.charAt(0)), // make array of first letter;
     )];
   },
@@ -82,7 +82,7 @@ export default {
     const filterLetters = this.fetchFirstLetters(flattenedLibrary);
 
     let sortedlibrary: SortedLibrary = {};
-
+    // as filterLetters is in unalphabetical order , this will be sorted in alphabetical order
     filterLetters.forEach((letter) => {
       const filteredGames = Object.values(flattenedLibrary).filter((game) => game.name.charAt(0) === letter);
 
@@ -95,11 +95,18 @@ export default {
       };
     });
 
-    return sortedlibrary;
+    Object.values(sortedlibrary).forEach((data) => {
+      data.sort((a, b) => a.name.localeCompare(b.name)); // sort alphabetically each results
+    });
+
+    const results = typeof sortedlibrary['#'] !== 'undefined' ? { '#': sortedlibrary['#'] } : {};
+    delete sortedlibrary['#'];
+
+    return { ...results, ...sortedlibrary };
   },
   loadLibrary(): SortedLibrary {
     const store = GameDexStore();
-    // @todo to be removed
+    // // @todo to be removed
     // const gameMock0 = libraryMock[0] as CompleteGameProfile;
     // const gameMock1 = libraryMock[1] as CompleteGameProfile;
     // const gameMock2 = libraryMock[2] as CompleteGameProfile;
@@ -113,5 +120,11 @@ export default {
     const flattenedLibrary = this.flatGameLibrary(rawLibrary);
 
     return this.organizeFlattenedLibraryAsGameLibrary(flattenedLibrary);
+  },
+
+  isAlreadySaved(gameId:GameProfile['id']): boolean {
+    const store = GameDexStore();
+
+    return !!store.gameLibrary[gameId];
   },
 };

@@ -53,7 +53,7 @@ describe('Test Pinia Store', () => {
 
       const game = gameMock as CompleteGameProfile;
 
-      store.toggleGameInLibrary(game);
+      expect(store.toggleGameInLibrary(game)).toEqual(true);
       expect(store.gameLibrary[game.id]).toEqual(game);
     });
 
@@ -62,11 +62,11 @@ describe('Test Pinia Store', () => {
 
       const game = gameMock as CompleteGameProfile;
 
-      store.toggleGameInLibrary(game);
+      expect(store.toggleGameInLibrary(game)).toEqual(true);
       expect(store.gameLibrary[game.id]).toEqual(game);
       await flushPromises();
 
-      store.toggleGameInLibrary(game);
+      expect(store.toggleGameInLibrary(game)).toEqual(false);
       expect(store.gameLibrary[game.id]).toEqual(undefined);
     });
   });
