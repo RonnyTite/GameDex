@@ -13,9 +13,6 @@ export default defineStore('gameDexStore', {
     gameLibrary: {},
     colorSchemeIsDark: null,
   }),
-  getters: {
-    getgameLibrary() {},
-  },
   actions: {
     toggleGameInLibrary(game:CompleteGameProfile):void {
       const gameId = game.id.toString();
