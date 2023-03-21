@@ -56,7 +56,7 @@ import { defineComponent } from 'vue';
 import { SearchbarChangeEventDetail } from '@ionic/core';
 import { listOutline } from 'ionicons/icons';
 import Searchbar from '@/components/SearchBar.vue';
-import GameCard from '@/components/GameCard.vue';
+import GameCard from '@/components/GameCard/GameCard.vue';
 import DisplayAsList from '@/components/DisplayAsList.vue';
 import searchMockJson from '@/mocks/searchRequestResultsMock.json';
 import { GameProfile } from '@/types/searchEntities';

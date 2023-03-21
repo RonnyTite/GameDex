@@ -5,7 +5,8 @@ import searchResults from '@/mocks/searchRequestResultsMock.json';
 import GiantBombApi from '@/scripts/GiantBombApi';
 import { axiosInstance } from '@/scripts/RequestManager';
 import Utils from '@/utils/Utils';
-
+// https://pinia.vuejs.org/cookbook/testing.html#unit-testing-a-store
+import { setActivePinia, createPinia } from 'pinia';
 //  Had to mock HomePageSlider.vue  https://github.com/vuejs/vue-test-utils/issues/1522#issuecomment-623053575
 // because of this error Cannot find module 'swiper/vue' happening during unit tests
 jest.mock('@/components/HomePageSlider.vue', () => ({
@@ -19,6 +20,10 @@ describe('HomePage.vue Filters', () => {
     data: { results: searchResults.results },
   });
   beforeEach(() => {
+    // creates a fresh pinia and make it active so it's automatically picked
+    // up by any useStore() call without having to pass it to it:
+    // `useStore(pinia)`
+    setActivePinia(createPinia());
     axiosMock = Sinon.stub(axiosInstance, 'get').resolves(searchResultsStub);
     loadHomePageFeedSpy = Sinon.spy(GiantBombApi, 'loadHomePageFeed');
   });

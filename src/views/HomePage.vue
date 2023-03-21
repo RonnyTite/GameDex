@@ -97,7 +97,7 @@ import { defineComponent } from 'vue';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { RefresherEventDetail } from '@ionic/core';
 import { listOutline, gridOutline, filterOutline } from 'ionicons/icons';
-import GameCard from '@/components/GameCard.vue';
+import GameCard from '@/components/GameCard/GameCard.vue';
 import PlatformsFilter from '@/components/PlatformsFilter.vue';
 import DisplayAsList from '@/components/DisplayAsList.vue';
 import HomePageSlider from '@/components/HomePageSlider.vue';

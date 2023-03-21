@@ -1,7 +1,8 @@
-import { CompleteGameProfile, GameProfile, GameProfileFeed } from '@/types/searchEntities';
+import {
+  CompleteGameProfile, GameProfile, GameProfileFeed,
+} from '@/types/searchEntities';
 import { GameLibrary, SortedLibrary } from '@/types/Store.d';
 import GameDexStore from '@/store/Store';
-// import libraryMock from '@/mocks/libraryMock.json';
 
 export interface TodayDate {
   day: number
@@ -121,10 +122,21 @@ export default {
 
     return this.organizeFlattenedLibraryAsGameLibrary(flattenedLibrary);
   },
-
-  isAlreadySaved(gameId:GameProfile['id']): boolean {
+  /**
+   * @description Fetch game from store if exists ELSE load it from GiantBomb
+   */
+  loadGame(gameId:string):Promise<CompleteGameProfile> {
     const store = GameDexStore();
 
+    const existsInStore = this.isAlreadySaved(gameId);
+
+    if (existsInStore) {
+      return Promise.resolve(store.gameLibrary[gameId]);
+    }
+    return Promise.reject(new Error('Game not found'));
+  },
+  isAlreadySaved(gameId:string): boolean {
+    const store = GameDexStore();
     return !!store.gameLibrary[gameId];
   },
 };
