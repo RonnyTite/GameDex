@@ -59,7 +59,7 @@ import { SearchbarChangeEventDetail } from '@ionic/core';
 import { filterOutline } from 'ionicons/icons';
 import gameDexStore from '@/store/Store';
 import Searchbar from '@/components/SearchBar.vue';
-import GameCard from '@/components/GameCard/GameCard.vue';
+import GameCard from '@/components/gamecard/GameCard.vue';
 import DisplayAsList from '@/components/DisplayAsList.vue';
 import PlatformsFilter from '@/components/PlatformsFilter.vue';
 import Utils from '@/utils/Utils';

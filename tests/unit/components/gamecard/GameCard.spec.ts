@@ -1,6 +1,6 @@
 import { flushPromises, mount } from '@vue/test-utils';
 import Sinon, { SinonSpy, SinonStub } from 'sinon';
-import GameCard from '@/components/GameCard/GameCard.vue';
+import GameCard from '@/components/gamecard/GameCard.vue';
 import searchMockJson from '@/mocks/searchRequestResultsMock.json';
 import GiantBombApi from '@/scripts/GiantBombApi';
 import { axiosInstance } from '@/scripts/RequestManager';

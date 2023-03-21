@@ -5,6 +5,7 @@ import searchMockJson from '@/mocks/searchRequestResultsMock.json';
 import { GameProfile, SearchResults } from '@/types/searchEntities';
 import { axiosInstance } from '@/scripts/RequestManager';
 import GiantBombApi from '@/scripts/GiantBombApi';
+import { setActivePinia, createPinia } from 'pinia';
 
 describe('SearchPage.vue', () => {
   let wrapper:any;
@@ -14,6 +15,10 @@ describe('SearchPage.vue', () => {
   });
   let makeSearchSpy:SinonSpy;
   beforeEach(() => {
+    // creates a fresh pinia and make it active so it's automatically picked
+    // up by any useStore() call without having to pass it to it:
+    // `useStore(pinia)`
+    setActivePinia(createPinia());
     axiosMock = Sinon.stub(axiosInstance, 'get').resolves(searchResultsStub);
     makeSearchSpy = Sinon.spy(GiantBombApi, 'makeSearch');
   });

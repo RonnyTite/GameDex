@@ -1,6 +1,6 @@
 import { flushPromises, mount } from '@vue/test-utils';
 import Sinon from 'sinon';
-import GameCardContent from '@/components/GameCard/GameCardContent.vue';
+import GameCardContent from '@/components/gamecard/GameCardContent.vue';
 import searchMockJson from '@/mocks/searchRequestResultsMock.json';
 // https://pinia.vuejs.org/cookbook/testing.html#unit-testing-a-store
 import { setActivePinia, createPinia } from 'pinia';
