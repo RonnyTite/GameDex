@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="Object.keys(game).length > 0">
+    <div v-if="isGameProfileExists">
       <div class="img-container">
         <IonImg
           :src="game.image.original_url || ''"
@@ -60,6 +60,10 @@
       </div>
     </div>
     <div v-else>
+      <IonIcon
+        :icon="skullOutline"
+        class="spinner"
+      />
       FAIL TO LOAD DATA
     </div>
   </div>
@@ -68,7 +72,7 @@
 import { IonIcon, IonImg } from '@ionic/vue';
 import { defineComponent, PropType } from 'vue';
 import {
-  arrowBackOutline, shareSocialOutline, heartOutline, heart,
+  arrowBackOutline, shareSocialOutline, heartOutline, heart, skullOutline,
 } from 'ionicons/icons';
 import gameDexStore from '@/store/Store';
 import { CompleteGameProfile } from '@/types/searchEntities';
@@ -86,7 +90,7 @@ export default defineComponent({
   },
   setup() {
     return {
-      arrowBackOutline, shareSocialOutline, heartOutline, heart,
+      arrowBackOutline, shareSocialOutline, heartOutline, heart, skullOutline,
     };
   },
   data() {
@@ -103,6 +107,9 @@ export default defineComponent({
     },
     isAlreadySaved(): boolean {
       return Utils.isAlreadySaved(this.game.id.toString());
+    },
+    isGameProfileExists() {
+      return Object.keys(this.game).length > 0;
     },
   },
   mounted() {
