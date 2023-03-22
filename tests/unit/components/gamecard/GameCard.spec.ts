@@ -79,4 +79,20 @@ describe('GameCard.vue', () => {
     Sinon.assert.calledOnce(axiosMock);
     expect(wrapper.vm.game).toEqual(searchMockJson.results[0]);
   });
+
+  it('should create data to shareb', async () => {
+    wrapper = mountComponent({
+      isOpen: true,
+      gameId: '20710',
+    });
+    await flushPromises();
+
+    expect(wrapper.vm.dataToShare).toEqual({
+      text: searchMockJson.results[0].deck,
+      title: searchMockJson.results[0].name,
+      // url: searchMockJson.results[0].api_detail_url,
+      files: [searchMockJson.results[0].image.original_url],
+      dialogTitle: 'Dialog Title',
+    });
+  });
 });

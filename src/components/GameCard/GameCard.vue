@@ -104,10 +104,12 @@ export default defineComponent({
       return this.game.similar_games && this.game.similar_games.length > 0;
     },
     dataToShare(): ShareOptions {
+      // https://capacitorjs.com/docs/apis/share
       return {
         text: this.game.deck,
         title: this.game.name,
-        url: this.game.api_detail_url,
+        // url: this.game.api_detail_url,
+        files: [this.game.image.original_url],
         dialogTitle: 'Dialog Title',
       };
     },
