@@ -8,7 +8,7 @@ import { CompleteGameProfile } from '@/types/searchEntities';
 import GameCardContent from '@/components/GameCardContent.vue';
 
 const propsData = {
-  game: searchMockJson.results[0],
+  gameProperties: searchMockJson.results[0],
 };
 
 const mountComponent = (props = propsData) => mount(GameCardContent, {
