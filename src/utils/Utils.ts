@@ -121,8 +121,20 @@ export default {
 
     return this.organizeFlattenedLibraryAsGameLibrary(flattenedLibrary);
   },
+  /**
+   * @description Fetch game from store if exists ELSE load it from GiantBomb
+   */
+  loadGame(gameId:string):Promise<CompleteGameProfile> {
+    const store = GameDexStore();
 
-  isAlreadySaved(gameId:GameProfile['id']): boolean {
+    const existsInStore = this.isAlreadySaved(gameId);
+
+    if (existsInStore) {
+      return Promise.resolve(store.gameLibrary[gameId]);
+    }
+    return Promise.reject(new Error('Game not found'));
+  },
+  isAlreadySaved(gameId:string): boolean {
     const store = GameDexStore();
 
     return !!store.gameLibrary[gameId];

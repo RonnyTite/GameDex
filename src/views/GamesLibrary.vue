@@ -16,13 +16,13 @@
           />
         </IonButtons>
       </IonToolbar>
-      <ion-toolbar>
+      <IonToolbar>
         <Searchbar
           :debounce="200"
           @on-search="registerSearchEvent($event)"
           @clear="resetSearch"
         />
-      </ion-toolbar>
+      </IonToolbar>
     </IonHeader>
     <IonContent :fullscreen="true">
       <IonHeader collapse="condense" />

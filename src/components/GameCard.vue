@@ -1,5 +1,8 @@
 <template>
-  <IonModal :is-open="isOpen">
+  <IonModal
+    id="gamecard-modal"
+    :is-open="isOpen"
+  >
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
@@ -38,64 +41,10 @@
         name="crescent"
         class="spinner"
       />
-      <div v-else>
-        <div class="img-container">
-          <IonImg
-            :src="game.image.original_url || ''"
-            class="main-image"
-          />
-          <div
-            class="heart-container"
-            @click="toggleGameInLibrary"
-          >
-            <IonIcon
-              class="heart-icon heart-filled"
-              :icon="heart"
-            />
-            <IonIcon
-              class="heart-icon heart-outline"
-              :icon="heartOutline"
-            />
-          </div>
-        </div>
-
-        <div class="ion-margin-top">
-          <span class="text__blue text__bold">Developer(s): </span>
-          <span
-            v-for="(developer, key) in game.developers"
-            :key="key"
-          >{{ developer.name }} {{ game.developers.length !==
-            key + 1 ? '| ' : '' }}</span>
-        </div>
-
-        <div class="ion-margin-top">
-          <span class="text__blue text__bold">Release Date: </span>{{ computeReleaseDate }}
-        </div>
-        <div class="ion-margin-top">
-          <span class="text__blue text__bold ">Region: </span>{{ game.region }}
-        </div>
-
-        <DisplayAsLabel
-          :label-list="game.platforms"
-          :abbreviation="false"
-        />
-
-        <div class="ion-margin-top">
-          <span class="text__blue text__bold">Story</span>
-          <p class="font__proxima">
-            {{ game.deck }}
-          </p>
-        </div>
-
-        <div v-if="containsSimilarGamesProperty">
-          <p
-            v-for="(similarGame, index) in game.similar_games"
-            :key="index"
-          >
-            {{ similarGame.name }}
-          </p>
-        </div>
-      </div>
+      <GameCardContent
+        v-else
+        :game-properties="game"
+      />
     </IonContent>
   </IonModal>
 </template>
@@ -103,13 +52,11 @@
 <script lang="ts">
 import {
   IonButtons, IonButton, IonModal, IonHeader, IonToolbar, IonContent, IonTitle, IonIcon, IonSpinner,
-  IonImg,
 } from '@ionic/vue';
-import { defineComponent, nextTick } from 'vue';
+import { defineComponent } from 'vue';
 import {
-  arrowBackOutline, shareSocialOutline, heartOutline, heart,
+  arrowBackOutline, shareSocialOutline,
 } from 'ionicons/icons';
-import gameDexStore from '@/store/Store';
 import { CompleteGameProfile } from '@/types/searchEntities';
 import GiantBombApi from '@/scripts/GiantBombApi';
 import Utils from '@/utils/Utils';
@@ -118,7 +65,7 @@ import GameMock from '@/mocks/gameMock.json';
 import {
   Share, CanShareResult, ShareResult, ShareOptions,
 } from '@capacitor/share';
-import DisplayAsLabel from './DisplayAsLabel.vue';
+import GameCardContent from './GameCardContent.vue';
 
 export default defineComponent({
   components: {
@@ -126,13 +73,12 @@ export default defineComponent({
     IonButton,
     IonModal,
     IonIcon,
-    IonImg,
     IonHeader,
     IonContent,
     IonToolbar,
     IonTitle,
     IonSpinner,
-    DisplayAsLabel,
+    GameCardContent,
   },
   props: {
     isOpen: { type: Boolean, required: true, default: false },
@@ -141,7 +87,7 @@ export default defineComponent({
   emits: ['close-modal'],
   setup() {
     return {
-      arrowBackOutline, shareSocialOutline, heartOutline, heart,
+      arrowBackOutline, shareSocialOutline,
     };
   },
   data() {
@@ -166,7 +112,7 @@ export default defineComponent({
       };
     },
     isAlreadySaved(): boolean {
-      return Utils.isAlreadySaved(this.game.id);
+      return Utils.isAlreadySaved(this.gameId);
     },
   },
   mounted() {
@@ -175,24 +121,21 @@ export default defineComponent({
   methods: {
     initPage(): void {
       if (this.isOpen && this.gameId) {
-        this.processing = true;
-        GiantBombApi.fetchGameProfile(this.gameId)
-          .then((searchResults) => {
-            this.game = searchResults.data.results;
+        Utils.loadGame(this.gameId)
+          .then((fetchedGame) => {
+            this.game = fetchedGame;
           })
-          .catch((err) => {
+          .catch(() => GiantBombApi.fetchGameProfile(this.gameId)
+            .then((searchResults) => {
+              this.game = searchResults.data.results as CompleteGameProfile;
+            })
+            .catch((err) => {
             // !!Debug Mode
-            this.game = GameMock as CompleteGameProfile;
-            console.error(err);
-          }).finally(async () => {
+              this.game = GameMock as CompleteGameProfile;
+              console.error(err);
+            }))
+          .finally(async () => {
             this.processing = false;
-            await nextTick(); // wait  a little for the newt rendering after processing => false https://vuejs.org/api/general.html#nexttick
-            if (this.isAlreadySaved) {
-              this.addHeartBeatAnimation();
-            } else {
-              const animatedHeart = document.querySelector('.heart-filled');
-              animatedHeart?.setAttribute('style', 'opacity: 0');
-            }
           });
       }
     },
@@ -203,32 +146,6 @@ export default defineComponent({
     },
     share(): Promise<ShareResult> {
       return Share.share(this.dataToShare);
-    },
-    addHeartBeatAnimation(): void {
-      const animatedHeart = document.querySelector('.heart-filled');
-      if (animatedHeart) {
-        animatedHeart.classList.remove('heartbeat', 'slowbeat');
-        animatedHeart.classList.add('heartbeat');
-      }
-    },
-    addSlowBeatAnimation(): void {
-      const animatedHeart = document.querySelector('.heart-filled');
-      if (animatedHeart) {
-        animatedHeart.classList.remove('heartbeat', 'slowbeat');
-        animatedHeart.classList.add('slowbeat');
-      }
-    },
-    toggleHeartAnimation(): void {
-      if (this.isAlreadySaved) {
-        this.addHeartBeatAnimation();
-      } else {
-        this.addSlowBeatAnimation();
-      }
-    },
-    toggleGameInLibrary(): void {
-      const store = gameDexStore();
-      store.toggleGameInLibrary(this.game);
-      this.toggleHeartAnimation();
     },
   },
 });
@@ -278,59 +195,4 @@ export default defineComponent({
   opacity: 0;
 }
 
-/* ANIMATION  */
-.heartbeat {
-  animation: 1.8s ease-in 0s 1 beat;
-  /* Retain last frame of animation when disappearing https://stackoverflow.com/a/6902557 */
-  -webkit-animation-fill-mode: forwards;
-  -moz-animation-fill-mode: forwards;
-  -o-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
-}
-
-.slowbeat {
-  animation: 1.8s ease-in 0s 1 slowbeat;
-  /* Retain last frame of animation when disappearing https://stackoverflow.com/a/6902557 */
-  -webkit-animation-fill-mode: forwards;
-  -moz-animation-fill-mode: forwards;
-  -o-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
-}
-
-@keyframes beat {
-  0% {
-    transform: scale(0, 0);
-    opacity: 0.8;
-  }
-
-  60% {
-    transform: scale(1.3, 1.3);
-  }
-
-  80% {
-    transform: scale(0.8, 0.8);
-  }
-
-  100% {
-    transform: scale(1, 1);
-    opacity: 1;
-  }
-}
-
-@keyframes slowbeat {
-  0% {
-    transform: scale(1, 1);
-    opacity: 1;
-  }
-
-  80% {
-    transform: scale(0.2, 0.2);
-    opacity: 0.8;
-  }
-
-  100% {
-    transform: scale(0, 0);
-    opacity: 0
-  }
-}
 </style>

@@ -3,7 +3,7 @@
 	"//about-target": "upgrade target from ES2018 to ES2020 to be able to use import.meta",
   "//comment//": "was having trouble with Could not find a declaration file for module 'pinia', this fixed it ->https://stackoverflow.com/a/58232530",
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "es2020",
     "module": "esnext",
     "strict": true,
     "jsx": "preserve",
@@ -44,6 +44,7 @@
     "tests/**/*.tsx"
    ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "build"
   ]
 }
