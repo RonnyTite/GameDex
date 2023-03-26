@@ -86,7 +86,7 @@ export default defineComponent({
     DisplayAsLabel,
   },
   props: {
-    gameProperties: { type: Object as PropType<CompleteGameProfile>, required: false, default: () => {} },
+    gameProperties: { type: Object as PropType<CompleteGameProfile>, default: () => ({}) },
   },
   setup() {
     return {

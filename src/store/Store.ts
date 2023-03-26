@@ -5,13 +5,13 @@ import { CompleteGameProfile } from '@/types/searchEntities';
 // https://pinia.vuejs.org/core-concepts/
 interface GameDexState {
   gameLibrary: GameLibrary
-  colorSchemeIsDark: boolean | null
+  colorSchemeIsDark: boolean
 }
 
 export default defineStore('gameDexStore', {
   state: ():GameDexState => ({
     gameLibrary: {},
-    colorSchemeIsDark: null,
+    colorSchemeIsDark: false,
   }),
   actions: {
     toggleGameInLibrary(game:CompleteGameProfile):boolean {
@@ -42,7 +42,7 @@ export default defineStore('gameDexStore', {
     },
     wipe() {
       this.gameLibrary = {};
-      this.colorSchemeIsDark = null;
+      this.colorSchemeIsDark = false;
     },
   },
   persist: {
