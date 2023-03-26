@@ -7,12 +7,12 @@ import gameDexStore from '@/store/Store';
 import { CompleteGameProfile } from '@/types/searchEntities';
 import GameCardContent from '@/components/GameCardContent.vue';
 
-const propsData = {
-  gameProperties: searchMockJson.results[0],
-};
+const gameProperties = searchMockJson.results[0] as CompleteGameProfile;
 
-const mountComponent = (props = propsData) => mount(GameCardContent, {
-  props,
+const mountComponent = () => mount(GameCardContent, {
+  props: {
+    gameProperties,
+  },
 });
 
 describe('GameCardContent.vue with already saved game', () => {
