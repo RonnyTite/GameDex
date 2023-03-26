@@ -17,12 +17,12 @@
           </IonButton>
         </IonButtons>
       </IonToolbar>
-      <ion-toolbar>
+      <IonToolbar>
         <Searchbar
           @on-search="search($event)"
           @clear="clear"
         />
-      </ion-toolbar>
+      </IonToolbar>
     </IonHeader>
     <IonContent :fullscreen="true">
       <IonSpinner

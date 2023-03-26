@@ -80,10 +80,10 @@ describe('Utils', () => {
       gameMock1 = { ...libraryMock[1] } as CompleteGameProfile;
       gameMock2 = { ...libraryMock[2] } as CompleteGameProfile;
       gameMock3 = { ...libraryMock[3] } as CompleteGameProfile;
-      store.toggleGameInLibrary(gameMock0); // 070 Project
+      store.toggleGameInLibrary(gameMock3); // Street Fighter
       store.toggleGameInLibrary(gameMock1); // Bayonetta
       store.toggleGameInLibrary(gameMock2); // Bayonetta 2
-      store.toggleGameInLibrary(gameMock3); // Street Fighter
+      store.toggleGameInLibrary(gameMock0); // 070 Project
     });
     afterEach(() => {
       Sinon.restore();
@@ -97,7 +97,7 @@ describe('Utils', () => {
     it('should return array of letters', () => {
       const store = gameDexStore();
       const flattenedLibrary = Utils.flatGameLibrary(store.gameLibrary);
-      expect(Utils.fetchFirstLetters(flattenedLibrary)).toEqual(['0', 'B', 'S']);
+      expect(Utils.fetchFirstLetters(flattenedLibrary)).toEqual(['S', 'B', '0']);
     });
 
     it('should return filtered Library', () => {

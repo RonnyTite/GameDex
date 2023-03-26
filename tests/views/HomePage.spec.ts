@@ -5,6 +5,8 @@ import searchResults from '@/mocks/searchRequestResultsMock.json';
 import GiantBombApi from '@/scripts/GiantBombApi';
 import { axiosInstance } from '@/scripts/RequestManager';
 import Utils from '@/utils/Utils';
+// https://pinia.vuejs.org/cookbook/testing.html#unit-testing-a-store
+import { setActivePinia, createPinia } from 'pinia';
 
 //  Had to mock HomePageSlider.vue  https://github.com/vuejs/vue-test-utils/issues/1522#issuecomment-623053575
 // because of this error Cannot find module 'swiper/vue' happening during unit tests
@@ -19,6 +21,10 @@ describe('HomePage.vue Filters', () => {
     data: { results: searchResults.results },
   });
   beforeEach(() => {
+    // creates a fresh pinia and make it active so it's automatically picked
+    // up by any useStore() call without having to pass it to it:
+    // `useStore(pinia)`
+    setActivePinia(createPinia());
     axiosMock = Sinon.stub(axiosInstance, 'get').resolves(searchResultsStub);
     loadHomePageFeedSpy = Sinon.spy(GiantBombApi, 'loadHomePageFeed');
   });
@@ -27,6 +33,7 @@ describe('HomePage.vue Filters', () => {
   });
   it('filter blank date', () => {
     const wrapper = mount(HomePage);
+    wrapper.vm.loadFeed();
 
     Sinon.assert.calledOnceWithExactly(loadHomePageFeedSpy);
     Sinon.assert.calledOnce(axiosMock);
@@ -145,6 +152,7 @@ describe('HomePage.vue Filters', () => {
 
   it('filter today date', () => {
     const wrapper = mount(HomePage);
+    wrapper.vm.loadFeed();
 
     Sinon.assert.calledOnceWithExactly(loadHomePageFeedSpy);
     Sinon.assert.calledOnce(axiosMock);
@@ -195,6 +203,7 @@ describe('HomePage.vue Filters', () => {
 
   it('remove today date', () => {
     const wrapper = mount(HomePage);
+    wrapper.vm.loadFeed();
 
     Sinon.assert.calledOnceWithExactly(loadHomePageFeedSpy);
     Sinon.assert.calledOnce(axiosMock);
@@ -311,6 +320,8 @@ describe('HomePage.vue Real mount', () => {
 
   it('simple mount', async () => {
     const wrapper = mount(HomePage);
+    wrapper.vm.loadFeed();
+
     const feed = wrapper.vm.removingTodayDateFromFeedResults(searchResults.results);
     const todayFeed = wrapper.vm.filteringTodayDateFromFeedResults(searchResults.results);
     await flushPromises();
@@ -326,19 +337,19 @@ describe('HomePage  Emits', () => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore test are OK doesnt want all values just for the test
     Sinon.stub(GiantBombApi, 'loadHomePageFeed').resolves({ data: { results: searchResults.results } });
+    wrapper = mount(HomePage);
+    wrapper.vm.loadFeed();
   });
   afterEach(() => {
     wrapper.unmount();
     Sinon.restore();
   });
   it('receive emits and open gamecard', () => {
-    wrapper = mount(HomePage);
     wrapper.vm.openGameCard(searchResults.results[0]);
     expect(wrapper.vm.modalGameId).toEqual(searchResults.results[0].id.toString());
     expect(wrapper.vm.isGameCardModalOpen).toEqual(true);
   });
   it('receive emits and close gamecard', () => {
-    wrapper = mount(HomePage);
     wrapper.vm.closeGameCard();
     expect(wrapper.vm.modalGameId).toEqual('');
     expect(wrapper.vm.isGameCardModalOpen).toEqual(false);

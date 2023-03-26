@@ -78,6 +78,8 @@ describe('GamesLibrary Search and Filter', () => {
     store.toggleGameInLibrary(gameMock3); // Street Fighter
 
     loadedLibrary = Utils.loadLibrary();
+    wrapper = shallowMount(GamesLibrary);
+    wrapper.vm.initPage();
   });
 
   afterEach(() => {
@@ -85,10 +87,24 @@ describe('GamesLibrary Search and Filter', () => {
     Sinon.restore();
   });
 
+  it('mount', () => {
+    const store = gameDexStore();
+    console.debug('loadedLibrary', loadedLibrary);
+    console.debug('loadedLibrary', wrapper.vm.library);
+    expect(wrapper.vm.rawLibrary).toEqual(store.gameLibrary);
+    expect(wrapper.vm.library).toEqual({
+      '#': [gameMock0],
+      B: [
+        libraryMock[2],
+        libraryMock[1],
+      ],
+      S: [libraryMock[3]],
+    });
+  });
+
   // SEARCH
   it('search through library', () => {
     const store = gameDexStore();
-    wrapper = shallowMount(GamesLibrary);
     expect(wrapper.vm.rawLibrary).toEqual(store.gameLibrary);
     expect(wrapper.vm.search('stree')).toEqual({
       S: [libraryMock[3]],
@@ -100,7 +116,6 @@ describe('GamesLibrary Search and Filter', () => {
 
   it('search through library with no results', () => {
     const store = gameDexStore();
-    wrapper = shallowMount(GamesLibrary);
     expect(wrapper.vm.rawLibrary).toEqual(store.gameLibrary);
     expect(wrapper.vm.search('strte')).toEqual({});
     // check after search that raw library was not impacted
@@ -110,7 +125,6 @@ describe('GamesLibrary Search and Filter', () => {
 
   it('Search request with empty string', () => {
     const store = gameDexStore();
-    wrapper = shallowMount(GamesLibrary);
     expect(wrapper.vm.rawLibrary).toEqual(store.gameLibrary);
     expect(wrapper.vm.search('')).toEqual(wrapper.vm.library);
     // check after search that raw library was not impacted
@@ -121,7 +135,6 @@ describe('GamesLibrary Search and Filter', () => {
 
   it('reset search', () => {
     const store = gameDexStore();
-    wrapper = shallowMount(GamesLibrary);
     wrapper.vm.resetSearch();
     expect(wrapper.vm.rawLibrary).toEqual(store.gameLibrary);
     expect(wrapper.vm.library).toEqual(loadedLibrary);
@@ -131,7 +144,6 @@ describe('GamesLibrary Search and Filter', () => {
   // FILTER
   it('filter through library', async () => {
     const store = gameDexStore();
-    wrapper = shallowMount(GamesLibrary);
     expect(wrapper.vm.rawLibrary).toEqual(store.gameLibrary);
     const results = wrapper.vm.filteringByPlatforms(['Arcade']);
     await flushPromises();
@@ -141,13 +153,11 @@ describe('GamesLibrary Search and Filter', () => {
   });
 
   it('filter through library with no platforms', () => {
-    wrapper = shallowMount(GamesLibrary);
     expect(wrapper.vm.filteringByPlatforms([])).toEqual(loadedLibrary);
   });
 
   //  SEARCH AND FILTER
   it('search and filter only search', async () => {
-    wrapper = shallowMount(GamesLibrary);
     Sinon.spy(wrapper.vm, 'searchAndFilter');
 
     wrapper.vm.registerSearchEvent('stree');
@@ -160,7 +170,6 @@ describe('GamesLibrary Search and Filter', () => {
   });
 
   it('search and filter only filter', async () => {
-    wrapper = shallowMount(GamesLibrary);
     Sinon.spy(wrapper.vm, 'searchAndFilter');
 
     wrapper.vm.registerFilterEvent(['Arcade']);
@@ -172,7 +181,6 @@ describe('GamesLibrary Search and Filter', () => {
   });
 
   it('search and filter only filter', async () => {
-    wrapper = shallowMount(GamesLibrary);
     Sinon.spy(wrapper.vm, 'searchAndFilter');
 
     wrapper.vm.registerFilterEvent(['PlayStation 3']);
@@ -184,7 +192,6 @@ describe('GamesLibrary Search and Filter', () => {
     });
   });
   it('search and filter through library', async () => {
-    wrapper = shallowMount(GamesLibrary);
     Sinon.spy(wrapper.vm, 'searchAndFilter');
 
     await wrapper.setData({
@@ -201,7 +208,6 @@ describe('GamesLibrary Search and Filter', () => {
   });
 
   it('search and filter and remove filter through library', async () => {
-    wrapper = shallowMount(GamesLibrary);
     Sinon.spy(wrapper.vm, 'searchAndFilter');
 
     await wrapper.setData({

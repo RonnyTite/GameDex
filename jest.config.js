@@ -1,4 +1,5 @@
 module.exports = {
+  testMatch: ['**/tests/**/*.[jt]s?(x)'],
   preset: '@vue/cli-plugin-unit-jest/presets/typescript-and-babel',
   // eslint-disable-next-line max-len
   transformIgnorePatterns: ['/node_modules/(?!@ionic/vue|@ionic/vue-router|@ionic/core|@stencil/core|ionicons|axios|swiper|swiper/vue)'],

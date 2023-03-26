@@ -1,5 +1,8 @@
 <template>
-  <IonModal :is-open="isOpen">
+  <IonModal
+    id="gamecard-modal"
+    :is-open="isOpen"
+  >
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
@@ -17,7 +20,7 @@
           {{ game.name }}
         </IonTitle>
         <IonButtons
-          v-if="navigatorCanShare"
+          v-if="navigatorCanShare()"
           slot="end"
         >
           <IonButton
@@ -38,59 +41,10 @@
         name="crescent"
         class="spinner"
       />
-      <div v-else>
-        <div>
-          <div class="img-container">
-            <IonImg
-              :src="game.image.original_url || ''"
-              class="main-image"
-            />
-            <IonIcon
-              class="heart-icon"
-              :icon="heartOutline"
-              color="light"
-              @click="toggleGameInLibrary"
-            />
-          </div>
-        </div>
-
-        <div class="ion-margin-top">
-          <span class="text__blue text__bold">Developer(s): </span>
-          <span
-            v-for="(developer, key) in game.developers"
-            :key="key"
-          >{{ developer.name }} {{ game.developers.length !==
-            key + 1 ? '| ' : '' }}</span>
-        </div>
-
-        <div class="ion-margin-top">
-          <span class="text__blue text__bold">Release Date: </span>{{ computeReleaseDate }}
-        </div>
-        <div class="ion-margin-top">
-          <span class="text__blue text__bold ">Region: </span>{{ game.region }}
-        </div>
-
-        <DisplayAsLabel
-          :label-list="game.platforms"
-          :abbreviation="false"
-        />
-
-        <div class="ion-margin-top">
-          <span class="text__blue text__bold">Story</span>
-          <p class="font__proxima">
-            {{ game.deck }}
-          </p>
-        </div>
-
-        <div v-if="containsSimilarGamesProperty">
-          <p
-            v-for="(similarGame, index) in game.similar_games"
-            :key="index"
-          >
-            {{ similarGame.name }}
-          </p>
-        </div>
-      </div>
+      <GameCardContent
+        v-else
+        :game-properties="game"
+      />
     </IonContent>
   </IonModal>
 </template>
@@ -98,16 +52,20 @@
 <script lang="ts">
 import {
   IonButtons, IonButton, IonModal, IonHeader, IonToolbar, IonContent, IonTitle, IonIcon, IonSpinner,
-  IonImg,
 } from '@ionic/vue';
 import { defineComponent } from 'vue';
-import { arrowBackOutline, shareSocialOutline, heartOutline } from 'ionicons/icons';
-import gameDexStore from '@/store/Store';
+import {
+  arrowBackOutline, shareSocialOutline,
+} from 'ionicons/icons';
 import { CompleteGameProfile } from '@/types/searchEntities';
 import GiantBombApi from '@/scripts/GiantBombApi';
 import Utils from '@/utils/Utils';
 import GameMock from '@/mocks/gameMock.json';
-import DisplayAsLabel from './DisplayAsLabel.vue';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import {
+  Share, CanShareResult, ShareResult, ShareOptions,
+} from '@capacitor/share';
+import GameCardContent from './GameCardContent.vue';
 
 export default defineComponent({
   components: {
@@ -115,13 +73,12 @@ export default defineComponent({
     IonButton,
     IonModal,
     IonIcon,
-    IonImg,
     IonHeader,
     IonContent,
     IonToolbar,
     IonTitle,
     IonSpinner,
-    DisplayAsLabel,
+    GameCardContent,
   },
   props: {
     isOpen: { type: Boolean, required: true, default: false },
@@ -129,7 +86,9 @@ export default defineComponent({
   },
   emits: ['close-modal'],
   setup() {
-    return { arrowBackOutline, shareSocialOutline, heartOutline };
+    return {
+      arrowBackOutline, shareSocialOutline,
+    };
   },
   data() {
     return {
@@ -144,40 +103,49 @@ export default defineComponent({
     containsSimilarGamesProperty() {
       return this.game.similar_games && this.game.similar_games.length > 0;
     },
-    dataToShare() {
+    dataToShare(): ShareOptions {
       return {
         text: this.game.deck,
         title: this.game.name,
         url: this.game.api_detail_url,
+        dialogTitle: 'Dialog Title',
       };
     },
-    navigatorCanShare() {
-      return navigator.canShare(this.dataToShare) && navigator.share;
+    isAlreadySaved(): boolean {
+      return Utils.isAlreadySaved(this.gameId);
     },
   },
-  beforeMount() {
-    if (this.isOpen && this.gameId) {
-      this.processing = true;
-      GiantBombApi.fetchGameProfile(this.gameId)
-        .then((searchResults) => {
-          this.game = searchResults.data.results;
-        })
-        .catch((err) => {
-          // !!Debug Mode
-          this.game = GameMock as CompleteGameProfile;
-          console.error(err);
-        }).finally(() => {
-          this.processing = false;
-        });
-    }
+  mounted() {
+    this.initPage();
   },
   methods: {
-    async share(): Promise<void> {
-      return navigator.share(this.dataToShare);
+    initPage(): void {
+      if (this.isOpen && this.gameId) {
+        Utils.loadGame(this.gameId)
+          .then((fetchedGame) => {
+            this.game = fetchedGame;
+          })
+          .catch(() => GiantBombApi.fetchGameProfile(this.gameId)
+            .then((searchResults) => {
+              this.game = searchResults.data.results as CompleteGameProfile;
+            })
+            .catch((err) => {
+            // !!Debug Mode
+              this.game = GameMock as CompleteGameProfile;
+              console.error(err);
+            }))
+          .finally(async () => {
+            this.processing = false;
+          });
+      }
     },
-    toggleGameInLibrary() {
-      const store = gameDexStore();
-      store.toggleGameInLibrary(this.game);
+    // @ts-ignore its an async assigned to a const, everything is OK
+    async navigatorCanShare(): CanShareResult {
+      const canShare = await Share.canShare(); // need to wait to have a boolean
+      return canShare;
+    },
+    share(): Promise<ShareResult> {
+      return Share.share(this.dataToShare);
     },
   },
 });
@@ -202,7 +170,7 @@ export default defineComponent({
   height: 100%;
 }
 
-.heart-icon {
+.heart-container {
   cursor: pointer;
   position: absolute;
   right: 20px;
@@ -210,4 +178,21 @@ export default defineComponent({
   width: 25px;
   height: 25px;
 }
+
+.heart-icon {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.heart-outline {
+  color: #98002e;
+}
+
+.heart-filled {
+  color: #e31b23;
+  z-index: 10;
+  opacity: 0;
+}
+
 </style>

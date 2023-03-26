@@ -22,14 +22,14 @@ describe('Test Pinia Store', () => {
   it('Initial mount', () => {
     const store = gameDexStore();
 
-    expect(store.colorSchemeIsDark).toEqual(null);
+    expect(store.colorSchemeIsDark).toEqual(false);
     expect(store.gameLibrary).toEqual({});
   });
 
   it('should set the dark theme status', () => {
     const store = gameDexStore();
 
-    expect(store.colorSchemeIsDark).toEqual(null);
+    expect(store.colorSchemeIsDark).toEqual(false);
     store.setDeviceColorScheme(true);
     expect(store.colorSchemeIsDark).toEqual(true);
   });
@@ -43,7 +43,7 @@ describe('Test Pinia Store', () => {
 
     store.wipe();
 
-    expect(store.colorSchemeIsDark).toEqual(null);
+    expect(store.colorSchemeIsDark).toEqual(false);
     expect(store.gameLibrary).toEqual({});
   });
 
@@ -53,7 +53,7 @@ describe('Test Pinia Store', () => {
 
       const game = gameMock as CompleteGameProfile;
 
-      store.toggleGameInLibrary(game);
+      expect(store.toggleGameInLibrary(game)).toEqual(true);
       expect(store.gameLibrary[game.id]).toEqual(game);
     });
 
@@ -62,11 +62,11 @@ describe('Test Pinia Store', () => {
 
       const game = gameMock as CompleteGameProfile;
 
-      store.toggleGameInLibrary(game);
+      expect(store.toggleGameInLibrary(game)).toEqual(true);
       expect(store.gameLibrary[game.id]).toEqual(game);
       await flushPromises();
 
-      store.toggleGameInLibrary(game);
+      expect(store.toggleGameInLibrary(game)).toEqual(false);
       expect(store.gameLibrary[game.id]).toEqual(undefined);
     });
   });

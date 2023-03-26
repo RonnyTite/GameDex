@@ -5,32 +5,35 @@ import { CompleteGameProfile } from '@/types/searchEntities';
 // https://pinia.vuejs.org/core-concepts/
 interface GameDexState {
   gameLibrary: GameLibrary
-  colorSchemeIsDark: boolean | null
+  colorSchemeIsDark: boolean
 }
 
 export default defineStore('gameDexStore', {
   state: ():GameDexState => ({
     gameLibrary: {},
-    colorSchemeIsDark: null,
+    colorSchemeIsDark: false,
   }),
-  getters: {
-    getgameLibrary() {},
-  },
   actions: {
-    toggleGameInLibrary(game:CompleteGameProfile):void {
+    toggleGameInLibrary(game:CompleteGameProfile):boolean {
       const gameId = game.id.toString();
       const isAlreadySaved = Object.keys(this.gameLibrary).includes(gameId);
+
+      let isSaved:boolean;
 
       if (isAlreadySaved) {
         delete this.gameLibrary[gameId];
         console.debug(`${gameId} has been removed`);
+        isSaved = false;
       } else {
         this.gameLibrary = {
           [gameId]: game,
           ...this.gameLibrary,
         };
         console.debug(`${gameId} has been saved`);
+        isSaved = true;
       }
+
+      return isSaved;
     },
 
     setDeviceColorScheme(isDark:boolean):void {
@@ -39,7 +42,7 @@ export default defineStore('gameDexStore', {
     },
     wipe() {
       this.gameLibrary = {};
-      this.colorSchemeIsDark = null;
+      this.colorSchemeIsDark = false;
     },
   },
   persist: {
