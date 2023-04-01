@@ -60,7 +60,6 @@ import {
 import { CompleteGameProfile } from '@/types/searchEntities';
 import GiantBombApi from '@/scripts/GiantBombApi';
 import Utils from '@/utils/Utils';
-import GameMock from '@/mocks/gameMock.json';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import {
   Share, CanShareResult, ShareResult, ShareOptions,
@@ -93,7 +92,7 @@ export default defineComponent({
   data() {
     return {
       game: {} as CompleteGameProfile,
-      processing: false as boolean,
+      processing: true as boolean,
     };
   },
   computed: {
@@ -116,28 +115,35 @@ export default defineComponent({
     },
   },
   mounted() {
-    this.initPage();
+    this.initPage()
+      .then(() => {
+        this.processing = false;
+      });
   },
   methods: {
-    initPage(): void {
+    initPage(): Promise<void> {
       if (this.isOpen && this.gameId) {
-        Utils.loadGame(this.gameId)
+        return Utils.loadGame(this.gameId)
           .then((fetchedGame) => {
-            this.game = fetchedGame;
-          })
-          .catch(() => GiantBombApi.fetchGameProfile(this.gameId)
-            .then((searchResults) => {
-              this.game = searchResults.data.results as CompleteGameProfile;
-            })
-            .catch((err) => {
-            // !!Debug Mode
-              this.game = GameMock as CompleteGameProfile;
-              console.error(err);
-            }))
-          .finally(async () => {
-            this.processing = false;
+            if (this.assertGameProfile(fetchedGame)) {
+              this.game = fetchedGame;
+              return Promise.resolve();
+            }
+            return GiantBombApi.fetchGameProfile(this.gameId)
+              .then((searchResults) => {
+                this.game = searchResults.data.results;
+                return Promise.resolve();
+              })
+              .catch((err) => {
+                console.error(err);
+                this.processing = false;
+              });
           });
       }
+      return Promise.resolve();
+    },
+    assertGameProfile(game:CompleteGameProfile | Array<never>): game is CompleteGameProfile {
+      return 'name' in game;
     },
     // @ts-ignore its an async assigned to a const, everything is OK
     async navigatorCanShare(): CanShareResult {
